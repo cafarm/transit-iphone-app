@@ -1,2 +1,2 @@
-Transit-App
+transit-app
 ===========

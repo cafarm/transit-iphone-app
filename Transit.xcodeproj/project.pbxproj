@@ -1,0 +1,489 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1F59515D15AC0D98007A4554 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F59515C15AC0D98007A4554 /* UIKit.framework */; };
+		1F59515F15AC0D98007A4554 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F59515E15AC0D98007A4554 /* Foundation.framework */; };
+		1F59516115AC0D98007A4554 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F59516015AC0D98007A4554 /* CoreGraphics.framework */; };
+		1F59516715AC0D98007A4554 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1F59516515AC0D98007A4554 /* InfoPlist.strings */; };
+		1F59516915AC0D98007A4554 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F59516815AC0D98007A4554 /* main.m */; };
+		1F59516D15AC0D98007A4554 /* TAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F59516C15AC0D98007A4554 /* TAAppDelegate.m */; };
+		1F59517015AC0D98007A4554 /* TALocationInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F59516F15AC0D98007A4554 /* TALocationInputViewController.m */; };
+		1F59517315AC0D98007A4554 /* TALocationInputViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F59517115AC0D98007A4554 /* TALocationInputViewController.xib */; };
+		1F59517B15AC0D98007A4554 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F59517A15AC0D98007A4554 /* SenTestingKit.framework */; };
+		1F59517C15AC0D98007A4554 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F59515C15AC0D98007A4554 /* UIKit.framework */; };
+		1F59517D15AC0D98007A4554 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F59515E15AC0D98007A4554 /* Foundation.framework */; };
+		1F59518515AC0D98007A4554 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1F59518315AC0D98007A4554 /* InfoPlist.strings */; };
+		1F59518815AC0D98007A4554 /* TransitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F59518715AC0D98007A4554 /* TransitTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1F59517E15AC0D98007A4554 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F59514F15AC0D98007A4554 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1F59515715AC0D98007A4554;
+			remoteInfo = Transit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1F59515815AC0D98007A4554 /* Transit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Transit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F59515C15AC0D98007A4554 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		1F59515E15AC0D98007A4554 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1F59516015AC0D98007A4554 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		1F59516415AC0D98007A4554 /* Transit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Transit-Info.plist"; sourceTree = "<group>"; };
+		1F59516615AC0D98007A4554 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1F59516815AC0D98007A4554 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		1F59516A15AC0D98007A4554 /* Transit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Transit-Prefix.pch"; sourceTree = "<group>"; };
+		1F59516B15AC0D98007A4554 /* TAAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TAAppDelegate.h; sourceTree = "<group>"; };
+		1F59516C15AC0D98007A4554 /* TAAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TAAppDelegate.m; sourceTree = "<group>"; };
+		1F59516E15AC0D98007A4554 /* TALocationInputViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TALocationInputViewController.h; sourceTree = "<group>"; };
+		1F59516F15AC0D98007A4554 /* TALocationInputViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TALocationInputViewController.m; sourceTree = "<group>"; };
+		1F59517215AC0D98007A4554 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/TALocationInputViewController.xib; sourceTree = "<group>"; };
+		1F59517915AC0D98007A4554 /* TransitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TransitTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F59517A15AC0D98007A4554 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		1F59518215AC0D98007A4554 /* TransitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TransitTests-Info.plist"; sourceTree = "<group>"; };
+		1F59518415AC0D98007A4554 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1F59518615AC0D98007A4554 /* TransitTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransitTests.h; sourceTree = "<group>"; };
+		1F59518715AC0D98007A4554 /* TransitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TransitTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1F59515515AC0D98007A4554 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F59515D15AC0D98007A4554 /* UIKit.framework in Frameworks */,
+				1F59515F15AC0D98007A4554 /* Foundation.framework in Frameworks */,
+				1F59516115AC0D98007A4554 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1F59517515AC0D98007A4554 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F59517B15AC0D98007A4554 /* SenTestingKit.framework in Frameworks */,
+				1F59517C15AC0D98007A4554 /* UIKit.framework in Frameworks */,
+				1F59517D15AC0D98007A4554 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1F59514D15AC0D98007A4554 = {
+			isa = PBXGroup;
+			children = (
+				1F59516215AC0D98007A4554 /* Transit */,
+				1F59518015AC0D98007A4554 /* TransitTests */,
+				1F59519A15AC1659007A4554 /* Resources */,
+				1F59515B15AC0D98007A4554 /* Frameworks */,
+				1F59515915AC0D98007A4554 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1F59515915AC0D98007A4554 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1F59515815AC0D98007A4554 /* Transit.app */,
+				1F59517915AC0D98007A4554 /* TransitTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1F59515B15AC0D98007A4554 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1F59515C15AC0D98007A4554 /* UIKit.framework */,
+				1F59515E15AC0D98007A4554 /* Foundation.framework */,
+				1F59516015AC0D98007A4554 /* CoreGraphics.framework */,
+				1F59517A15AC0D98007A4554 /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1F59516215AC0D98007A4554 /* Transit */ = {
+			isa = PBXGroup;
+			children = (
+				1FFD6C0815AC1BB200A4C388 /* Store */,
+				1FFD6C0715AC1BAA00A4C388 /* Controller */,
+				1FFD6C0615AC1B9600A4C388 /* View */,
+				1FFD6C0415AC1B8D00A4C388 /* Model */,
+				1F59516B15AC0D98007A4554 /* TAAppDelegate.h */,
+				1F59516C15AC0D98007A4554 /* TAAppDelegate.m */,
+				1F59516315AC0D98007A4554 /* Supporting Files */,
+			);
+			path = Transit;
+			sourceTree = "<group>";
+		};
+		1F59516315AC0D98007A4554 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1F59516415AC0D98007A4554 /* Transit-Info.plist */,
+				1F59516515AC0D98007A4554 /* InfoPlist.strings */,
+				1F59516815AC0D98007A4554 /* main.m */,
+				1F59516A15AC0D98007A4554 /* Transit-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1F59518015AC0D98007A4554 /* TransitTests */ = {
+			isa = PBXGroup;
+			children = (
+				1F59518615AC0D98007A4554 /* TransitTests.h */,
+				1F59518715AC0D98007A4554 /* TransitTests.m */,
+				1F59518115AC0D98007A4554 /* Supporting Files */,
+			);
+			path = TransitTests;
+			sourceTree = "<group>";
+		};
+		1F59518115AC0D98007A4554 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1F59518215AC0D98007A4554 /* TransitTests-Info.plist */,
+				1F59518315AC0D98007A4554 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1F59519A15AC1659007A4554 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1F59517115AC0D98007A4554 /* TALocationInputViewController.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		1FFD6C0415AC1B8D00A4C388 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		1FFD6C0615AC1B9600A4C388 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		1FFD6C0715AC1BAA00A4C388 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				1F59516E15AC0D98007A4554 /* TALocationInputViewController.h */,
+				1F59516F15AC0D98007A4554 /* TALocationInputViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		1FFD6C0815AC1BB200A4C388 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Store;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1F59515715AC0D98007A4554 /* Transit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1F59518B15AC0D98007A4554 /* Build configuration list for PBXNativeTarget "Transit" */;
+			buildPhases = (
+				1F59515415AC0D98007A4554 /* Sources */,
+				1F59515515AC0D98007A4554 /* Frameworks */,
+				1F59515615AC0D98007A4554 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Transit;
+			productName = Transit;
+			productReference = 1F59515815AC0D98007A4554 /* Transit.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1F59517815AC0D98007A4554 /* TransitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1F59518E15AC0D98007A4554 /* Build configuration list for PBXNativeTarget "TransitTests" */;
+			buildPhases = (
+				1F59517415AC0D98007A4554 /* Sources */,
+				1F59517515AC0D98007A4554 /* Frameworks */,
+				1F59517615AC0D98007A4554 /* Resources */,
+				1F59517715AC0D98007A4554 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1F59517F15AC0D98007A4554 /* PBXTargetDependency */,
+			);
+			name = TransitTests;
+			productName = TransitTests;
+			productReference = 1F59517915AC0D98007A4554 /* TransitTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1F59514F15AC0D98007A4554 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = TA;
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Seven O' Eight";
+			};
+			buildConfigurationList = 1F59515215AC0D98007A4554 /* Build configuration list for PBXProject "Transit" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 1F59514D15AC0D98007A4554;
+			productRefGroup = 1F59515915AC0D98007A4554 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1F59515715AC0D98007A4554 /* Transit */,
+				1F59517815AC0D98007A4554 /* TransitTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1F59515615AC0D98007A4554 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F59516715AC0D98007A4554 /* InfoPlist.strings in Resources */,
+				1F59517315AC0D98007A4554 /* TALocationInputViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1F59517615AC0D98007A4554 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F59518515AC0D98007A4554 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1F59517715AC0D98007A4554 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1F59515415AC0D98007A4554 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F59516915AC0D98007A4554 /* main.m in Sources */,
+				1F59516D15AC0D98007A4554 /* TAAppDelegate.m in Sources */,
+				1F59517015AC0D98007A4554 /* TALocationInputViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1F59517415AC0D98007A4554 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F59518815AC0D98007A4554 /* TransitTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1F59517F15AC0D98007A4554 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1F59515715AC0D98007A4554 /* Transit */;
+			targetProxy = 1F59517E15AC0D98007A4554 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		1F59516515AC0D98007A4554 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1F59516615AC0D98007A4554 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		1F59517115AC0D98007A4554 /* TALocationInputViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1F59517215AC0D98007A4554 /* en */,
+			);
+			name = TALocationInputViewController.xib;
+			path = Transit;
+			sourceTree = "<group>";
+		};
+		1F59518315AC0D98007A4554 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1F59518415AC0D98007A4554 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1F59518915AC0D98007A4554 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		1F59518A15AC0D98007A4554 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1F59518C15AC0D98007A4554 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Transit/Transit-Prefix.pch";
+				INFOPLIST_FILE = "Transit/Transit-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		1F59518D15AC0D98007A4554 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Transit/Transit-Prefix.pch";
+				INFOPLIST_FILE = "Transit/Transit-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		1F59518F15AC0D98007A4554 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Transit.app/Transit";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Transit/Transit-Prefix.pch";
+				INFOPLIST_FILE = "TransitTests/TransitTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		1F59519015AC0D98007A4554 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Transit.app/Transit";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Transit/Transit-Prefix.pch";
+				INFOPLIST_FILE = "TransitTests/TransitTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1F59515215AC0D98007A4554 /* Build configuration list for PBXProject "Transit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1F59518915AC0D98007A4554 /* Debug */,
+				1F59518A15AC0D98007A4554 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1F59518B15AC0D98007A4554 /* Build configuration list for PBXNativeTarget "Transit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1F59518C15AC0D98007A4554 /* Debug */,
+				1F59518D15AC0D98007A4554 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1F59518E15AC0D98007A4554 /* Build configuration list for PBXNativeTarget "TransitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1F59518F15AC0D98007A4554 /* Debug */,
+				1F59519015AC0D98007A4554 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1F59514F15AC0D98007A4554 /* Project object */;
+}
