@@ -9,14 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @interface TALocationInputViewController : UIViewController <UITextFieldDelegate>
+{
+    UIBarButtonItem *routeButton;
+    IBOutlet UITextField *startField;
+    IBOutlet UITextField *endField;
+    IBOutlet UIButton *swapFieldsButton;
+}
 
-@property (weak, nonatomic) IBOutlet UITextField *startField;
-@property (weak, nonatomic) IBOutlet UITextField *endField;
-
-@property (strong, nonatomic) UIBarButtonItem *routeButton;
-
-- (IBAction)swapFields:(id)sender;
-
-- (void)route;
+- (void)routeMapOverview;
 
 @end

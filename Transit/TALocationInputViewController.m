@@ -7,17 +7,18 @@
 //
 
 #import "TALocationInputViewController.h"
+#import "TAMapViewController.h"
 
 @interface TALocationInputViewController ()
 
+@property (strong, nonatomic) UIBarButtonItem *routeButton;
+
 - (void)setLabelText:(NSString *)labelText forTextField:(UITextField *)textField;
+- (IBAction)swapFields:(id)sender;
 
 @end
 
 @implementation TALocationInputViewController
-
-@synthesize startField;
-@synthesize endField;
 
 @synthesize routeButton;
 
@@ -26,11 +27,12 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         UINavigationItem *navigationItem = [self navigationItem];
-        [navigationItem setTitle:@"Directions"];
+        [navigationItem setTitle:@"Transit"];
         
         [self setRouteButton:[[UIBarButtonItem alloc] initWithTitle:@"Route" style:UIBarButtonItemStyleDone target:self action:@selector(route)]];
         [routeButton setEnabled:NO];
         [navigationItem setRightBarButtonItem:routeButton];
+        
     }
     return self;
 }
@@ -44,14 +46,20 @@
     
     [self setLabelText:@"End:  " forTextField:endField];
     [endField setDelegate:self];
-    
-    // hack to suppress keyboard slide animation
-    [UIWindow beginAnimations: nil context: NULL];
-    [UIWindow setAnimationsEnabled: NO];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
     [endField becomeFirstResponder];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
     
-    [UIWindow commitAnimations];
+    [[self view] endEditing: YES];
 }
 
 - (void)setLabelText:(NSString *)labelText forTextField:(UITextField *)textField
@@ -81,13 +89,25 @@
     [endField setText:start];
 }
 
-- (void)route
+- (void)routeMapOverview
 {
-    // make sure user didn't swap fields to enable the route button without a start
+    // make sure user didn't swap fields to somehow enable the route button
     if ([[startField text] length] == 0) {
         [startField becomeFirstResponder];
         return;
     }
+    
+    if (([[endField text] length] == 0)) {
+        [endField becomeFirstResponder];
+        return;
+    }
+    
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle: @"Edit" style: UIBarButtonItemStyleBordered target: nil action: nil];
+    [[self navigationItem] setBackBarButtonItem: editButton];
+    
+    TAMapViewController *mapController = [[TAMapViewController alloc] initWithNibName:@"TAMapViewController" bundle:nil];
+    
+    [[self navigationController] pushViewController:mapController animated:YES];
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -111,7 +131,7 @@
         if ([textField returnKeyType] == UIReturnKeyNext) {
             [startField becomeFirstResponder];
         } else {
-            [self route];
+            [self routeMapOverview];
         }
     }
     
