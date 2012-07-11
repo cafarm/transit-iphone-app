@@ -10,6 +10,8 @@
 
 @interface TALocationInputViewController ()
 
+- (void)setLabelText:(NSString *)labelText forTextField:(UITextField *)textField;
+
 @end
 
 @implementation TALocationInputViewController
@@ -33,6 +35,45 @@
     return self;
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [self setLabelText:@"Start:  " forTextField:startField];
+    [startField setDelegate:self];
+    
+    [self setLabelText:@"End:  " forTextField:endField];
+    [endField setDelegate:self];
+    
+    // hack to suppress keyboard slide animation
+    [UIWindow beginAnimations: nil context: NULL];
+    [UIWindow setAnimationsEnabled: NO];
+    
+    [endField becomeFirstResponder];
+    
+    [UIWindow commitAnimations];
+}
+
+- (void)setLabelText:(NSString *)labelText forTextField:(UITextField *)textField
+{
+    [textField setLeftViewMode:UITextFieldViewModeAlways];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, -1, 45, 31)];
+    [label setFont:[textField font]];
+    [label setTextAlignment:NSTextAlignmentRight];
+    [label setTextColor:[UIColor grayColor]];
+    [label setBackgroundColor:[UIColor clearColor]];
+    [label setText:labelText];
+
+    // a view to shift the label up to align with text field input
+    UIView *view = [[UIView alloc] init];
+    [view setFrame:[label frame]];
+    [view setBackgroundColor:[UIColor clearColor]];
+    [view addSubview:label];
+    
+    [textField setLeftView:view];
+}
+
 - (IBAction)swapFields:(id)sender
 {
     NSString *start = [startField text];
@@ -42,13 +83,17 @@
 
 - (void)route
 {
-    
+    // make sure user didn't swap fields to enable the route button without a start
+    if ([[startField text] length] == 0) {
+        [startField becomeFirstResponder];
+        return;
+    }
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     if (textField == endField) {
-        if (![[startField text] isEqual:@""]) {
+        if ([[startField text] length] > 0) {
             [endField setReturnKeyType:UIReturnKeyRoute];
             [endField setEnablesReturnKeyAutomatically:YES];
         } else{
@@ -75,30 +120,29 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    int newLength = [[textField text] length] - range.length + [string length];
+    int currentLength = [[textField text] length];
+    int newLength = currentLength - range.length + [string length];
+    
     if (newLength == 0) {
-        [routeButton setEnabled:NO];
-    } else if ((![[startField text] isEqual:@""]) && (![[endField text] isEqual:@""])) {
-        [routeButton setEnabled:YES];
+        if ([routeButton isEnabled]) {
+            [routeButton setEnabled:NO];
+        }
+    } else if (currentLength == 0) {
+        BOOL inputComplete = ((textField == startField) && ([[endField text] length] > 0)) || ((textField == endField) && ([[startField text] length] > 0));
+        if (inputComplete) {
+            [routeButton setEnabled:YES];
+        }
     }
     
     return YES;
 }
 
-- (void)viewDidLoad
+- (BOOL)textFieldShouldClear:(UITextField *)textField
 {
-    [super viewDidLoad];
-    
-    [startField setDelegate:self];
-    [endField setDelegate:self];
-    
-    // hack to suppress keyboard slide animation
-    [UIWindow beginAnimations: nil context: NULL];
-    [UIWindow setAnimationsEnabled: NO];
-    
-    [endField becomeFirstResponder];
-    
-    [UIWindow commitAnimations];
+    if ([routeButton isEnabled]) {
+        [routeButton setEnabled:NO];
+    }
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning
