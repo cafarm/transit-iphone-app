@@ -12,24 +12,15 @@
 @class MKMapView;
 @class TAItinerary;
 
-typedef enum {
-    TACurrentLocation,
-    TADirectionsList,
-    TATransitOptions
-} TAMapViewControl;
-
 @interface TAMapViewController : UIViewController <MKMapViewDelegate>
-{
-    UIBarButtonItem *startButton;
-    IBOutlet MKMapView *mapView;
-    UISegmentedControl *segmentedControl;
-}
 
 @property (strong, nonatomic) TAItinerary *itinerary;
 
 - (void)followCurrentLocation;
 - (void)followCurrentLocationWithHeading;
 - (void)stopFollowingCurrentLocation;
-- (void)startStepByStep;
+- (void)presentDirectionsTable;
+- (void)presentTransitOptions;
+- (void)startStepByStepMap;
 
 @end

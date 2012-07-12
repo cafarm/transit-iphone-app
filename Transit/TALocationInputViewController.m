@@ -10,29 +10,28 @@
 #import "TAMapViewController.h"
 
 @interface TALocationInputViewController ()
-
-@property (strong, nonatomic) UIBarButtonItem *routeButton;
+{
+    UIBarButtonItem *routeButton;
+    IBOutlet UITextField *startField;
+    IBOutlet UITextField *endField;
+    IBOutlet UIButton *swapFieldsButton;
+}
 
 - (void)setLabelText:(NSString *)labelText forTextField:(UITextField *)textField;
-- (IBAction)swapFields:(id)sender;
 
 @end
 
 @implementation TALocationInputViewController
 
-@synthesize routeButton;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        UINavigationItem *navigationItem = [self navigationItem];
-        [navigationItem setTitle:@"Transit"];
+        [[self navigationItem] setTitle:@"Transit"];
         
-        [self setRouteButton:[[UIBarButtonItem alloc] initWithTitle:@"Route" style:UIBarButtonItemStyleDone target:self action:@selector(route)]];
+        routeButton = [[UIBarButtonItem alloc] initWithTitle:@"Route" style:UIBarButtonItemStyleDone target:self action:@selector(routeMapOverview)];
         [routeButton setEnabled:NO];
-        [navigationItem setRightBarButtonItem:routeButton];
-        
+        [[self navigationItem] setRightBarButtonItem:routeButton];
     }
     return self;
 }
@@ -82,7 +81,7 @@
     [textField setLeftView:view];
 }
 
-- (IBAction)swapFields:(id)sender
+- (IBAction)swapFields
 {
     NSString *start = [startField text];
     [startField setText:[endField text]];

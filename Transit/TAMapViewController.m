@@ -7,14 +7,21 @@
 //
 
 #import "TAMapViewController.h"
+#import "TADirectionsTableViewController.h"
+#import "TATransitOptionsViewController.h"
+
+typedef enum {
+    TACurrentLocation,
+    TADirectionsList,
+    TATransitOptions
+} TAMapViewControl;
 
 @interface TAMapViewController ()
 {
-    char currentLocationPressCycle;
+    UIBarButtonItem *startButton;
+    IBOutlet MKMapView *mapView;
+    UISegmentedControl *segmentedControl;
 }
-
-@property (strong, nonatomic) UIBarButtonItem *startButton;
-@property (strong, nonatomic) UISegmentedControl *segmentedControl;
 
 - (void)changeView:(id)sender;
 
@@ -25,21 +32,9 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        currentLocationPressCycle = 0;
-        
-        [self setStartButton:[[UIBarButtonItem alloc] initWithTitle:@"Start" style:UIBarButtonItemStyleDone target:self action:@selector(start)]];
-        [[self navigationItem] setRightBarButtonItem:[self startButton]];
-        
-        [self setSegmentedControl:[[UISegmentedControl alloc] initWithFrame:CGRectMake(7, 380, 117, 30)]];
-        [[self segmentedControl] setMomentary:YES];
-        [[self segmentedControl] insertSegmentWithTitle:@"fol" atIndex:TACurrentLocation animated:NO];
-        [[self segmentedControl] insertSegmentWithTitle:@"lis" atIndex:TADirectionsList animated:NO];
-        [[self segmentedControl] insertSegmentWithTitle:@"opt" atIndex:TATransitOptions animated:NO];
-        
-        [[self segmentedControl] addTarget:self action:@selector(changeView:) forControlEvents:UIControlEventValueChanged];
-        
-        [[self view] addSubview:[self segmentedControl]];
+    if (self) {        
+        startButton = [[UIBarButtonItem alloc] initWithTitle:@"Start" style:UIBarButtonItemStyleDone target:self action:@selector(startStepByStepMap)];
+        [[self navigationItem] setRightBarButtonItem:startButton];
     }
     return self;
 }
@@ -47,7 +42,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+
+    segmentedControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(7, 380, 117, 30)];
+    [segmentedControl setMomentary:YES];
+    [segmentedControl insertSegmentWithTitle:@"fol" atIndex:TACurrentLocation animated:NO];
+    [segmentedControl insertSegmentWithTitle:@"lst" atIndex:TADirectionsList animated:NO];
+    [segmentedControl insertSegmentWithTitle:@"opt" atIndex:TATransitOptions animated:NO];
+    
+    [segmentedControl addTarget:self action:@selector(changeView:) forControlEvents:UIControlEventValueChanged];
+    
+    [[self view] addSubview:segmentedControl];
 }
 
 - (void)changeView:(id)sender
@@ -56,51 +60,69 @@
     
     switch (selectedSegment) {
         case TACurrentLocation:
-            currentLocationPressCycle++;
-            if (currentLocationPressCycle == 1) {
+            if ([mapView userTrackingMode] == MKUserTrackingModeNone) {
                 [self followCurrentLocation];
-                [[self segmentedControl] setTitle:@"hed" forSegmentAtIndex:TACurrentLocation];
-            } else if (currentLocationPressCycle == 2) {
+            } else if ([mapView userTrackingMode] == MKUserTrackingModeFollow) {
                 [self followCurrentLocationWithHeading];
-                [[self segmentedControl] setTitle:@"off" forSegmentAtIndex:TACurrentLocation];
             } else {
                 [self stopFollowingCurrentLocation];
             }
             break;
         case TADirectionsList:
-            NSLog(@"dir list");
+            [self presentDirectionsTable];
             break;
         case TATransitOptions:
-            NSLog(@"dir list");
+            [self presentTransitOptions];
+            break;
         default:
             break;
     }
 }
 
 - (void)followCurrentLocation
-{    
+{
     [mapView setUserTrackingMode:MKUserTrackingModeFollow animated:YES];
+    [segmentedControl setTitle:@"hed" forSegmentAtIndex:TACurrentLocation];
 }
 
 - (void)followCurrentLocationWithHeading
 {
     [mapView setUserTrackingMode:MKUserTrackingModeFollowWithHeading animated:YES];
+    [segmentedControl setTitle:@"off" forSegmentAtIndex:TACurrentLocation];
 }
 
 - (void)stopFollowingCurrentLocation
 {
     [mapView setUserTrackingMode:MKUserTrackingModeNone animated:YES];
+    [ segmentedControl setTitle:@"fol" forSegmentAtIndex:TACurrentLocation];
 }
 
 - (void)mapView:(MKMapView *)mapView didChangeUserTrackingMode:(MKUserTrackingMode)mode animated:(BOOL)animated
 {
     if (mode == MKUserTrackingModeNone) {
-        [[self segmentedControl] setTitle:@"fol" forSegmentAtIndex:TACurrentLocation];
-        currentLocationPressCycle = 0;
+        [segmentedControl setTitle:@"fol" forSegmentAtIndex:TACurrentLocation];
     }
 }
 
-- (void)startStepByStep
+- (void)presentDirectionsTable
+{
+    TADirectionsTableViewController *directionsController = [[TADirectionsTableViewController alloc] init];
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:directionsController];
+        
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
+
+- (void)presentTransitOptions
+{
+    TATransitOptionsViewController *optionsController = [[TATransitOptionsViewController alloc] init];
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:optionsController];
+    
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
+
+- (void)startStepByStepMap
 {
     
 }
