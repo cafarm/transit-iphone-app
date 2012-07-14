@@ -16,9 +16,9 @@ typedef enum {
 
 @interface TATransitOptionsViewController ()
 {
-    UIBarButtonItem *doneButton;
-    NSArray *sectionKeys;
-    NSDictionary *tableContent;
+    UIBarButtonItem *_doneButton;
+    NSArray *_sectionKeys;
+    NSDictionary *_tableContent;
 }
 
 @end
@@ -31,8 +31,8 @@ typedef enum {
     if (self) {
         [[self navigationItem] setTitle:@"Transit Options"];
         
-        doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(dismissViewController)];
-        [[self navigationItem] setRightBarButtonItem:doneButton];
+        _doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(dismissViewController)];
+        self.navigationItem.rightBarButtonItem = _doneButton;
     }
     return self;
 }
@@ -50,13 +50,13 @@ typedef enum {
     NSString *timeKey = @"Time";
     NSString *itinerariesKey = @"Itineraries";
     
-    sectionKeys = [NSArray arrayWithObjects:routingKey,timeKey, itinerariesKey, nil];
+    _sectionKeys = [NSArray arrayWithObjects:routingKey,timeKey, itinerariesKey, nil];
     
     NSArray *routing = [NSArray arrayWithObjects:@"Best Route", @"Fewer Transfers", @"Less Walking", nil];
     NSArray *time = [NSArray arrayWithObject:[NSDate date]];
     NSMutableArray *itineraries = [NSArray arrayWithObjects:@"", @"", @"", nil];
     
-    tableContent = [NSMutableDictionary dictionaryWithObjectsAndKeys:routing, routingKey, time, timeKey, itineraries, itinerariesKey, nil];
+    _tableContent = [NSMutableDictionary dictionaryWithObjectsAndKeys:routing, routingKey, time, timeKey, itineraries, itinerariesKey, nil];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -67,7 +67,7 @@ typedef enum {
 
 - (void)dismissViewController
 {
-    [[self presentingViewController] dismissViewControllerAnimated:YES completion:nil];
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -85,13 +85,13 @@ typedef enum {
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [tableContent count];
+    return [_tableContent count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSString *key = [sectionKeys objectAtIndex:section];
-    return [[tableContent objectForKey:key] count];
+    NSString *key = [_sectionKeys objectAtIndex:section];
+    return [[_tableContent objectForKey:key] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -103,11 +103,11 @@ typedef enum {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
     }
     
-    NSString *key = [sectionKeys objectAtIndex:[indexPath section]];
-    NSArray *contents = [tableContent objectForKey:key];
+    NSString *key = [_sectionKeys objectAtIndex:[indexPath section]];
+    NSArray *contents = [_tableContent objectForKey:key];
     NSObject *contentForRow = [contents objectAtIndex:[indexPath row]];
     
-    [[cell textLabel] setText:[NSString stringWithFormat:@"%@", contentForRow]];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", contentForRow];
     
     return cell;
 }
@@ -157,7 +157,7 @@ typedef enum {
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    TATransitOptionSection section = [indexPath section];
+    TATransitOptionSection section = indexPath.section;
     switch (section) {
         case TARoutingSection:
 

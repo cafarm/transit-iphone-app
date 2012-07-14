@@ -13,14 +13,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
     TALocationInputViewController *inputController = [[TALocationInputViewController alloc] initWithNibName:@"TALocationInputViewController" bundle:nil];
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:inputController];
-    [[self window] setRootViewController:navigationController];
+    self.window.rootViewController = navigationController;
     
-    [[self window] makeKeyAndVisible];
+    [self.window makeKeyAndVisible];
     return YES;
 }
 

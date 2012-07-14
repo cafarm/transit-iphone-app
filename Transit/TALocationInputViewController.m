@@ -8,18 +8,17 @@
 
 #import "TALocationInputViewController.h"
 #import "TAMapViewController.h"
-#import "TAItineraryStore.h"
 
 @interface TALocationInputViewController ()
 {
-    NSString *navigationTitle;
-    UIBarButtonItem *routeButton;
-    IBOutlet UITextField *startField;
-    IBOutlet UITextField *endField;
-    IBOutlet UIButton *swapFieldsButton;
-    IBOutlet UITableView *suggestedLocationsTable;
+    NSString *_navigationTitle;
+    UIBarButtonItem *_routeButton;
+    IBOutlet UITextField *_startField;
+    IBOutlet UITextField *_endField;
+    IBOutlet UIButton *_swapFieldsButton;
+    IBOutlet UITableView *_suggestedLocationsTable;
     
-    TAItineraryStore *itineraryStore;
+    TATripStore *_tripStore;
 }
 
 - (void)setLabelText:(NSString *)labelText forTextField:(UITextField *)textField;
@@ -34,18 +33,18 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        navigationTitle = @"Transit";
-        [[self navigationItem] setTitle:navigationTitle];
+        _navigationTitle = @"Transit";
+        [self.navigationItem setTitle:_navigationTitle];
         
-        routeButton = [[UIBarButtonItem alloc] initWithTitle:@"Route"
-                                                       style:UIBarButtonItemStyleDone
-                                                      target:self
-                                                      action:@selector(routeMapOverview)];
-        [routeButton setEnabled:NO];
-        [[self navigationItem] setRightBarButtonItem:routeButton];
+        _routeButton = [[UIBarButtonItem alloc] initWithTitle:@"Route"
+                                                        style:UIBarButtonItemStyleDone
+                                                       target:self
+                                                       action:@selector(routeMapOverview)];
+        [_routeButton setEnabled:NO];
+        [self.navigationItem setRightBarButtonItem:_routeButton];
         
-        itineraryStore = [[TAItineraryStore alloc] init];
-        [itineraryStore setDelegate:self];
+        _tripStore = [[TATripStore alloc] init];
+        [_tripStore setDelegate:self];
     }
     return self;
 }
@@ -54,11 +53,11 @@
 {
     [super viewDidLoad];
     
-    [self setLabelText:@"Start:  " forTextField:startField];
-    [startField setDelegate:self];
+    [self setLabelText:@"Start:  " forTextField:_startField];
+    [_startField setDelegate:self];
     
-    [self setLabelText:@"End:  " forTextField:endField];
-    [endField setDelegate:self];
+    [self setLabelText:@"End:  " forTextField:_endField];
+    [_endField setDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -72,73 +71,75 @@
 {
     [super viewWillDisappear:animated];
     
-    [[self view] endEditing: YES];
+    [self.view endEditing: YES];
 }
 
 - (void)setLabelText:(NSString *)labelText forTextField:(UITextField *)textField
 {
-    [textField setLeftViewMode:UITextFieldViewModeAlways];
+    textField.leftViewMode = UITextFieldViewModeAlways;
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, -1, 45, 31)];
-    [label setFont:[textField font]];
-    [label setTextAlignment:NSTextAlignmentRight];
-    [label setTextColor:[UIColor grayColor]];
-    [label setBackgroundColor:[UIColor clearColor]];
-    [label setText:labelText];
+    label.font = textField.font;
+    label.textAlignment = NSTextAlignmentRight;
+    label.textColor = [UIColor grayColor];
+    label.backgroundColor = [UIColor clearColor];
+    label.text = labelText;
 
     // a view to shift the label up to align with text field input
     UIView *view = [[UIView alloc] init];
-    [view setFrame:[label frame]];
-    [view setBackgroundColor:[UIColor clearColor]];
+    view.frame = label.frame;
+    view.backgroundColor = [UIColor clearColor];
     [view addSubview:label];
     
-    [textField setLeftView:view];
+    textField.leftView = view;
 }
 
 - (IBAction)swapStartAndEndFields
 {
-    NSString *start = [startField text];
-    [startField setText:[endField text]];
-    [endField setText:start];
+    NSString *start = _startField.text;
+    _startField.text = _endField.text;
+    _endField.text = start;
 }
 
 - (void)routeMapOverview
 {
     // make sure user didn't swap fields to somehow enable the route button
-    if ([[startField text] length] == 0) {
-        [startField becomeFirstResponder];
+    if ([_startField.text length] == 0) {
+        [_startField becomeFirstResponder];
         return;
     }
     
-    if (([[endField text] length] == 0)) {
-        [endField becomeFirstResponder];
+    if ([_endField.text length] == 0) {
+        [_endField becomeFirstResponder];
         return;
     }
     
     [self lockViewController];
     
-    [itineraryStore setStartLocation:[startField text]];
-    [itineraryStore setEndLocation:[endField text]];
-    [itineraryStore fetchItineraries];
+    _tripStore.startLocation = _startField.text;
+    _tripStore.endLocation = _endField.text;
+    [_tripStore planTrip];
 }
 
-- (void)itineraryStore:(TAItineraryStore *)store didFetchItineraries:(NSArray *)itineraries
+- (void)tripStore:(TATripStore *)store didPlanTrip:(TATrip *)theTrip
 {
     TAMapViewController *mapController = [[TAMapViewController alloc] init];
     
-    UIBarButtonItem *transitButton = [[UIBarButtonItem alloc] initWithTitle:navigationTitle
+    UIBarButtonItem *transitButton = [[UIBarButtonItem alloc] initWithTitle:_navigationTitle
                                                                       style:UIBarButtonItemStyleBordered
-                                                                     target:nil action:nil];
-    [[self navigationItem] setBackBarButtonItem:transitButton];
+                                                                     target:nil
+                                                                     action:nil];
+    self.navigationItem.backBarButtonItem = transitButton;
     
-    [[self navigationController] pushViewController:mapController animated:YES];
+    [self.navigationController pushViewController:mapController animated:YES];
 }
 
-- (void)itineraryStore:(TAItineraryStore *)store didFailWithError:(NSError *)error
+- (void)tripStore:(TATripStore *)store didFailWithError:(NSError *)error
 {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Directions Not Available"
-                                                        message:[error localizedDescription]
-                                                       delegate:self cancelButtonTitle:nil
+                                                        message:error.localizedDescription
+                                                       delegate:self
+                                              cancelButtonTitle:nil
                                               otherButtonTitles:@"OK", nil];
     
     [alertView show];
@@ -147,44 +148,44 @@
 
 - (void)lockViewController
 {
-    [[self navigationItem] setTitle:@"Loading..."];
-    [routeButton setEnabled:NO];
-    [startField setEnabled:NO];
-    [endField setEnabled:NO];
-    [swapFieldsButton setEnabled:NO];
-    [[self view] endEditing: YES];
+    self.navigationItem.title = @"Loading...";
+    _routeButton.enabled = NO;
+    _startField.enabled = NO;
+    _endField.enabled = NO;
+    _swapFieldsButton.enabled = NO;
+    [self.view endEditing: YES];
 }
 
 - (void)unlockViewController
 {
-    [[self navigationItem] setTitle:navigationTitle];
-    [routeButton setEnabled:YES];
-    [startField setEnabled:YES];
-    [endField setEnabled:YES];
-    [swapFieldsButton setEnabled:YES];
-    [endField becomeFirstResponder];
+    self.navigationItem.title = _navigationTitle;
+    _routeButton.enabled = YES;
+    _startField.enabled = YES;
+    _endField.enabled = YES;
+    _swapFieldsButton.enabled = YES;
+    [_endField becomeFirstResponder];
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    if (textField == endField) {
-        if ([[startField text] length] > 0) {
-            [endField setReturnKeyType:UIReturnKeyRoute];
-            [endField setEnablesReturnKeyAutomatically:YES];
+    if (textField == _endField) {
+        if ([_startField.text length] > 0) {
+            _endField.returnKeyType = UIReturnKeyRoute;
+            _endField.enablesReturnKeyAutomatically = YES;
         } else{
-            [endField setReturnKeyType:UIReturnKeyNext];
-            [endField setEnablesReturnKeyAutomatically:NO];
+            _endField.returnKeyType = UIReturnKeyNext;
+            _endField.enablesReturnKeyAutomatically = NO;
         }
     }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if (textField == startField) {
-        [endField becomeFirstResponder];
+    if (textField == _startField) {
+        [_endField becomeFirstResponder];
     } else {
-        if ([textField returnKeyType] == UIReturnKeyNext) {
-            [startField becomeFirstResponder];
+        if (textField.returnKeyType == UIReturnKeyNext) {
+            [_startField becomeFirstResponder];
         } else {
             [self routeMapOverview];
         }
@@ -197,19 +198,19 @@
     shouldChangeCharactersInRange:(NSRange)range
                 replacementString:(NSString *)string
 {
-    int currentLength = [[textField text] length];
+    int currentLength = [textField.text length];
     int newLength = currentLength - range.length + [string length];
     
     if (newLength == 0) {
-        if ([routeButton isEnabled]) {
-            [routeButton setEnabled:NO];
+        if (_routeButton.enabled) {
+            _routeButton.enabled = NO;
         }
     } else if (currentLength == 0) {
-        BOOL inputComplete = ((textField == startField) && ([[endField text] length] > 0))
-                             || ((textField == endField) && ([[startField text] length] > 0));
+        BOOL inputComplete = ((textField == _startField) && ([_endField.text length] > 0))
+                             || ((textField == _endField) && ([_startField.text length] > 0));
         
         if (inputComplete) {
-            [routeButton setEnabled:YES];
+            _routeButton.enabled = YES;
         }
     }
     
@@ -218,8 +219,8 @@
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField
 {
-    if ([routeButton isEnabled]) {
-        [routeButton setEnabled:NO];
+    if (_routeButton.enabled) {
+        _routeButton.enabled = NO;
     }
     return YES;
 }

@@ -10,11 +10,11 @@
 #import <MapKit/MapKit.h>
 
 @class MKMapView;
-@class TAItinerary;
+@class TATrip;
 
 @interface TAMapViewController : UIViewController <MKMapViewDelegate>
 
-@property (strong, nonatomic) TAItinerary *itinerary;
+@property (strong, nonatomic) TATrip *trip;
 
 - (void)followCurrentLocation;
 - (void)followCurrentLocationWithHeading;

@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TAItineraryStoreDelegate.h"
+#import "TATripStore.h"
 
-@interface TALocationInputViewController : UIViewController <UITextFieldDelegate, TAItineraryStoreDelegate>
+@interface TALocationInputViewController : UIViewController <UITextFieldDelegate, TATripStoreDelegate>
 
 - (IBAction)swapStartAndEndFields;
 - (void)routeMapOverview;

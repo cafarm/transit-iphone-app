@@ -10,7 +10,7 @@
 
 @interface TADirectionsTableViewController ()
 {
-    UIBarButtonItem *doneButton;
+    UIBarButtonItem *_doneButton;
 }
 
 @end
@@ -21,10 +21,10 @@
 {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self) {
-        [[self navigationItem] setTitle:@"Directions"];
+        self.navigationItem.title = @"Directions";
 
-        doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(dismissViewController)];
-        [[self navigationItem] setRightBarButtonItem:doneButton];
+        _doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(dismissViewController)];
+        self.navigationItem.rightBarButtonItem = _doneButton;
     }
     return self;
 }
@@ -47,7 +47,7 @@
 
 - (void)dismissViewController
 {
-    [[self presentingViewController] dismissViewControllerAnimated:YES completion:nil];
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning

@@ -1,66 +1,70 @@
 //
-//  TAItineraryStore.m
+//  TATripStore.m
 //  Transit
 //
 //  Created by Mark Cafaro on 7/12/12.
 //  Copyright (c) 2012 Seven O' Eight. All rights reserved.
 //
 
-#import "TAItineraryStore.h"
+#import "TATripStore.h"
+#import "TATrip.h"
 #import "TATravelDate.h"
-#import "TAItineraryStoreDelegate.h"
+#import "TAConnection.h"
 
-@interface TAItineraryStore ()
+@interface TATripStore ()
 {
-    NSString *currentLocation;
-    CLLocationManager *locationManager;
+    NSString *_currentLocation;
+    CLLocationManager *_locationManager;
 }
 
 @end
 
-@implementation TAItineraryStore
+@implementation TATripStore
 
-@synthesize startLocation;
-@synthesize endLocation;
-@synthesize routingPreference;
-@synthesize travelDate;
-@synthesize requiresAccessibleTrip;
-@synthesize maxWalkDistance;
-@synthesize delegate;
+@synthesize startLocation=_startLocation;
+@synthesize endLocation=_endLocation;
+@synthesize routingPreference=_routingPreference;
+@synthesize travelDate=_travelDate;
+@synthesize requiresAccessibleTrip=_requiresAccessibleTrip;
+@synthesize maxWalkDistance=_maxWalkDistance;
+@synthesize delegate=_delegate;
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        routingPreference = TABestRoute;
-        travelDate = [[TATravelDate alloc] initWithDate:[NSDate date] departureOrArrival:TADepartAt];
-        requiresAccessibleTrip = NO;
-        maxWalkDistance = TAHalfMileWalk;
+        _routingPreference = TABestRoute;
+        _travelDate = [[TATravelDate alloc] initWithDate:[NSDate date] departAtOrArriveBy:TADepartAt];
+        _requiresAccessibleTrip = NO;
+        _maxWalkDistance = TAHalfMileWalk;
         
-        locationManager = [[CLLocationManager alloc] init];
-        [locationManager setDelegate:self];
-        [locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
-        [locationManager startUpdatingLocation];
+        _locationManager = [[CLLocationManager alloc] init];
+        [_locationManager setDelegate:self];
+        [_locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
+        [_locationManager startUpdatingLocation];
     }
     return self;
 }
 
-- (void)fetchItineraries
+- (void)planTrip
 {
-    // TODO: better nil checks on current location
-    if ([startLocation caseInsensitiveCompare:@"Current Location"] == NSOrderedSame) {
-        startLocation = currentLocation != nil ? currentLocation : @"";
+    // TODO: pull encoding instructions from our server
+    // TODO: better nil check on current location
+    // we may want to block execution until we find the current location
+    if ([self.startLocation caseInsensitiveCompare:@"Current Location"] == NSOrderedSame) {
+        self.startLocation = _currentLocation != nil ? _currentLocation : @"";
     }
     
-    if ([endLocation caseInsensitiveCompare:@"Current Location"] == NSOrderedSame) {
-        endLocation = currentLocation != nil ? currentLocation : @"";
+    if ([self.endLocation caseInsensitiveCompare:@"Current Location"] == NSOrderedSame) {
+        self.endLocation = _currentLocation != nil ? _currentLocation : @"";
     }
     
-    NSString *encodedStartLocation = [startLocation stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
-    NSString *encodedEndLocation = [endLocation stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+    // TODO: we'll want to strip city name, state, zip code and punctuation from these addresses
+    NSString *encodedStartLocation = [self.startLocation stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+    NSString *encodedEndLocation = [self.endLocation stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
     
     NSString *encodedRoutingPreference;
-    switch (routingPreference) {
+    switch (self.routingPreference) {
         case TAFewerTransfers:
             encodedRoutingPreference = @"X";
             break;
@@ -73,33 +77,33 @@
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MM'%2F'dd'%2F'yy"];
-    NSString *encodedDate = [dateFormatter stringFromDate:[travelDate date]];
+    NSString *encodedDate = [dateFormatter stringFromDate:[self.travelDate date]];
     
     [dateFormatter setDateFormat:@"HH"];
-    NSString *encodedHourTime = [dateFormatter stringFromDate:[travelDate date]];
+    NSString *encodedHourTime = [dateFormatter stringFromDate:[self.travelDate date]];
     
     [dateFormatter setDateFormat:@"mm"];
-    NSString *encodedMinuteTime = [dateFormatter stringFromDate:[travelDate date]];
+    NSString *encodedMinuteTime = [dateFormatter stringFromDate:[self.travelDate date]];
     
     [dateFormatter setDateFormat:@"a"];
-    NSString *encodedAMPMTime = [dateFormatter stringFromDate:[travelDate date]];
+    NSString *encodedAMPMTime = [dateFormatter stringFromDate:[self.travelDate date]];
     
     NSString *encodedDepartAtOrArriveBy;
-    if ([travelDate departAtOrArriveBy] == TAArriveBy) {
+    if ([self.travelDate departAtOrArriveBy] == TAArriveBy) {
         encodedDepartAtOrArriveBy = @"A";
     } else {
         encodedDepartAtOrArriveBy = @"D";
     }
     
     NSString *encodedRequiresAccessibileTrip;
-    if (requiresAccessibleTrip) {
+    if (self.requiresAccessibleTrip) {
         encodedRequiresAccessibileTrip = @"Y";
     } else {
         encodedRequiresAccessibileTrip = @"N";
     }
     
     NSString *encodedMaxWalkDistance;
-    switch (maxWalkDistance) {
+    switch (self.maxWalkDistance) {
         case TAQuarterMileWalk:
             encodedMaxWalkDistance = @".25";
             break;
@@ -113,7 +117,6 @@
             break;
     }
     
-    // TODO: pull instructions from server
     NSString *formatString = @"%@&%@&%@&%@&%@&%@&%@&%@&%@&%@&%@&%@";
     NSString *urlString = [NSString stringWithFormat:formatString,
                            @"http://tripplanner.kingcounty.gov/cgi-bin/itin.pl?",
@@ -129,9 +132,23 @@
                            [@"Atr=" stringByAppendingString:encodedRequiresAccessibileTrip],
                            [@"Walk=" stringByAppendingString:encodedMaxWalkDistance]];
     
-    NSLog(@"%@", urlString);
+    DLog(@"%@", urlString);
     
-    [delegate itineraryStore:self didFetchItineraries:nil];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    TATrip *trip = [[TATrip alloc] init];
+    
+    TAConnection *connection = [[TAConnection alloc] initWithRequest:request];
+    [connection setCompletionBlock:^(TATrip *trip, NSError *error) {
+        if (!error) {
+            [self.delegate tripStore:self didPlanTrip:trip];
+        } else {
+            [self.delegate tripStore:self didFailWithError:error];
+        }
+    }];
+    [connection setXmlRootObject:trip];
+    [connection start];
 }
 
 - (void)locationManager:(CLLocationManager *)manager
@@ -153,7 +170,7 @@
     [geocoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks, NSError *error) {
         if (!error) {
             CLPlacemark *bestPlacemark = [placemarks objectAtIndex:0];
-            currentLocation = [NSString stringWithFormat:@"%@ %@",
+            _currentLocation = [NSString stringWithFormat:@"%@ %@",
                                [bestPlacemark subThoroughfare],
                                [bestPlacemark thoroughfare]];
         }
@@ -162,7 +179,7 @@
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    [delegate itineraryStore:self didFailWithError:error];
+    [self.delegate tripStore:self didFailWithError:error];
 }
 
 @end

@@ -15,9 +15,9 @@ typedef enum {
 
 @interface TATravelDate : NSObject
 
-@property (readonly, strong, nonatomic)NSDate *date;
-@property (readonly, nonatomic)TADepartAtOrArriveBy departAtOrArriveBy;
+@property (readonly, strong, nonatomic) NSDate *date;
+@property (readonly, nonatomic) TADepartAtOrArriveBy departAtOrArriveBy;
 
-- (id)initWithDate:(NSDate *)aDate departureOrArrival:(TADepartAtOrArriveBy)departureOrArrival;
+- (id)initWithDate:(NSDate *)date departAtOrArriveBy:(TADepartAtOrArriveBy)departAtOrArriveBy;
 
 @end

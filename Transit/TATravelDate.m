@@ -10,15 +10,15 @@
 
 @implementation TATravelDate
 
-@synthesize date;
-@synthesize departAtOrArriveBy;
+@synthesize date=_date;
+@synthesize departAtOrArriveBy=_departAtOrArriveBy;
 
-- (id)initWithDate:(NSDate *)aDate departureOrArrival:(TADepartAtOrArriveBy)departureOrArrival
+- (id)initWithDate:(NSDate *)date departAtOrArriveBy:(TADepartAtOrArriveBy)departAtOrArriveBy
 {
     self = [super init];
     if (self) {
-        date = aDate;
-        departAtOrArriveBy = departureOrArrival;
+        _date = date;
+        _departAtOrArriveBy = departAtOrArriveBy;
     }
     return self;
 }
