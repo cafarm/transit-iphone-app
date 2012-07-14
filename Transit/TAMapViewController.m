@@ -18,6 +18,7 @@ typedef enum {
 
 @interface TAMapViewController ()
 {
+    UIBarButtonItem *transitButton;
     UIBarButtonItem *startButton;
     IBOutlet MKMapView *mapView;
     UISegmentedControl *segmentedControl;

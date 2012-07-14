@@ -2,25 +2,39 @@
 //  TAItineraryStore.h
 //  Transit
 //
-//  Created by Mark Cafaro on 7/11/12.
+//  Created by Mark Cafaro on 7/12/12.
 //  Copyright (c) 2012 Seven O' Eight. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
+
+@class TATravelDate;
+@protocol TAItineraryStoreDelegate;
 
 typedef enum {
     TABestRoute,
-    TAFewestTranfers,
+    TAFewerTransfers,
     TALessWalking
 } TARoutingPreference;
 
-@interface TAItineraryStore : NSObject
+typedef enum {
+    TAQuarterMileWalk,
+    TAHalfMileWalk,
+    TAThreeQuarterMileWalk,
+    TAOneMileWalk
+} TAMaxWalkDistance;
 
-@property (nonatomic) TARoutingPreference routingPreference;
-@property (strong, nonatomic) NSDate *desiredTime;
-@property (strong, nonatomic) NSString *startLocation;
-@property (strong, nonatomic) NSString *endLocation;
+@interface TAItineraryStore : NSObject <CLLocationManagerDelegate>
 
-+ (TAItineraryStore *)sharedStore;
+@property (strong, nonatomic)NSString *startLocation;
+@property (strong, nonatomic)NSString *endLocation;
+@property (nonatomic)TARoutingPreference routingPreference;
+@property (strong, nonatomic)TATravelDate *travelDate;
+@property (nonatomic)BOOL requiresAccessibleTrip;
+@property (nonatomic)TAMaxWalkDistance maxWalkDistance;
+@property (weak, nonatomic)id<TAItineraryStoreDelegate> delegate;
+
+- (void)fetchItineraries;
 
 @end

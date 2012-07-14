@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1F33A59015AE9EBB009A791E /* TAItineraryStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33A58F15AE9EBB009A791E /* TAItineraryStore.m */; };
+		1F33A5A615AF93B8009A791E /* TATransitDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33A5A515AF93B8009A791E /* TATransitDataStore.m */; };
+		1F33A5A915AF9587009A791E /* TAItineraryStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33A5A815AF9587009A791E /* TAItineraryStore.m */; };
+		1F33A5B015AFA1AC009A791E /* TATravelDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33A5AF15AFA1AC009A791E /* TATravelDate.m */; };
 		1F342CBD15AE236300E2A6E8 /* TADirectionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F342CBC15AE236300E2A6E8 /* TADirectionsTableViewController.m */; };
 		1F342CC615AE4DE800E2A6E8 /* TATransitOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F342CC515AE4DE800E2A6E8 /* TATransitOptionsViewController.m */; };
 		1F59515D15AC0D98007A4554 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F59515C15AC0D98007A4554 /* UIKit.framework */; };
@@ -23,6 +25,7 @@
 		1F59517D15AC0D98007A4554 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F59515E15AC0D98007A4554 /* Foundation.framework */; };
 		1F59518515AC0D98007A4554 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1F59518315AC0D98007A4554 /* InfoPlist.strings */; };
 		1F59518815AC0D98007A4554 /* TransitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F59518715AC0D98007A4554 /* TransitTests.m */; };
+		1FA09DDA15AFBFD100A767AA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA09DD915AFBFD100A767AA /* CoreLocation.framework */; };
 		1FFD6C0C15AD1D6200A4C388 /* TAMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD6C0A15AD1D6200A4C388 /* TAMapViewController.m */; };
 		1FFD6C0D15AD1D6200A4C388 /* TAMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FFD6C0B15AD1D6200A4C388 /* TAMapViewController.xib */; };
 		1FFD6C0F15AD1DA500A4C388 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FFD6C0E15AD1DA500A4C388 /* MapKit.framework */; };
@@ -40,8 +43,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1F33A58E15AE9EBB009A791E /* TAItineraryStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAItineraryStore.h; sourceTree = "<group>"; };
-		1F33A58F15AE9EBB009A791E /* TAItineraryStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAItineraryStore.m; sourceTree = "<group>"; };
+		1F33A5A415AF93B8009A791E /* TATransitDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TATransitDataStore.h; sourceTree = "<group>"; };
+		1F33A5A515AF93B8009A791E /* TATransitDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TATransitDataStore.m; sourceTree = "<group>"; };
+		1F33A5A715AF9587009A791E /* TAItineraryStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAItineraryStore.h; sourceTree = "<group>"; };
+		1F33A5A815AF9587009A791E /* TAItineraryStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAItineraryStore.m; sourceTree = "<group>"; };
+		1F33A5AE15AFA1AC009A791E /* TATravelDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TATravelDate.h; sourceTree = "<group>"; };
+		1F33A5AF15AFA1AC009A791E /* TATravelDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TATravelDate.m; sourceTree = "<group>"; };
 		1F342CBB15AE236300E2A6E8 /* TADirectionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TADirectionsTableViewController.h; sourceTree = "<group>"; };
 		1F342CBC15AE236300E2A6E8 /* TADirectionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TADirectionsTableViewController.m; sourceTree = "<group>"; };
 		1F342CC415AE4DE800E2A6E8 /* TATransitOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TATransitOptionsViewController.h; sourceTree = "<group>"; };
@@ -65,6 +72,8 @@
 		1F59518415AC0D98007A4554 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1F59518615AC0D98007A4554 /* TransitTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransitTests.h; sourceTree = "<group>"; };
 		1F59518715AC0D98007A4554 /* TransitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TransitTests.m; sourceTree = "<group>"; };
+		1FA09DD615AFA9DB00A767AA /* TAItineraryStoreDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAItineraryStoreDelegate.h; sourceTree = "<group>"; };
+		1FA09DD915AFBFD100A767AA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1FFD6C0915AD1D6100A4C388 /* TAMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAMapViewController.h; sourceTree = "<group>"; };
 		1FFD6C0A15AD1D6200A4C388 /* TAMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAMapViewController.m; sourceTree = "<group>"; };
 		1FFD6C0B15AD1D6200A4C388 /* TAMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TAMapViewController.xib; path = Transit/TAMapViewController.xib; sourceTree = "<group>"; };
@@ -78,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FA09DDA15AFBFD100A767AA /* CoreLocation.framework in Frameworks */,
 				1FFD6C0F15AD1DA500A4C388 /* MapKit.framework in Frameworks */,
 				1F59515D15AC0D98007A4554 /* UIKit.framework in Frameworks */,
 				1F59515F15AC0D98007A4554 /* Foundation.framework in Frameworks */,
@@ -121,6 +131,7 @@
 		1F59515B15AC0D98007A4554 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1FA09DD915AFBFD100A767AA /* CoreLocation.framework */,
 				1FFD6C0E15AD1DA500A4C388 /* MapKit.framework */,
 				1F59515C15AC0D98007A4554 /* UIKit.framework */,
 				1F59515E15AC0D98007A4554 /* Foundation.framework */,
@@ -188,6 +199,8 @@
 			children = (
 				1FFD6C1015AD358000A4C388 /* TAItinerary.h */,
 				1FFD6C1115AD358000A4C388 /* TAItinerary.m */,
+				1F33A5AE15AFA1AC009A791E /* TATravelDate.h */,
+				1F33A5AF15AFA1AC009A791E /* TATravelDate.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -217,8 +230,11 @@
 		1FFD6C0815AC1BB200A4C388 /* Stores */ = {
 			isa = PBXGroup;
 			children = (
-				1F33A58E15AE9EBB009A791E /* TAItineraryStore.h */,
-				1F33A58F15AE9EBB009A791E /* TAItineraryStore.m */,
+				1F33A5A715AF9587009A791E /* TAItineraryStore.h */,
+				1F33A5A815AF9587009A791E /* TAItineraryStore.m */,
+				1FA09DD615AFA9DB00A767AA /* TAItineraryStoreDelegate.h */,
+				1F33A5A415AF93B8009A791E /* TATransitDataStore.h */,
+				1F33A5A515AF93B8009A791E /* TATransitDataStore.m */,
 			);
 			name = Stores;
 			sourceTree = "<group>";
@@ -339,7 +355,9 @@
 				1FFD6C1215AD358000A4C388 /* TAItinerary.m in Sources */,
 				1F342CBD15AE236300E2A6E8 /* TADirectionsTableViewController.m in Sources */,
 				1F342CC615AE4DE800E2A6E8 /* TATransitOptionsViewController.m in Sources */,
-				1F33A59015AE9EBB009A791E /* TAItineraryStore.m in Sources */,
+				1F33A5A615AF93B8009A791E /* TATransitDataStore.m in Sources */,
+				1F33A5A915AF9587009A791E /* TAItineraryStore.m in Sources */,
+				1F33A5B015AFA1AC009A791E /* TATravelDate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -231,13 +231,21 @@
 					<int key="connectionID">142</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">suggestedLocationsTable</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="781710026"/>
+					</object>
+					<int key="connectionID">146</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">swapFields</string>
+						<string key="label">swapStartAndEndFields</string>
 						<reference key="source" ref="751851971"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
-					<int key="connectionID">144</int>
+					<int key="connectionID">145</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -801,7 +809,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">144</int>
+			<int key="maxID">146</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -817,19 +825,20 @@
 					<string key="className">TALocationInputViewController</string>
 					<string key="superclassName">UIViewController</string>
 					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">swapFields</string>
+						<string key="NS.key.0">swapStartAndEndFields</string>
 						<string key="NS.object.0">id</string>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">swapFields</string>
+						<string key="NS.key.0">swapStartAndEndFields</string>
 						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">swapFields</string>
+							<string key="name">swapStartAndEndFields</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="endField">UITextField</string>
 						<string key="startField">UITextField</string>
+						<string key="suggestedLocationsTable">UITableView</string>
 						<string key="swapFieldsButton">UIButton</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -840,6 +849,10 @@
 						<object class="IBToOneOutletInfo" key="startField">
 							<string key="name">startField</string>
 							<string key="candidateClassName">UITextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="suggestedLocationsTable">
+							<string key="name">suggestedLocationsTable</string>
+							<string key="candidateClassName">UITableView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="swapFieldsButton">
 							<string key="name">swapFieldsButton</string>

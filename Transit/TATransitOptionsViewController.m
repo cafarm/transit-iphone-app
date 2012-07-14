@@ -9,9 +9,9 @@
 #import "TATransitOptionsViewController.h"
 
 typedef enum {
-    TARoutingSection = 0,
-    TATimeSection = 1,
-    TAItinerariesSection = 2
+    TARoutingSection,
+    TATimeSection,
+    TAItinerariesSection
 } TATransitOptionSection;
 
 @interface TATransitOptionsViewController ()
