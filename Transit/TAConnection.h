@@ -8,11 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol DTHTMLParserDelegate;
+
 @interface TAConnection : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 
 @property (copy, nonatomic) NSURLRequest *request;
 @property (copy, nonatomic) void (^completionBlock)(id obj, NSError *error);
-@property (strong, nonatomic) id<NSXMLParserDelegate> xmlRootObject;
+@property (strong, nonatomic) id<DTHTMLParserDelegate> htmlRootObject;
 
 - (id)initWithRequest:(NSURLRequest *)request;
 

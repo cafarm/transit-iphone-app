@@ -7,6 +7,7 @@
 //
 
 #import "TAConnection.h"
+#import "DTHTMLParser.h"
 
 static NSMutableArray *_sharedConnectionList = nil;
 
@@ -22,7 +23,7 @@ static NSMutableArray *_sharedConnectionList = nil;
 
 @synthesize request=_request;
 @synthesize completionBlock=_completionBlock;
-@synthesize xmlRootObject=_xmlRootObject;
+@synthesize htmlRootObject=_xmlRootObject;
 
 - (id)initWithRequest:(NSURLRequest *)request
 {
@@ -54,10 +55,10 @@ static NSMutableArray *_sharedConnectionList = nil;
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    if (self.xmlRootObject) {
+    if (self.htmlRootObject) {
         // Create a parser with the incoming data and let the root object parse its content
-        NSXMLParser *parser = [[NSXMLParser alloc] initWithData:_container];
-        [parser setDelegate:self.xmlRootObject];
+        DTHTMLParser *parser = [[DTHTMLParser alloc] initWithData:_container encoding:NSUTF8StringEncoding];
+        [parser setDelegate:self.htmlRootObject];
         [parser parse];
     }
     

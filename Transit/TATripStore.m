@@ -147,7 +147,7 @@
             [self.delegate tripStore:self didFailWithError:error];
         }
     }];
-    [connection setXmlRootObject:trip];
+    [connection setHtmlRootObject:trip];
     [connection start];
 }
 

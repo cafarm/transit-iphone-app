@@ -7,10 +7,10 @@
 //
 
 #import "TATrip.h"
+#import "TAItinerary.h"
 
 @interface TATrip ()
 {
-    __weak id _parentParserDelegate;
     NSMutableString *_currentString;
 }
 
@@ -29,18 +29,23 @@
     return self;
 }
 
-- (void)parser:(NSXMLParser *)parser
-    didStartElement:(NSString *)elementName
-       namespaceURI:(NSString *)namespaceURI
-      qualifiedName:(NSString *)qName
-         attributes:(NSDictionary *)attributeDict
+- (void)parser:(DTHTMLParser *)parser foundComment:(NSString *)comment
 {
-    DLog(@"%@", elementName);
-}
-
-- (void)parser:(NSXMLParser *)parser foundComment:(NSString *)comment
-{
-    DLog(@"%@", comment);
+    // TODO: signal to the controller that we found an itinerary list
+//    if ([comment isEqualToString:@" Begin Itinerary List "]) {
+//        
+//    }
+    
+    if (([comment hasPrefix:@" Begin Itinerary "]) && ([comment characterAtIndex:17] != 'L')) {
+        DLog(@"%@ found itinerary: %@", self, comment);
+        
+        TAItinerary *itinerary = [[TAItinerary alloc] init];
+        [itinerary setParentParserDelegate:self];
+        
+        [self.itineraries addObject:itinerary];
+        
+        [parser setDelegate:itinerary];
+    }
 }
 
 @end

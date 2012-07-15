@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F30D98D15B21DA0008A1F94 /* TALeg.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F30D98C15B21DA0008A1F94 /* TALeg.m */; };
+		1F30D99115B22323008A1F94 /* TAWalkLeg.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F30D99015B22323008A1F94 /* TAWalkLeg.m */; };
 		1F33A5A615AF93B8009A791E /* TATransitDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33A5A515AF93B8009A791E /* TATransitDataStore.m */; };
 		1F33A5A915AF9587009A791E /* TATripStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33A5A815AF9587009A791E /* TATripStore.m */; };
 		1F33A5B015AFA1AC009A791E /* TATravelDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33A5AF15AFA1AC009A791E /* TATravelDate.m */; };
@@ -25,11 +27,13 @@
 		1F59517D15AC0D98007A4554 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F59515E15AC0D98007A4554 /* Foundation.framework */; };
 		1F59518515AC0D98007A4554 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1F59518315AC0D98007A4554 /* InfoPlist.strings */; };
 		1F59518815AC0D98007A4554 /* TransitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F59518715AC0D98007A4554 /* TransitTests.m */; };
+		1F68B5EF15B2788B006191B9 /* TATransitLeg.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F68B5EE15B2788B006191B9 /* TATransitLeg.m */; };
 		1FA09DDA15AFBFD100A767AA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA09DD915AFBFD100A767AA /* CoreLocation.framework */; };
 		1FA09DED15B10E6400A767AA /* TAConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA09DEC15B10E6400A767AA /* TAConnection.m */; };
 		1FA09DF215B1137700A767AA /* TATrip.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA09DF115B1137700A767AA /* TATrip.m */; };
-		1FA09DF415B150AC00A767AA /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA09DF315B150AC00A767AA /* libxml2.2.dylib */; };
-		1FA09DF815B15FAE00A767AA /* TAHTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA09DF715B15FAE00A767AA /* TAHTMLParser.m */; };
+		1FA09E9415B202B700A767AA /* DTHTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA09E9315B202B700A767AA /* DTHTMLParser.m */; };
+		1FA09E9615B2036A00A767AA /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA09E9515B2036A00A767AA /* libxml2.dylib */; };
+		1FA09E9A15B20F9200A767AA /* TAParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA09E9915B20F9200A767AA /* TAParser.m */; };
 		1FFD6C0C15AD1D6200A4C388 /* TAMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD6C0A15AD1D6200A4C388 /* TAMapViewController.m */; };
 		1FFD6C0D15AD1D6200A4C388 /* TAMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FFD6C0B15AD1D6200A4C388 /* TAMapViewController.xib */; };
 		1FFD6C0F15AD1DA500A4C388 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FFD6C0E15AD1DA500A4C388 /* MapKit.framework */; };
@@ -47,6 +51,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1F30D98B15B21DA0008A1F94 /* TALeg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TALeg.h; sourceTree = "<group>"; };
+		1F30D98C15B21DA0008A1F94 /* TALeg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TALeg.m; sourceTree = "<group>"; };
+		1F30D98F15B22323008A1F94 /* TAWalkLeg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAWalkLeg.h; sourceTree = "<group>"; };
+		1F30D99015B22323008A1F94 /* TAWalkLeg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAWalkLeg.m; sourceTree = "<group>"; };
 		1F33A5A415AF93B8009A791E /* TATransitDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TATransitDataStore.h; sourceTree = "<group>"; };
 		1F33A5A515AF93B8009A791E /* TATransitDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TATransitDataStore.m; sourceTree = "<group>"; };
 		1F33A5A715AF9587009A791E /* TATripStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TATripStore.h; sourceTree = "<group>"; };
@@ -76,14 +84,18 @@
 		1F59518415AC0D98007A4554 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1F59518615AC0D98007A4554 /* TransitTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransitTests.h; sourceTree = "<group>"; };
 		1F59518715AC0D98007A4554 /* TransitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TransitTests.m; sourceTree = "<group>"; };
+		1F68B5ED15B2788B006191B9 /* TATransitLeg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TATransitLeg.h; sourceTree = "<group>"; };
+		1F68B5EE15B2788B006191B9 /* TATransitLeg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TATransitLeg.m; sourceTree = "<group>"; };
 		1FA09DD915AFBFD100A767AA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1FA09DEB15B10E6400A767AA /* TAConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAConnection.h; sourceTree = "<group>"; };
 		1FA09DEC15B10E6400A767AA /* TAConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAConnection.m; sourceTree = "<group>"; };
 		1FA09DF015B1137700A767AA /* TATrip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TATrip.h; sourceTree = "<group>"; };
 		1FA09DF115B1137700A767AA /* TATrip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TATrip.m; sourceTree = "<group>"; };
-		1FA09DF315B150AC00A767AA /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
-		1FA09DF615B15FAE00A767AA /* TAHTMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAHTMLParser.h; sourceTree = "<group>"; };
-		1FA09DF715B15FAE00A767AA /* TAHTMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAHTMLParser.m; sourceTree = "<group>"; };
+		1FA09E9215B202B700A767AA /* DTHTMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTHTMLParser.h; sourceTree = "<group>"; };
+		1FA09E9315B202B700A767AA /* DTHTMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTHTMLParser.m; sourceTree = "<group>"; };
+		1FA09E9515B2036A00A767AA /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		1FA09E9815B20F9200A767AA /* TAParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAParser.h; sourceTree = "<group>"; };
+		1FA09E9915B20F9200A767AA /* TAParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAParser.m; sourceTree = "<group>"; };
 		1FFD6C0915AD1D6100A4C388 /* TAMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAMapViewController.h; sourceTree = "<group>"; };
 		1FFD6C0A15AD1D6200A4C388 /* TAMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAMapViewController.m; sourceTree = "<group>"; };
 		1FFD6C0B15AD1D6200A4C388 /* TAMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TAMapViewController.xib; path = Transit/TAMapViewController.xib; sourceTree = "<group>"; };
@@ -97,7 +109,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FA09DF415B150AC00A767AA /* libxml2.2.dylib in Frameworks */,
+				1FA09E9615B2036A00A767AA /* libxml2.dylib in Frameworks */,
 				1FA09DDA15AFBFD100A767AA /* CoreLocation.framework in Frameworks */,
 				1FFD6C0F15AD1DA500A4C388 /* MapKit.framework in Frameworks */,
 				1F59515D15AC0D98007A4554 /* UIKit.framework in Frameworks */,
@@ -212,8 +224,6 @@
 			children = (
 				1FA09DEB15B10E6400A767AA /* TAConnection.h */,
 				1FA09DEC15B10E6400A767AA /* TAConnection.m */,
-				1FA09DF615B15FAE00A767AA /* TAHTMLParser.h */,
-				1FA09DF715B15FAE00A767AA /* TAHTMLParser.m */,
 			);
 			name = Actors;
 			sourceTree = "<group>";
@@ -221,9 +231,20 @@
 		1FA09DF515B150D400A767AA /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				1FA09DF315B150AC00A767AA /* libxml2.2.dylib */,
+				1FA09E9515B2036A00A767AA /* libxml2.dylib */,
+				1FA09E9115B202B700A767AA /* DTHTMLParser */,
 			);
 			name = Libraries;
+			sourceTree = "<group>";
+		};
+		1FA09E9115B202B700A767AA /* DTHTMLParser */ = {
+			isa = PBXGroup;
+			children = (
+				1FA09E9215B202B700A767AA /* DTHTMLParser.h */,
+				1FA09E9315B202B700A767AA /* DTHTMLParser.m */,
+			);
+			name = DTHTMLParser;
+			path = Libraries/DTHTMLParser;
 			sourceTree = "<group>";
 		};
 		1FFD6C0415AC1B8D00A4C388 /* Models */ = {
@@ -233,8 +254,16 @@
 				1FA09DF115B1137700A767AA /* TATrip.m */,
 				1FFD6C1015AD358000A4C388 /* TAItinerary.h */,
 				1FFD6C1115AD358000A4C388 /* TAItinerary.m */,
+				1F30D98B15B21DA0008A1F94 /* TALeg.h */,
+				1F30D98C15B21DA0008A1F94 /* TALeg.m */,
+				1F30D98F15B22323008A1F94 /* TAWalkLeg.h */,
+				1F30D99015B22323008A1F94 /* TAWalkLeg.m */,
+				1F68B5ED15B2788B006191B9 /* TATransitLeg.h */,
+				1F68B5EE15B2788B006191B9 /* TATransitLeg.m */,
 				1F33A5AE15AFA1AC009A791E /* TATravelDate.h */,
 				1F33A5AF15AFA1AC009A791E /* TATravelDate.m */,
+				1FA09E9815B20F9200A767AA /* TAParser.h */,
+				1FA09E9915B20F9200A767AA /* TAParser.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -393,7 +422,11 @@
 				1F33A5B015AFA1AC009A791E /* TATravelDate.m in Sources */,
 				1FA09DED15B10E6400A767AA /* TAConnection.m in Sources */,
 				1FA09DF215B1137700A767AA /* TATrip.m in Sources */,
-				1FA09DF815B15FAE00A767AA /* TAHTMLParser.m in Sources */,
+				1FA09E9415B202B700A767AA /* DTHTMLParser.m in Sources */,
+				1FA09E9A15B20F9200A767AA /* TAParser.m in Sources */,
+				1F30D98D15B21DA0008A1F94 /* TALeg.m in Sources */,
+				1F30D99115B22323008A1F94 /* TAWalkLeg.m in Sources */,
+				1F68B5EF15B2788B006191B9 /* TATransitLeg.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,7 +497,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -482,7 +515,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -494,7 +527,11 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Transit/Transit-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = "Transit/Transit-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -505,7 +542,11 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Transit/Transit-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = "Transit/Transit-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -522,6 +563,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Transit/Transit-Prefix.pch";
 				INFOPLIST_FILE = "TransitTests/TransitTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
@@ -539,6 +581,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Transit/Transit-Prefix.pch";
 				INFOPLIST_FILE = "TransitTests/TransitTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;

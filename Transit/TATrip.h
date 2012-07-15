@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 Seven O' Eight. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "TAParser.h"
 
-@interface TATrip : NSObject <NSXMLParserDelegate>
+@interface TATrip : TAParser
 
 @property (readonly, strong, nonatomic) NSMutableArray *itineraries;
 

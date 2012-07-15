@@ -80,7 +80,7 @@
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, -1, 45, 31)];
     label.font = textField.font;
-    label.textAlignment = NSTextAlignmentRight;
+    label.textAlignment = UITextAlignmentRight;
     label.textColor = [UIColor grayColor];
     label.backgroundColor = [UIColor clearColor];
     label.text = labelText;
