@@ -1,2 +1,2 @@
-transit-app
-===========
+transit-iphone-app
+==================
