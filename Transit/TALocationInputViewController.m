@@ -17,8 +17,6 @@
     IBOutlet UITextField *_endField;
     IBOutlet UIButton *_swapFieldsButton;
     IBOutlet UITableView *_suggestedLocationsTable;
-    
-    TATripStore *_tripStore;
 }
 
 - (void)setLabelText:(NSString *)labelText forTextField:(UITextField *)textField;
@@ -42,9 +40,6 @@
                                                        action:@selector(routeMapOverview)];
         [_routeButton setEnabled:NO];
         [self.navigationItem setRightBarButtonItem:_routeButton];
-        
-        _tripStore = [[TATripStore alloc] init];
-        [_tripStore setDelegate:self];
     }
     return self;
 }
@@ -115,35 +110,6 @@
     }
     
     [self lockViewController];
-    
-    _tripStore.startLocation = _startField.text;
-    _tripStore.endLocation = _endField.text;
-    [_tripStore planTrip];
-}
-
-- (void)tripStore:(TATripStore *)store didPlanTrip:(TATrip *)theTrip
-{
-    TAMapViewController *mapController = [[TAMapViewController alloc] init];
-    
-    UIBarButtonItem *transitButton = [[UIBarButtonItem alloc] initWithTitle:_navigationTitle
-                                                                      style:UIBarButtonItemStyleBordered
-                                                                     target:nil
-                                                                     action:nil];
-    self.navigationItem.backBarButtonItem = transitButton;
-    
-    [self.navigationController pushViewController:mapController animated:YES];
-}
-
-- (void)tripStore:(TATripStore *)store didFailWithError:(NSError *)error
-{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Directions Not Available"
-                                                        message:error.localizedDescription
-                                                       delegate:self
-                                              cancelButtonTitle:nil
-                                              otherButtonTitles:@"OK", nil];
-    
-    [alertView show];
-    [self unlockViewController];
 }
 
 - (void)lockViewController
