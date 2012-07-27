@@ -1,3 +1,0 @@
-[submodule "Libraries/opentripplanner-api-client"]
-	path = Libraries/opentripplanner-api-client
-	url = https://github.com/cafarm/opentripplanner-api-client.git
