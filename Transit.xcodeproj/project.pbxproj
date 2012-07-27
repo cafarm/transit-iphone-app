@@ -12,7 +12,6 @@
 		1F59515D15AC0D98007A4554 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F59515C15AC0D98007A4554 /* UIKit.framework */; };
 		1F59515F15AC0D98007A4554 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F59515E15AC0D98007A4554 /* Foundation.framework */; };
 		1F59516115AC0D98007A4554 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F59516015AC0D98007A4554 /* CoreGraphics.framework */; };
-		1F59516715AC0D98007A4554 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1F59516515AC0D98007A4554 /* InfoPlist.strings */; };
 		1F59516915AC0D98007A4554 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F59516815AC0D98007A4554 /* main.m */; };
 		1F59516D15AC0D98007A4554 /* TAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F59516C15AC0D98007A4554 /* TAAppDelegate.m */; };
 		1F59517015AC0D98007A4554 /* TALocationInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F59516F15AC0D98007A4554 /* TALocationInputViewController.m */; };
@@ -68,7 +67,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1F12167A15C207AE007B75A5 /* MACLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MACLog.h; sourceTree = "<group>"; };
+		1F12167A15C207AE007B75A5 /* MACLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MACLog.h; path = SupportingFiles/MACLog.h; sourceTree = "<group>"; };
 		1F342CBB15AE236300E2A6E8 /* TADirectionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TADirectionsTableViewController.h; path = Controllers/TADirectionsTableViewController.h; sourceTree = "<group>"; };
 		1F342CBC15AE236300E2A6E8 /* TADirectionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TADirectionsTableViewController.m; path = Controllers/TADirectionsTableViewController.m; sourceTree = "<group>"; };
 		1F342CC415AE4DE800E2A6E8 /* TATransitOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TATransitOptionsViewController.h; path = Controllers/TATransitOptionsViewController.h; sourceTree = "<group>"; };
@@ -77,10 +76,9 @@
 		1F59515C15AC0D98007A4554 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1F59515E15AC0D98007A4554 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1F59516015AC0D98007A4554 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		1F59516415AC0D98007A4554 /* Transit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Transit-Info.plist"; sourceTree = "<group>"; };
-		1F59516615AC0D98007A4554 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		1F59516815AC0D98007A4554 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		1F59516A15AC0D98007A4554 /* Transit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Transit-Prefix.pch"; sourceTree = "<group>"; };
+		1F59516415AC0D98007A4554 /* Transit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Transit-Info.plist"; path = "SupportingFiles/Transit-Info.plist"; sourceTree = "<group>"; };
+		1F59516815AC0D98007A4554 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = main.m; path = SupportingFiles/main.m; sourceTree = "<group>"; };
+		1F59516A15AC0D98007A4554 /* Transit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Transit-Prefix.pch"; path = "SupportingFiles/Transit-Prefix.pch"; sourceTree = "<group>"; };
 		1F59516B15AC0D98007A4554 /* TAAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TAAppDelegate.h; sourceTree = "<group>"; };
 		1F59516C15AC0D98007A4554 /* TAAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TAAppDelegate.m; sourceTree = "<group>"; };
 		1F59516E15AC0D98007A4554 /* TALocationInputViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TALocationInputViewController.h; path = Controllers/TALocationInputViewController.h; sourceTree = "<group>"; };
@@ -92,7 +90,7 @@
 		1F59518615AC0D98007A4554 /* TransitTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransitTests.h; sourceTree = "<group>"; };
 		1F59518715AC0D98007A4554 /* TransitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TransitTests.m; sourceTree = "<group>"; };
 		1F634A9415C1F4CC00192802 /* OTPClient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OTPClient.xcodeproj; path = "Libraries/opentripplanner-api-client/OTPClient.xcodeproj"; sourceTree = "<group>"; };
-		1F9357BF15C20F3F0045D6DF /* TALocationInputViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TALocationInputViewController.xib; path = Resources/TALocationInputViewController.xib; sourceTree = "<group>"; };
+		1F9357BF15C20F3F0045D6DF /* TALocationInputViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TALocationInputViewController.xib; path = Transit/Resources/TALocationInputViewController.xib; sourceTree = "<group>"; };
 		1FA09DD915AFBFD100A767AA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1FD199BE15BBB10100BA8D48 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		1FD199C015BBB10800BA8D48 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -103,7 +101,7 @@
 		1FD199CA15BBB14900BA8D48 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		1FFD6C0915AD1D6100A4C388 /* TAMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TAMapViewController.h; path = Controllers/TAMapViewController.h; sourceTree = "<group>"; };
 		1FFD6C0A15AD1D6200A4C388 /* TAMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TAMapViewController.m; path = Controllers/TAMapViewController.m; sourceTree = "<group>"; };
-		1FFD6C0B15AD1D6200A4C388 /* TAMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TAMapViewController.xib; path = Resources/TAMapViewController.xib; sourceTree = "<group>"; };
+		1FFD6C0B15AD1D6200A4C388 /* TAMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TAMapViewController.xib; path = Transit/Resources/TAMapViewController.xib; sourceTree = "<group>"; };
 		1FFD6C0E15AD1DA500A4C388 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -183,28 +181,26 @@
 		1F59516215AC0D98007A4554 /* Transit */ = {
 			isa = PBXGroup;
 			children = (
-				1F59519A15AC1659007A4554 /* Resources */,
-				1FFD6C0415AC1B8D00A4C388 /* Models */,
-				1FFD6C0815AC1BB200A4C388 /* Stores */,
-				1FFD6C0715AC1BAA00A4C388 /* Controllers */,
-				1FFD6C0615AC1B9600A4C388 /* Views */,
 				1F59516B15AC0D98007A4554 /* TAAppDelegate.h */,
 				1F59516C15AC0D98007A4554 /* TAAppDelegate.m */,
-				1F59516315AC0D98007A4554 /* Supporting Files */,
+				1FFD6C0415AC1B8D00A4C388 /* Models */,
+				1FFD6C0715AC1BAA00A4C388 /* Controllers */,
+				1FFD6C0615AC1B9600A4C388 /* Views */,
+				1F59519A15AC1659007A4554 /* Resources */,
+				1F59516315AC0D98007A4554 /* SupportingFiles */,
 			);
 			path = Transit;
 			sourceTree = "<group>";
 		};
-		1F59516315AC0D98007A4554 /* Supporting Files */ = {
+		1F59516315AC0D98007A4554 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
 				1F59516415AC0D98007A4554 /* Transit-Info.plist */,
-				1F59516515AC0D98007A4554 /* InfoPlist.strings */,
 				1F59516815AC0D98007A4554 /* main.m */,
 				1F59516A15AC0D98007A4554 /* Transit-Prefix.pch */,
 				1F12167A15C207AE007B75A5 /* MACLog.h */,
 			);
-			name = "Supporting Files";
+			name = SupportingFiles;
 			sourceTree = "<group>";
 		};
 		1F59518015AC0D98007A4554 /* TransitTests */ = {
@@ -281,13 +277,6 @@
 				1F342CC515AE4DE800E2A6E8 /* TATransitOptionsViewController.m */,
 			);
 			name = Controllers;
-			sourceTree = "<group>";
-		};
-		1FFD6C0815AC1BB200A4C388 /* Stores */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Stores;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -386,7 +375,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F59516715AC0D98007A4554 /* InfoPlist.strings in Resources */,
 				1FFD6C0D15AD1D6200A4C388 /* TAMapViewController.xib in Resources */,
 				1F9357C015C20F3F0045D6DF /* TALocationInputViewController.xib in Resources */,
 			);
@@ -456,14 +444,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		1F59516515AC0D98007A4554 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1F59516615AC0D98007A4554 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 		1F59518315AC0D98007A4554 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -524,8 +504,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Transit/Transit-Prefix.pch";
-				INFOPLIST_FILE = "Transit/Transit-Info.plist";
+				GCC_PREFIX_HEADER = "Transit/SupportingFiles/Transit-Prefix.pch";
+				INFOPLIST_FILE = "Transit/SupportingFiles/Transit-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -541,8 +521,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Transit/Transit-Prefix.pch";
-				INFOPLIST_FILE = "Transit/Transit-Info.plist";
+				GCC_PREFIX_HEADER = "Transit/SupportingFiles/Transit-Prefix.pch";
+				INFOPLIST_FILE = "Transit/SupportingFiles/Transit-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = (
 					"-ObjC",
