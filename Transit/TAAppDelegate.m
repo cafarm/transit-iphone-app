@@ -7,20 +7,36 @@
 //
 
 #import "TAAppDelegate.h"
+#import "OTPObjectManager.h"
 #import "TALocationInputViewController.h"
 
+@interface TAAppDelegate ()
+
+@property (strong, nonatomic) OTPObjectManager *objectManager;
+@property (strong, nonatomic) UINavigationController *navigationController;
+
+@end
+
 @implementation TAAppDelegate
+
+@synthesize objectManager=_objectManager;
+@synthesize navigationController=_navigationController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
-    TALocationInputViewController *inputController = [[TALocationInputViewController alloc] initWithNibName:@"TALocationInputViewController" bundle:nil];
+    // init the shared object manager
+    self.objectManager = [[OTPObjectManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://localhost:4567"]];
     
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:inputController];
-    self.window.rootViewController = navigationController;
+    TALocationInputViewController *inputController = [[TALocationInputViewController alloc] initWithNibName:@"TALocationInputViewController"
+                                                                                                     bundle:nil];
     
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:inputController];
+    
+    self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
+    
     return YES;
 }
 

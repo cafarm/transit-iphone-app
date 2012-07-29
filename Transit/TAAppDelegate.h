@@ -8,12 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@class TAViewController;
-
 @interface TAAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
-@property (strong, nonatomic) TAViewController *viewController;
 
 @end

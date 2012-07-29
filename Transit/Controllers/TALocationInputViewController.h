@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface TALocationInputViewController : UIViewController <UITextFieldDelegate>
+@interface TALocationInputViewController : UIViewController <UITextFieldDelegate, CLLocationManagerDelegate, UIAlertViewDelegate>
 
-- (IBAction)swapStartAndEndFields;
-- (void)routeMapOverview;
+- (IBAction)swapFields;
+- (void)route;
 
 @end

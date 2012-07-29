@@ -9,18 +9,22 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
-@class MKMapView;
-@class TATrip;
+@class OTPTripPlan;
 
 @interface TAMapViewController : UIViewController <MKMapViewDelegate>
 
-@property (strong, nonatomic) TATrip *trip;
+@property (strong, nonatomic) OTPTripPlan *tripPlan;
+@property (nonatomic) int selectedItineraryIndex;
+
+- (void)overlaySelectedItinerary;
 
 - (void)followCurrentLocation;
 - (void)followCurrentLocationWithHeading;
 - (void)stopFollowingCurrentLocation;
+
 - (void)presentDirectionsTable;
 - (void)presentTransitOptions;
+
 - (void)startStepByStepMap;
 
 @end
