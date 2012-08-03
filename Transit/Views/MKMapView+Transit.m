@@ -1,37 +1,40 @@
 //
-//  TAMapView.m
+//  MKMapView+Transit.m
 //  Transit
 //
-//  Created by Mark Cafaro on 7/28/12.
+//  Created by Mark Cafaro on 7/29/12.
 //  Copyright (c) 2012 Seven O' Eight. All rights reserved.
 //
 
-#import "TAMapView.h"
+#import "MKMapView+Transit.h"
 #import "OTPItinerary.h"
 #import "OTPLeg.h"
 #import "OTPPlace.h"
+#import "TALegStartAnnotation.h"
 
-@implementation TAMapView
+@implementation MKMapView (Transit)
 
-- (id)initWithFrame:(CGRect)frame
+- (void)setRegionToFitItinerary:(OTPItinerary *)itinerary animated:(BOOL)animated
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
+    NSMutableArray *places = [NSMutableArray arrayWithCapacity:([itinerary.legs count] + 1)];
+
+    for (OTPLeg *leg in itinerary.legs) {        
+        [places addObject:leg.from];
+        
+        if (leg == itinerary.legs.lastObject) {
+            [places addObject:leg.to];
+        }
     }
-    return self;
+    [self setRegionToFitPlaces:places animated:animated];
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+- (void)setRegionToFitLeg:(OTPLeg *)leg animated:(BOOL)animated
 {
-    // Drawing code
+    NSArray *places = [NSArray arrayWithObjects:leg.from, leg.to, nil];
+    [self setRegionToFitPlaces:places animated:animated];
 }
-*/
 
-- (void)setRegionToItinerary:(OTPItinerary *)itinerary animated:(BOOL)animated
+- (void)setRegionToFitPlaces:(NSArray *)places animated:(BOOL)animated
 {
     CLLocationCoordinate2D topLeftCoordinate = {
         .latitude = -90,
@@ -42,17 +45,6 @@
         .latitude = 90,
         .longitude = -180
     };
-        
-    NSMutableArray *places = [NSMutableArray arrayWithCapacity:([itinerary.legs count] + 1)];
-    for (OTPLeg *leg in itinerary.legs) {
-        BOOL isLast = leg == itinerary.legs.lastObject;
-        
-        if (!isLast) {
-            [places addObject:leg.from];
-        } else {
-            [places addObject:leg.to];
-        }
-    }
     
     for (OTPPlace *place in places) {
         topLeftCoordinate.longitude = fmin(topLeftCoordinate.longitude, [place.longitude doubleValue]);
@@ -66,12 +58,28 @@
     region.center.longitude = topLeftCoordinate.longitude + (bottomRightCoordinate.longitude - topLeftCoordinate.longitude) * 0.5;
     region.span.latitudeDelta = fabs(topLeftCoordinate.latitude - bottomRightCoordinate.latitude) * 1.1;
     
-    // Add a little extra space on the sides
+    // add a little extra space on the sides
     region.span.longitudeDelta = fabs(bottomRightCoordinate.longitude - topLeftCoordinate.longitude) * 1.1;
     
     region = [self regionThatFits:region];
     [self setRegion:region animated:animated];
 }
 
+- (void)addOverlayForItinerary:(OTPItinerary *)itinerary
+{
+    for (OTPLeg *leg in itinerary.legs) {
+        [self addOverlayForLeg:leg];
+    }
+}
+
+- (void)addOverlayForLeg:(OTPLeg *)leg
+{
+    TALegStartAnnotation *legStartAnnotation = [[TALegStartAnnotation alloc] initWithLeg:leg];
+    [self addAnnotation:legStartAnnotation];
+    
+    MKPolyline *polyline = leg.polyline;
+    
+    [self addOverlay:polyline];
+}
 
 @end

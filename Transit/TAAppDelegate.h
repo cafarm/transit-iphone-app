@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class OTPObjectManager;
+
 @interface TAAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+
+@property (strong, nonatomic) OTPObjectManager *objectManager;
+
+@property (strong, nonatomic) UINavigationController *navigationController;
 
 @end

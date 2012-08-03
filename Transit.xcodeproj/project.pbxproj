@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1F2C1AB815C3BACC0070785E /* TALocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C1AB715C3BACC0070785E /* TALocationManager.m */; };
 		1F342CBD15AE236300E2A6E8 /* TADirectionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F342CBC15AE236300E2A6E8 /* TADirectionsTableViewController.m */; };
 		1F342CC615AE4DE800E2A6E8 /* TATransitOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F342CC515AE4DE800E2A6E8 /* TATransitOptionsViewController.m */; };
+		1F50B1F315CA6CD3003AC67D /* TALocationField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F50B1F215CA6CD3003AC67D /* TALocationField.m */; };
+		1F50B1F715CB51F7003AC67D /* TALocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F50B1F615CB51F7003AC67D /* TALocationManager.m */; };
 		1F59515D15AC0D98007A4554 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F59515C15AC0D98007A4554 /* UIKit.framework */; };
 		1F59515F15AC0D98007A4554 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F59515E15AC0D98007A4554 /* Foundation.framework */; };
 		1F59516115AC0D98007A4554 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F59516015AC0D98007A4554 /* CoreGraphics.framework */; };
@@ -22,11 +23,13 @@
 		1F59518515AC0D98007A4554 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1F59518315AC0D98007A4554 /* InfoPlist.strings */; };
 		1F59518815AC0D98007A4554 /* TransitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F59518715AC0D98007A4554 /* TransitTests.m */; };
 		1F634AA315C1F6C600192802 /* libOTPClient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F634A9E15C1F4CC00192802 /* libOTPClient.a */; };
-		1F7CACFE15C4ED9700A17454 /* TAPlaceAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7CACFD15C4ED9700A17454 /* TAPlaceAnnotation.m */; };
-		1F7CAD0415C5084A00A17454 /* TAMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7CAD0315C5084A00A17454 /* TAMapView.m */; };
-		1F7CAD0715C51C0700A17454 /* OTPLeg+Polyline.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7CAD0615C51C0700A17454 /* OTPLeg+Polyline.m */; };
+		1F77405715C6253100F3D527 /* MKMapView+Transit.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F77405615C6253100F3D527 /* MKMapView+Transit.m */; };
 		1F9357C015C20F3F0045D6DF /* TALocationInputViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F9357BF15C20F3F0045D6DF /* TALocationInputViewController.xib */; };
 		1FA09DDA15AFBFD100A767AA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA09DD915AFBFD100A767AA /* CoreLocation.framework */; };
+		1FBE2FD615CBA6A400928B87 /* response.json in Resources */ = {isa = PBXBuildFile; fileRef = 1FBE2FD415CBA6A400928B87 /* response.json */; };
+		1FBE2FD715CBA6A400928B87 /* responseWithError.json in Resources */ = {isa = PBXBuildFile; fileRef = 1FBE2FD515CBA6A400928B87 /* responseWithError.json */; };
+		1FBE2FDA15CBA9F200928B87 /* TALegStartAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBE2FD915CBA9F200928B87 /* TALegStartAnnotation.m */; };
+		1FBE2FEB15CBBC8D00928B87 /* TALegStepView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBE2FEA15CBBC8D00928B87 /* TALegStepView.m */; };
 		1FD199BF15BBB10100BA8D48 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD199BE15BBB10100BA8D48 /* CFNetwork.framework */; };
 		1FD199C115BBB10800BA8D48 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD199C015BBB10800BA8D48 /* CoreData.framework */; };
 		1FD199C315BBB11000BA8D48 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD199C215BBB11000BA8D48 /* MobileCoreServices.framework */; };
@@ -71,12 +74,14 @@
 
 /* Begin PBXFileReference section */
 		1F12167A15C207AE007B75A5 /* MACLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MACLog.h; path = SupportingFiles/MACLog.h; sourceTree = "<group>"; };
-		1F2C1AB615C3BACC0070785E /* TALocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TALocationManager.h; sourceTree = "<group>"; };
-		1F2C1AB715C3BACC0070785E /* TALocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TALocationManager.m; sourceTree = "<group>"; };
 		1F342CBB15AE236300E2A6E8 /* TADirectionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TADirectionsTableViewController.h; path = Controllers/TADirectionsTableViewController.h; sourceTree = "<group>"; };
 		1F342CBC15AE236300E2A6E8 /* TADirectionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TADirectionsTableViewController.m; path = Controllers/TADirectionsTableViewController.m; sourceTree = "<group>"; };
 		1F342CC415AE4DE800E2A6E8 /* TATransitOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TATransitOptionsViewController.h; path = Controllers/TATransitOptionsViewController.h; sourceTree = "<group>"; };
 		1F342CC515AE4DE800E2A6E8 /* TATransitOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TATransitOptionsViewController.m; path = Controllers/TATransitOptionsViewController.m; sourceTree = "<group>"; };
+		1F50B1F115CA6CD3003AC67D /* TALocationField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TALocationField.h; path = Views/TALocationField.h; sourceTree = "<group>"; };
+		1F50B1F215CA6CD3003AC67D /* TALocationField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TALocationField.m; path = Views/TALocationField.m; sourceTree = "<group>"; };
+		1F50B1F515CB51F7003AC67D /* TALocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TALocationManager.h; path = Stores/TALocationManager.h; sourceTree = "<group>"; };
+		1F50B1F615CB51F7003AC67D /* TALocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TALocationManager.m; path = Stores/TALocationManager.m; sourceTree = "<group>"; };
 		1F59515815AC0D98007A4554 /* Transit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Transit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F59515C15AC0D98007A4554 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1F59515E15AC0D98007A4554 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -95,14 +100,16 @@
 		1F59518615AC0D98007A4554 /* TransitTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransitTests.h; sourceTree = "<group>"; };
 		1F59518715AC0D98007A4554 /* TransitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TransitTests.m; sourceTree = "<group>"; };
 		1F634A9415C1F4CC00192802 /* OTPClient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OTPClient.xcodeproj; path = "Libraries/opentripplanner-api-client/OTPClient.xcodeproj"; sourceTree = "<group>"; };
-		1F7CACFC15C4ED9700A17454 /* TAPlaceAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TAPlaceAnnotation.h; path = Models/Annotations/TAPlaceAnnotation.h; sourceTree = "<group>"; };
-		1F7CACFD15C4ED9700A17454 /* TAPlaceAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TAPlaceAnnotation.m; path = Models/Annotations/TAPlaceAnnotation.m; sourceTree = "<group>"; };
-		1F7CAD0215C5084A00A17454 /* TAMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TAMapView.h; path = Views/TAMapView.h; sourceTree = "<group>"; };
-		1F7CAD0315C5084A00A17454 /* TAMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TAMapView.m; path = Views/TAMapView.m; sourceTree = "<group>"; };
-		1F7CAD0515C51C0700A17454 /* OTPLeg+Polyline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "OTPLeg+Polyline.h"; path = "Models/OTPLeg+Polyline.h"; sourceTree = "<group>"; };
-		1F7CAD0615C51C0700A17454 /* OTPLeg+Polyline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "OTPLeg+Polyline.m"; path = "Models/OTPLeg+Polyline.m"; sourceTree = "<group>"; };
+		1F77405515C6253100F3D527 /* MKMapView+Transit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MKMapView+Transit.h"; path = "Views/MKMapView+Transit.h"; sourceTree = "<group>"; };
+		1F77405615C6253100F3D527 /* MKMapView+Transit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MKMapView+Transit.m"; path = "Views/MKMapView+Transit.m"; sourceTree = "<group>"; };
 		1F9357BF15C20F3F0045D6DF /* TALocationInputViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TALocationInputViewController.xib; path = Transit/Resources/TALocationInputViewController.xib; sourceTree = "<group>"; };
 		1FA09DD915AFBFD100A767AA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		1FBE2FD415CBA6A400928B87 /* response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = response.json; path = Fixtures/response.json; sourceTree = "<group>"; };
+		1FBE2FD515CBA6A400928B87 /* responseWithError.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = responseWithError.json; path = Fixtures/responseWithError.json; sourceTree = "<group>"; };
+		1FBE2FD815CBA9F200928B87 /* TALegStartAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TALegStartAnnotation.h; path = Models/Annotations/TALegStartAnnotation.h; sourceTree = "<group>"; };
+		1FBE2FD915CBA9F200928B87 /* TALegStartAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TALegStartAnnotation.m; path = Models/Annotations/TALegStartAnnotation.m; sourceTree = "<group>"; };
+		1FBE2FE915CBBC8D00928B87 /* TALegStepView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TALegStepView.h; path = Views/TALegStepView.h; sourceTree = "<group>"; };
+		1FBE2FEA15CBBC8D00928B87 /* TALegStepView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TALegStepView.m; path = Views/TALegStepView.m; sourceTree = "<group>"; };
 		1FD199BE15BBB10100BA8D48 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		1FD199C015BBB10800BA8D48 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		1FD199C215BBB11000BA8D48 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -149,6 +156,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F50B1F415CB51C9003AC67D /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				1F50B1F515CB51F7003AC67D /* TALocationManager.h */,
+				1F50B1F615CB51F7003AC67D /* TALocationManager.m */,
+			);
+			name = Stores;
+			sourceTree = "<group>";
+		};
 		1F59514D15AC0D98007A4554 = {
 			isa = PBXGroup;
 			children = (
@@ -193,13 +209,12 @@
 			children = (
 				1F59516B15AC0D98007A4554 /* TAAppDelegate.h */,
 				1F59516C15AC0D98007A4554 /* TAAppDelegate.m */,
+				1F50B1F415CB51C9003AC67D /* Stores */,
 				1FFD6C0415AC1B8D00A4C388 /* Models */,
 				1FFD6C0715AC1BAA00A4C388 /* Controllers */,
 				1FFD6C0615AC1B9600A4C388 /* Views */,
 				1F59519A15AC1659007A4554 /* Resources */,
 				1F59516315AC0D98007A4554 /* SupportingFiles */,
-				1F2C1AB615C3BACC0070785E /* TALocationManager.h */,
-				1F2C1AB715C3BACC0070785E /* TALocationManager.m */,
 			);
 			path = Transit;
 			sourceTree = "<group>";
@@ -218,6 +233,7 @@
 		1F59518015AC0D98007A4554 /* TransitTests */ = {
 			isa = PBXGroup;
 			children = (
+				1FBE2FD315CBA69100928B87 /* Fixtures */,
 				1F59518615AC0D98007A4554 /* TransitTests.h */,
 				1F59518715AC0D98007A4554 /* TransitTests.m */,
 				1F59518115AC0D98007A4554 /* Supporting Files */,
@@ -255,8 +271,8 @@
 		1F7CACFB15C4ED3600A17454 /* Annotations */ = {
 			isa = PBXGroup;
 			children = (
-				1F7CACFC15C4ED9700A17454 /* TAPlaceAnnotation.h */,
-				1F7CACFD15C4ED9700A17454 /* TAPlaceAnnotation.m */,
+				1FBE2FD815CBA9F200928B87 /* TALegStartAnnotation.h */,
+				1FBE2FD915CBA9F200928B87 /* TALegStartAnnotation.m */,
 			);
 			name = Annotations;
 			sourceTree = "<group>";
@@ -270,12 +286,19 @@
 			name = Libraries;
 			sourceTree = "<group>";
 		};
+		1FBE2FD315CBA69100928B87 /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				1FBE2FD415CBA6A400928B87 /* response.json */,
+				1FBE2FD515CBA6A400928B87 /* responseWithError.json */,
+			);
+			name = Fixtures;
+			sourceTree = "<group>";
+		};
 		1FFD6C0415AC1B8D00A4C388 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				1F7CACFB15C4ED3600A17454 /* Annotations */,
-				1F7CAD0515C51C0700A17454 /* OTPLeg+Polyline.h */,
-				1F7CAD0615C51C0700A17454 /* OTPLeg+Polyline.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -283,8 +306,12 @@
 		1FFD6C0615AC1B9600A4C388 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				1F7CAD0215C5084A00A17454 /* TAMapView.h */,
-				1F7CAD0315C5084A00A17454 /* TAMapView.m */,
+				1F77405515C6253100F3D527 /* MKMapView+Transit.h */,
+				1F77405615C6253100F3D527 /* MKMapView+Transit.m */,
+				1F50B1F115CA6CD3003AC67D /* TALocationField.h */,
+				1F50B1F215CA6CD3003AC67D /* TALocationField.m */,
+				1FBE2FE915CBBC8D00928B87 /* TALegStepView.h */,
+				1FBE2FEA15CBBC8D00928B87 /* TALegStepView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -409,6 +436,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F59518515AC0D98007A4554 /* InfoPlist.strings in Resources */,
+				1FBE2FD615CBA6A400928B87 /* response.json in Resources */,
+				1FBE2FD715CBA6A400928B87 /* responseWithError.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,10 +470,11 @@
 				1FFD6C0C15AD1D6200A4C388 /* TAMapViewController.m in Sources */,
 				1F342CBD15AE236300E2A6E8 /* TADirectionsTableViewController.m in Sources */,
 				1F342CC615AE4DE800E2A6E8 /* TATransitOptionsViewController.m in Sources */,
-				1F2C1AB815C3BACC0070785E /* TALocationManager.m in Sources */,
-				1F7CACFE15C4ED9700A17454 /* TAPlaceAnnotation.m in Sources */,
-				1F7CAD0415C5084A00A17454 /* TAMapView.m in Sources */,
-				1F7CAD0715C51C0700A17454 /* OTPLeg+Polyline.m in Sources */,
+				1F77405715C6253100F3D527 /* MKMapView+Transit.m in Sources */,
+				1F50B1F315CA6CD3003AC67D /* TALocationField.m in Sources */,
+				1F50B1F715CB51F7003AC67D /* TALocationManager.m in Sources */,
+				1FBE2FDA15CBA9F200928B87 /* TALegStartAnnotation.m in Sources */,
+				1FBE2FEB15CBBC8D00928B87 /* TALegStepView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

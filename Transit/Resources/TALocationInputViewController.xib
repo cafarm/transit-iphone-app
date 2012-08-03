@@ -118,7 +118,7 @@
 									<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								</object>
 								<int key="IBUIClearButtonMode">1</int>
-								<string key="IBUIText">Current Location</string>
+								<string key="IBUIText"/>
 								<object class="NSColor" key="IBUITextColor">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MAA</bytes>
@@ -744,6 +744,7 @@
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="100.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="103.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="104.CustomClassName">TALocationField</string>
 				<string key="104.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<array class="NSMutableArray" key="104.IBViewMetadataConstraints">
 					<reference ref="484976989"/>
@@ -798,6 +799,7 @@
 				<string key="82.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="84.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="88.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="89.CustomClassName">TALocationField</string>
 				<string key="89.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<array class="NSMutableArray" key="89.IBViewMetadataConstraints">
 					<reference ref="267776116"/>
@@ -823,6 +825,14 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">TALocationField</string>
+					<string key="superclassName">UITextField</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/TALocationField.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">TALocationInputViewController</string>
 					<string key="superclassName">UIViewController</string>
 					<object class="NSMutableDictionary" key="actions">
@@ -837,19 +847,19 @@
 						</object>
 					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="endField">UITextField</string>
-						<string key="startField">UITextField</string>
+						<string key="endField">TALocationField</string>
+						<string key="startField">TALocationField</string>
 						<string key="suggestedLocationsTable">UITableView</string>
 						<string key="swapFieldsButton">UIButton</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="endField">
 							<string key="name">endField</string>
-							<string key="candidateClassName">UITextField</string>
+							<string key="candidateClassName">TALocationField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="startField">
 							<string key="name">startField</string>
-							<string key="candidateClassName">UITextField</string>
+							<string key="candidateClassName">TALocationField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="suggestedLocationsTable">
 							<string key="name">suggestedLocationsTable</string>

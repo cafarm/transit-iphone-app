@@ -9,22 +9,35 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
+@class OTPObjectManager;
 @class OTPTripPlan;
+@class OTPItinerary;
 
 @interface TAMapViewController : UIViewController <MKMapViewDelegate>
 
-@property (strong, nonatomic) OTPTripPlan *tripPlan;
-@property (nonatomic) int selectedItineraryIndex;
+- (id)initWithObjectManager:(OTPObjectManager *)objectManager tripPlan:(OTPTripPlan *)tripPlan;
 
-- (void)overlaySelectedItinerary;
+@property (strong, nonatomic) OTPObjectManager *objectManager;
+@property (strong, nonatomic) OTPTripPlan *tripPlan;
+
+@property (weak, nonatomic) MKMapView *mapView;
+@property (weak, nonatomic) UISegmentedControl *segmentedControl;
+
+@property (strong, nonatomic) UIBarButtonItem *startButton;
+@property (strong, nonatomic) UIBarButtonItem *overviewButton;
+@property (strong, nonatomic) UIBarButtonItem *resumeButton;
+
+- (void)overlayPreferredItinerary;
+
+- (void)overviewPreferredItineraryAnimated:(BOOL)animated;
+- (void)startPreferredItineraryAnimated:(BOOL)animated;
+- (void)resumePreferredItineraryAnimated:(BOOL)animated;
 
 - (void)followCurrentLocation;
 - (void)followCurrentLocationWithHeading;
 - (void)stopFollowingCurrentLocation;
 
-- (void)presentDirectionsTable;
-- (void)presentTransitOptions;
-
-- (void)startStepByStepMap;
+- (void)presentDirectionsTableViewController;
+- (void)presentTransitOptionsViewController;
 
 @end

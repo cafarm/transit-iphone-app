@@ -10,13 +10,6 @@
 #import "OTPObjectManager.h"
 #import "TALocationInputViewController.h"
 
-@interface TAAppDelegate ()
-
-@property (strong, nonatomic) OTPObjectManager *objectManager;
-@property (strong, nonatomic) UINavigationController *navigationController;
-
-@end
-
 @implementation TAAppDelegate
 
 @synthesize objectManager=_objectManager;
@@ -26,11 +19,9 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
-    // init the shared object manager
     self.objectManager = [[OTPObjectManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://localhost:4567"]];
     
-    TALocationInputViewController *inputController = [[TALocationInputViewController alloc] initWithNibName:@"TALocationInputViewController"
-                                                                                                     bundle:nil];
+    TALocationInputViewController *inputController = [[TALocationInputViewController alloc] initWithObjectManager:self.objectManager];
     
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:inputController];
     

@@ -7,12 +7,11 @@
 //
 
 #import "TAMapViewController.h"
-#import "TAMapView.h"
+#import "MKMapView+Transit.h"
 #import "OTPTripPlan.h"
 #import "OTPItinerary.h"
-#import "OTPLeg+Polyline.h"
+#import "OTPLeg.h"
 #import "OTPPlace.h"
-#import "TAPlaceAnnotation.h"
 #import "TADirectionsTableViewController.h"
 #import "TATransitOptionsViewController.h"
 
@@ -36,12 +35,8 @@ static const MKCoordinateRegion kSeattleRegion = {
 
 @interface TAMapViewController ()
 
-@property (weak, nonatomic) TAMapView *mapView;
-@property (weak, nonatomic) UIBarButtonItem *startButton;
-@property (weak, nonatomic) UISegmentedControl *segmentedControl;
-
-@property (nonatomic) BOOL shouldShowSelectedItineraryOverview;
-@property (nonatomic) BOOL shouldOverlaySelectedItinerary;
+@property (nonatomic) BOOL shouldShowPreferredItinerary;
+@property (nonatomic) BOOL shouldOverlayPreferredItinerary;
 
 - (void)changeView:(id)sender;
 
@@ -50,23 +45,37 @@ static const MKCoordinateRegion kSeattleRegion = {
 @implementation TAMapViewController
 
 @synthesize mapView = _mapView;
-@synthesize startButton = _startButton;
 @synthesize segmentedControl = _segmentedControl;
 
-@synthesize shouldShowSelectedItineraryOverview = _shouldShowSelectedItineraryOverview;
-@synthesize shouldOverlaySelectedItinerary = _shouldOverlaySelectedItinerary;
+@synthesize startButton = _startButton;
+@synthesize overviewButton = _overviewButton;
+@synthesize resumeButton = _resumeButton;
 
+@synthesize shouldShowPreferredItinerary = _shouldShowPreferredItinerary;
+@synthesize shouldOverlayPreferredItinerary = _shouldOverlayPreferredItinerary;
+
+@synthesize objectManager = _objectManager;
 @synthesize tripPlan = _tripPlan;
-@synthesize selectedItineraryIndex = _selectedItineraryIndex;
+
+- (id)initWithObjectManager:(OTPObjectManager *)objectManager tripPlan:(OTPTripPlan *)tripPlan
+{
+    self = [super init];
+    if (self) {
+        _objectManager = objectManager;
+        _tripPlan = tripPlan;
+    }
+    return self;
+}
 
 - (void)loadView
 {    
-    UIBarButtonItem *startButton = [[UIBarButtonItem alloc] initWithTitle:@"Start"
-                                                                    style:UIBarButtonItemStyleDone target:self
-                                                                   action:@selector(startStepByStepMap)];
+    self.startButton = [[UIBarButtonItem alloc] initWithTitle:@"Start"
+                                                        style:UIBarButtonItemStyleDone target:self
+                                                       action:@selector(startPreferredItinerary)];
     
-    self.navigationItem.rightBarButtonItem = startButton;
-    self.startButton = startButton;
+    self.navigationItem.rightBarButtonItem = self.startButton;
+    
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 100, 320, 100)];
     
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(7, 380, 117, 30)];
     segmentedControl.momentary = YES;
@@ -76,71 +85,107 @@ static const MKCoordinateRegion kSeattleRegion = {
     [segmentedControl addTarget:self action:@selector(changeView:) forControlEvents:UIControlEventValueChanged];
     self.segmentedControl = segmentedControl;
         
-    TAMapView *mapView = [[TAMapView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    MKMapView *mapView = [[MKMapView alloc] initWithFrame:[UIScreen mainScreen].bounds];
 
+//    [mapView addSubview:scrollView];
     [mapView addSubview:segmentedControl];
+    mapView.showsUserLocation = YES;
     mapView.region = kSeattleRegion;
     mapView.delegate = self;
     self.mapView = mapView;
     
     self.view = mapView;
-    
-    self.shouldOverlaySelectedItinerary = NO;
-    self.shouldShowSelectedItineraryOverview = NO;
 }
 
 - (void)viewDidLoad
-{
-    self.selectedItineraryIndex = 0;
-    
-    // we want the map tiles to finish loading before showing the itinerary overview
-    self.shouldShowSelectedItineraryOverview = YES;
+{    
+    // We want the map tiles to finish loading before showing (overviewing and overlaying) the preferred itinerary
+    self.shouldShowPreferredItinerary = YES;
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)showSelectedItineraryOverviewAnimated:(BOOL)animated
-{
-    OTPItinerary *selectedItinerary = [self.tripPlan.itineraries objectAtIndex:self.selectedItineraryIndex];
     
-    [self.mapView setRegionToItinerary:selectedItinerary animated:animated];
-    
-    // we want the map to finish setting the region before overlaying the itinerary
-    self.shouldOverlaySelectedItinerary = YES;
+    // TODO: find out how to properly release strong references
 }
 
-- (void)overlaySelectedItinerary
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    OTPItinerary *selectedItinerary = [self.tripPlan.itineraries objectAtIndex:self.selectedItineraryIndex];
-    [self overlayItinerary:selectedItinerary];
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)overlayItinerary:(OTPItinerary *)itinerary
+- (UIBarButtonItem *)overviewButton
 {
-    for (OTPLeg *leg in itinerary.legs) {
-        BOOL isLast = leg == itinerary.legs.lastObject;
-        
-        [self overlayLeg:leg isLast:isLast];
+    if (_overviewButton == nil) {
+        _overviewButton = [[UIBarButtonItem alloc] initWithTitle:@"Overview"
+                                                           style:UIBarButtonItemStylePlain
+                                                          target:self
+                                                          action:@selector(overviewPreferredItinerary)];
     }
+    return _overviewButton;
 }
 
-- (void)overlayLeg:(OTPLeg *)leg isLast:(BOOL)isLast
+- (UIBarButtonItem *)resumeButton
 {
-    if (!isLast) {
-        TAPlaceAnnotation *fromAnnotation = [[TAPlaceAnnotation alloc] initWithPlace:leg.from];
-        [self.mapView addAnnotation:fromAnnotation];
+    if (_resumeButton == nil) {
+        _resumeButton = [[UIBarButtonItem alloc] initWithTitle:@"Resume"
+                                                         style:UIBarButtonItemStyleDone
+                                                        target:self
+                                                        action:@selector(resumePreferredItinerary)];
+    }
+    return _resumeButton;
+}
+
+- (void)overlayPreferredItinerary
+{
+    [self.mapView addOverlayForItinerary:self.tripPlan.preferredItinerary];
+}
+
+- (void)overviewPreferredItinerary
+{
+    [self overviewPreferredItineraryAnimated:YES];
+}
+
+- (void)overviewPreferredItineraryAnimated:(BOOL)animated
+{
+    [self.mapView setRegionToFitItinerary:self.tripPlan.preferredItinerary animated:animated];
+    
+    if (self.tripPlan.preferredItinerary.isStarted) {
+        [self.navigationItem setRightBarButtonItem:self.resumeButton animated:YES];
     } else {
-        TAPlaceAnnotation *toAnnotation = [[TAPlaceAnnotation alloc] initWithPlace:leg.to];
-        [self.mapView addAnnotation:toAnnotation];
+        [self.navigationItem setRightBarButtonItem:self.startButton animated:YES];
     }
+}
 
-    MKPolyline *polyline = leg.legPolyline;
+- (void)startPreferredItinerary
+{
+    [self startPreferredItineraryAnimated:YES];
+}
+
+- (void)startPreferredItineraryAnimated:(BOOL)animated
+{
+    self.tripPlan.preferredItinerary.currentLegIndex = 0;
     
-    [self.mapView addOverlay:polyline];
+    [self.mapView setRegionToFitLeg:self.tripPlan.preferredItinerary.currentLeg animated:animated];
+    
+    [self.navigationItem setRightBarButtonItem:self.overviewButton animated:animated];
+    
+    self.tripPlan.preferredItinerary.isStarted = YES;
+}
+
+- (void)resumePreferredItinerary
+{
+    [self resumePreferredItineraryAnimated:YES];
+}
+
+- (void)resumePreferredItineraryAnimated:(BOOL)animated
+{
+    self.tripPlan.preferredItinerary.currentLegIndex++;
+    
+    [self.mapView setRegionToFitLeg:self.tripPlan.preferredItinerary.currentLeg animated:animated];
+    
+    [self.navigationItem setRightBarButtonItem:self.overviewButton animated:animated];
 }
 
 - (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay
@@ -173,10 +218,10 @@ static const MKCoordinateRegion kSeattleRegion = {
             }
             break;
         case TADirectionsList:
-            [self presentDirectionsTable];
+            [self presentDirectionsTableViewController];
             break;
         case TATransitOptions:
-            [self presentTransitOptions];
+            [self presentTransitOptionsViewController];
             break;
         default:
             break;
@@ -201,13 +246,6 @@ static const MKCoordinateRegion kSeattleRegion = {
     [self.segmentedControl setTitle:@"fol" forSegmentAtIndex:TACurrentLocation];
 }
 
-- (void)setSelectedItineraryIndex:(int)selectedItineraryIndex
-{
-    NSAssert(selectedItineraryIndex >= 0 && selectedItineraryIndex <= [self.tripPlan.itineraries count], nil);
-    
-    _selectedItineraryIndex = selectedItineraryIndex;
-}
-
 - (void)mapView:(MKMapView *)mapView didChangeUserTrackingMode:(MKUserTrackingMode)mode animated:(BOOL)animated
 {
     if (mode == MKUserTrackingModeNone) {
@@ -217,21 +255,26 @@ static const MKCoordinateRegion kSeattleRegion = {
 
 - (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
 {
-    if (self.shouldShowSelectedItineraryOverview) {
-        [self showSelectedItineraryOverviewAnimated:YES];
-        self.shouldShowSelectedItineraryOverview = NO;
+    if (self.shouldShowPreferredItinerary) {
+        self.shouldShowPreferredItinerary = NO;
+        
+        [self overviewPreferredItineraryAnimated:YES];
+        
+        // We want the map to complete it's animation before overlaying the preferred itinerary
+        self.shouldOverlayPreferredItinerary = YES;
     }
 }
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
 {
-    if (self.shouldOverlaySelectedItinerary) {
-        [self overlaySelectedItinerary];
-        self.shouldOverlaySelectedItinerary = NO;
+    if (self.shouldOverlayPreferredItinerary) {
+        [self overlayPreferredItinerary];
+        
+        self.shouldOverlayPreferredItinerary = NO;
     }
 }
 
-- (void)presentDirectionsTable
+- (void)presentDirectionsTableViewController
 {
     TADirectionsTableViewController *directionsController = [[TADirectionsTableViewController alloc] init];
     
@@ -240,23 +283,13 @@ static const MKCoordinateRegion kSeattleRegion = {
     [self presentViewController:navigationController animated:YES completion:nil];
 }
 
-- (void)presentTransitOptions
+- (void)presentTransitOptionsViewController
 {
     TATransitOptionsViewController *optionsController = [[TATransitOptionsViewController alloc] init];
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:optionsController];
     
     [self presentViewController:navigationController animated:YES completion:nil];
-}
-
-- (void)startStepByStepMap
-{
-    
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 @end

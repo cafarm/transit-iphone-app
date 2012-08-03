@@ -1,8 +1,8 @@
 //
-//  TAPlaceAnnotation.h
+//  TALegStartAnnotation.h
 //  Transit
 //
-//  Created by Mark Cafaro on 7/28/12.
+//  Created by Mark Cafaro on 8/2/12.
 //  Copyright (c) 2012 Seven O' Eight. All rights reserved.
 //
 
@@ -10,13 +10,14 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 
-@class OTPPlace;
+@class OTPLeg;
 
-@interface TAPlaceAnnotation : NSObject <MKAnnotation>
+@interface TALegStartAnnotation : NSObject <MKAnnotation>
 
-- (id)initWithPlace:(OTPPlace *)place;
+- (id)initWithLeg:(OTPLeg *)leg;
 
-@property (readonly, nonatomic) OTPPlace *place;
+@property (readonly, nonatomic) OTPLeg *leg;
+
 @property (readonly, nonatomic) CLLocationCoordinate2D coordinate;
 @property (readonly, copy, nonatomic) NSString *title;
 
