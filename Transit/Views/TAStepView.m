@@ -1,14 +1,17 @@
 //
-//  TALegStepView.m
+//  TAStepView.m
 //  Transit
 //
 //  Created by Mark Cafaro on 8/3/12.
 //  Copyright (c) 2012 Seven O' Eight. All rights reserved.
 //
 
-#import "TALegStepView.h"
+#import "TAStepView.h"
 
-@implementation TALegStepView
+@implementation TAStepView
+
+@synthesize reuseIdentifier = _reuseIdentifier;
+@synthesize maskLayer = _maskLayer;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -19,13 +22,10 @@
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+- (void)prepareForReuse;
 {
-    // Drawing code
+	// Reset modified properties
+	self.transform = CGAffineTransformIdentity;
 }
-*/
 
 @end

@@ -14,6 +14,7 @@
 #import "OTPPlace.h"
 #import "TADirectionsTableViewController.h"
 #import "TATransitOptionsViewController.h"
+#import "TAStepView.h"
 
 typedef enum {
     TACurrentLocation,
@@ -38,13 +39,13 @@ static const MKCoordinateRegion kSeattleRegion = {
 @property (nonatomic) BOOL shouldShowPreferredItinerary;
 @property (nonatomic) BOOL shouldOverlayPreferredItinerary;
 
-- (void)changeView:(id)sender;
-
 @end
+
 
 @implementation TAMapViewController
 
 @synthesize mapView = _mapView;
+@synthesize stepScrollView = _stepScrollView;
 @synthesize segmentedControl = _segmentedControl;
 
 @synthesize startButton = _startButton;
@@ -69,13 +70,17 @@ static const MKCoordinateRegion kSeattleRegion = {
 
 - (void)loadView
 {    
-    self.startButton = [[UIBarButtonItem alloc] initWithTitle:@"Start"
-                                                        style:UIBarButtonItemStyleDone target:self
-                                                       action:@selector(startPreferredItinerary)];
+    _startButton = [[UIBarButtonItem alloc] initWithTitle:@"Start"
+                                                    style:UIBarButtonItemStyleDone target:self
+                                                   action:@selector(startPreferredItinerary)];
     
     self.navigationItem.rightBarButtonItem = self.startButton;
     
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 100, 320, 100)];
+    MKMapView *mapView = [[MKMapView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    mapView.showsUserLocation = YES;
+    mapView.region = kSeattleRegion;
+    mapView.delegate = self;
+    _mapView = mapView;
     
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(7, 380, 117, 30)];
     segmentedControl.momentary = YES;
@@ -83,16 +88,15 @@ static const MKCoordinateRegion kSeattleRegion = {
     [segmentedControl insertSegmentWithTitle:@"lst" atIndex:TADirectionsList animated:NO];
     [segmentedControl insertSegmentWithTitle:@"opt" atIndex:TATransitOptions animated:NO];
     [segmentedControl addTarget:self action:@selector(changeView:) forControlEvents:UIControlEventValueChanged];
-    self.segmentedControl = segmentedControl;
-        
-    MKMapView *mapView = [[MKMapView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-
-//    [mapView addSubview:scrollView];
+    _segmentedControl = segmentedControl;
     [mapView addSubview:segmentedControl];
-    mapView.showsUserLocation = YES;
-    mapView.region = kSeattleRegion;
-    mapView.delegate = self;
-    self.mapView = mapView;
+    
+    TAStepScrollView *stepScrollView = [[TAStepScrollView alloc] initWithFrame:CGRectMake(0, 8, 320, 129)];
+    stepScrollView.delegate = self;
+    stepScrollView.dataSource = self;
+    [stepScrollView reloadData];
+    _stepScrollView = stepScrollView;
+    [mapView addSubview:stepScrollView];
     
     self.view = mapView;
 }
@@ -290,6 +294,30 @@ static const MKCoordinateRegion kSeattleRegion = {
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:optionsController];
     
     [self presentViewController:navigationController animated:YES completion:nil];
+}
+
+- (NSInteger)numberOfStepsInScrollView:(TAStepScrollView *)scrollView
+{
+    return [self.tripPlan.preferredItinerary.legs count];
+}
+
+- (TAStepView *)stepScrollView:(TAStepScrollView *)scrollView viewForStepAtIndex:(NSInteger)index
+{
+    static NSString *stepID = @"stepID";
+    TAStepView *stepView = [scrollView dequeueReusableStepWithIdentifier:stepID];
+    if (!stepView) {
+        stepView = [[TAStepView alloc] initWithFrame:CGRectMake(0, 0, 268, 129)];
+        stepView.backgroundColor = [UIColor grayColor];
+        stepView.reuseIdentifier = stepID;
+    }
+    return stepView;
+}
+
+- (void)stepScrollView:(TAStepScrollView *)scrollView didScrollToStep:(TAStepView *)step atIndex:(NSInteger)index
+{
+    self.tripPlan.preferredItinerary.currentLegIndex = index;
+    
+    [self.mapView setRegionToFitLeg:self.tripPlan.preferredItinerary.currentLeg animated:YES];
 }
 
 @end

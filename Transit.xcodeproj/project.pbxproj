@@ -29,7 +29,6 @@
 		1FBE2FD615CBA6A400928B87 /* response.json in Resources */ = {isa = PBXBuildFile; fileRef = 1FBE2FD415CBA6A400928B87 /* response.json */; };
 		1FBE2FD715CBA6A400928B87 /* responseWithError.json in Resources */ = {isa = PBXBuildFile; fileRef = 1FBE2FD515CBA6A400928B87 /* responseWithError.json */; };
 		1FBE2FDA15CBA9F200928B87 /* TALegStartAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBE2FD915CBA9F200928B87 /* TALegStartAnnotation.m */; };
-		1FBE2FEB15CBBC8D00928B87 /* TALegStepView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBE2FEA15CBBC8D00928B87 /* TALegStepView.m */; };
 		1FD199BF15BBB10100BA8D48 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD199BE15BBB10100BA8D48 /* CFNetwork.framework */; };
 		1FD199C115BBB10800BA8D48 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD199C015BBB10800BA8D48 /* CoreData.framework */; };
 		1FD199C315BBB11000BA8D48 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD199C215BBB11000BA8D48 /* MobileCoreServices.framework */; };
@@ -37,6 +36,8 @@
 		1FD199C715BBB12300BA8D48 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD199C615BBB12200BA8D48 /* SystemConfiguration.framework */; };
 		1FD199C915BBB12B00BA8D48 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD199C815BBB12B00BA8D48 /* QuartzCore.framework */; };
 		1FD199CB15BBB14900BA8D48 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD199CA15BBB14900BA8D48 /* libxml2.2.dylib */; };
+		1FF9F63015CCBA9C00AEBA28 /* TAStepScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9F62F15CCBA9C00AEBA28 /* TAStepScrollView.m */; };
+		1FF9F63315CCE0C500AEBA28 /* TAStepView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9F63215CCE0C500AEBA28 /* TAStepView.m */; };
 		1FFD6C0C15AD1D6200A4C388 /* TAMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD6C0A15AD1D6200A4C388 /* TAMapViewController.m */; };
 		1FFD6C0F15AD1DA500A4C388 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FFD6C0E15AD1DA500A4C388 /* MapKit.framework */; };
 /* End PBXBuildFile section */
@@ -108,8 +109,6 @@
 		1FBE2FD515CBA6A400928B87 /* responseWithError.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = responseWithError.json; path = Fixtures/responseWithError.json; sourceTree = "<group>"; };
 		1FBE2FD815CBA9F200928B87 /* TALegStartAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TALegStartAnnotation.h; path = Models/Annotations/TALegStartAnnotation.h; sourceTree = "<group>"; };
 		1FBE2FD915CBA9F200928B87 /* TALegStartAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TALegStartAnnotation.m; path = Models/Annotations/TALegStartAnnotation.m; sourceTree = "<group>"; };
-		1FBE2FE915CBBC8D00928B87 /* TALegStepView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TALegStepView.h; path = Views/TALegStepView.h; sourceTree = "<group>"; };
-		1FBE2FEA15CBBC8D00928B87 /* TALegStepView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TALegStepView.m; path = Views/TALegStepView.m; sourceTree = "<group>"; };
 		1FD199BE15BBB10100BA8D48 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		1FD199C015BBB10800BA8D48 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		1FD199C215BBB11000BA8D48 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -117,6 +116,10 @@
 		1FD199C615BBB12200BA8D48 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1FD199C815BBB12B00BA8D48 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		1FD199CA15BBB14900BA8D48 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
+		1FF9F62E15CCBA9C00AEBA28 /* TAStepScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TAStepScrollView.h; path = Views/TAStepScrollView.h; sourceTree = "<group>"; };
+		1FF9F62F15CCBA9C00AEBA28 /* TAStepScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TAStepScrollView.m; path = Views/TAStepScrollView.m; sourceTree = "<group>"; };
+		1FF9F63115CCE0C500AEBA28 /* TAStepView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TAStepView.h; path = Views/TAStepView.h; sourceTree = "<group>"; };
+		1FF9F63215CCE0C500AEBA28 /* TAStepView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TAStepView.m; path = Views/TAStepView.m; sourceTree = "<group>"; };
 		1FFD6C0915AD1D6100A4C388 /* TAMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TAMapViewController.h; path = Controllers/TAMapViewController.h; sourceTree = "<group>"; };
 		1FFD6C0A15AD1D6200A4C388 /* TAMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TAMapViewController.m; path = Controllers/TAMapViewController.m; sourceTree = "<group>"; };
 		1FFD6C0E15AD1DA500A4C388 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -310,8 +313,10 @@
 				1F77405615C6253100F3D527 /* MKMapView+Transit.m */,
 				1F50B1F115CA6CD3003AC67D /* TALocationField.h */,
 				1F50B1F215CA6CD3003AC67D /* TALocationField.m */,
-				1FBE2FE915CBBC8D00928B87 /* TALegStepView.h */,
-				1FBE2FEA15CBBC8D00928B87 /* TALegStepView.m */,
+				1FF9F62E15CCBA9C00AEBA28 /* TAStepScrollView.h */,
+				1FF9F62F15CCBA9C00AEBA28 /* TAStepScrollView.m */,
+				1FF9F63115CCE0C500AEBA28 /* TAStepView.h */,
+				1FF9F63215CCE0C500AEBA28 /* TAStepView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -474,7 +479,8 @@
 				1F50B1F315CA6CD3003AC67D /* TALocationField.m in Sources */,
 				1F50B1F715CB51F7003AC67D /* TALocationManager.m in Sources */,
 				1FBE2FDA15CBA9F200928B87 /* TALegStartAnnotation.m in Sources */,
-				1FBE2FEB15CBBC8D00928B87 /* TALegStepView.m in Sources */,
+				1FF9F63015CCBA9C00AEBA28 /* TAStepScrollView.m in Sources */,
+				1FF9F63315CCE0C500AEBA28 /* TAStepView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

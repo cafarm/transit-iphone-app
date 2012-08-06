@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
+#import "TAStepScrollView.h"
+
 @class OTPObjectManager;
 @class OTPTripPlan;
 @class OTPItinerary;
 
-@interface TAMapViewController : UIViewController <MKMapViewDelegate>
+@interface TAMapViewController : UIViewController <MKMapViewDelegate, TAStepScrollViewDelegate, TAStepScrollViewDataSource, UIGestureRecognizerDelegate>
 
 - (id)initWithObjectManager:(OTPObjectManager *)objectManager tripPlan:(OTPTripPlan *)tripPlan;
 
@@ -21,6 +23,7 @@
 @property (strong, nonatomic) OTPTripPlan *tripPlan;
 
 @property (weak, nonatomic) MKMapView *mapView;
+@property (weak, nonatomic) TAStepScrollView *stepScrollView;
 @property (weak, nonatomic) UISegmentedControl *segmentedControl;
 
 @property (strong, nonatomic) UIBarButtonItem *startButton;
