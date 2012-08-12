@@ -27,6 +27,8 @@
 
 @synthesize previousStep = _previousStep;
 
+@synthesize boundingMapRect = _boundingMapRect;
+
 + (NSArray *)stepsWithItinerary:(OTPItinerary *)itinerary
 {
     // Init for max capacity
@@ -73,6 +75,8 @@
         _fromOrTo = fromOrTo;
         
         _previousStep = previousStep;
+        
+        _boundingMapRect = MKMapRectNull;
     }
     return self;
 }
@@ -165,6 +169,20 @@
 - (NSDate *)scheduledDeparture
 {
     return self.place.departure;
+}
+
+- (MKMapRect)boundingMapRect
+{
+    if (MKMapRectIsNull(_boundingMapRect)) {
+        for (OTPLeg *leg in self.legs) {
+            if (MKMapRectIsNull(_boundingMapRect)) {
+                _boundingMapRect = [leg boundingMapRect];
+            } else {
+                _boundingMapRect = MKMapRectUnion(_boundingMapRect, [leg boundingMapRect]);
+            }
+        }
+    }
+    return _boundingMapRect;
 }
 
 @end

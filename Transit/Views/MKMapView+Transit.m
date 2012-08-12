@@ -22,58 +22,26 @@ static const double kZoomRectHeightMin = 1920;
 
 - (void)setVisibleMapRectToFitItinerary:(OTPItinerary *)itinerary animated:(BOOL)animate
 {
-    UIEdgeInsets edgePadding = UIEdgeInsetsMake(0, 0, 0, 0);
-    [self setVisibleMapRectToFitLegs:itinerary.legs edgePadding:edgePadding animated:animate];
+    [self setVisibleMapRect:itinerary.boundingMapRect animated:animate];
 }
 
 - (void)setVisibleMapRectToFitStep:(TAStep *)step animated:(BOOL)animate
 {
-    UIEdgeInsets edgePadding = UIEdgeInsetsMake(self.bounds.size.height - 279, 0, 0, 0);
+//    UIEdgeInsets edgePadding = UIEdgeInsetsMake(self.bounds.size.height - 279, 0, 0, 0);
+    UIEdgeInsets edgePadding = UIEdgeInsetsMake(0, 0, 0, 0);
+
     if (step.fromOrTo == TAFrom) {
         // At the end of walking we don't have a step but we want to set the region to it's leg anyway
         if (step.previousStep != nil && step.previousStep.mode == OTPWalk) {
-            [self setVisibleMapRectToFitLegs:step.previousStep.legs edgePadding:edgePadding animated:animate];
+            [self setVisibleMapRect:step.previousStep.boundingMapRect edgePadding:edgePadding animated:animate];
         } else {
-            [self setVisibleMapRectToFitPlace:step.place edgePadding:edgePadding animated:animate];
+            MKMapPoint point = step.place.mapPoint;
+            MKMapRect pointRect = MKMapRectMake(point.x, point.y, 0, 0);
+            [self setVisibleMapRect:pointRect edgePadding:edgePadding animated:animate];
         }
     } else {
-        [self setVisibleMapRectToFitLegs:step.legs edgePadding:edgePadding animated:animate];
+        [self setVisibleMapRect:step.boundingMapRect edgePadding:edgePadding animated:animate];
     }
-}
-
-- (void)setVisibleMapRectToFitLegs:(NSArray *)legs edgePadding:(UIEdgeInsets)edgePadding animated:(BOOL)animate
-{    
-    MKMapRect zoomRect = MKMapRectNull;
-    for (OTPLeg *leg in legs) {
-        MKPolyline *polyline = [leg.legGeometry polylineValue];
-        
-        if (MKMapRectIsNull(zoomRect)) {
-            zoomRect = [polyline boundingMapRect];
-        } else {
-            zoomRect = MKMapRectUnion(zoomRect, [polyline boundingMapRect]);
-        }
-    }
-    
-    // Don't allow the zoomRect to be too small
-    if (zoomRect.size.width < kZoomRectWidthMin && zoomRect.size.height < kZoomRectHeightMin) {
-        zoomRect = MKMapRectMake(zoomRect.origin.x, zoomRect.origin.x, kZoomRectWidthMin, kZoomRectHeightMin);
-    }
-    
-    [self setVisibleMapRect:zoomRect edgePadding:edgePadding animated:animate];
-}
-
-- (void)setVisibleMapRectToFitPlace:(OTPPlace *)place edgePadding:(UIEdgeInsets)edgePadding animated:(BOOL)animate
-{
-    MKMapPoint point = place.mapPoint;
-    
-    MKMapPoint origin = MKMapPointMake(point.x - 2 / 2, point.y - 2 / 2);
-    
-    MKMapRect zoomRect = MKMapRectMake(origin.x,
-                                       origin.y,
-                                       2, 2);
-        
-    [self setVisibleMapRect:zoomRect animated:animate];
-//    [self setCenterCoordinate:place.coordinate animated:animate];
 }
 
 - (void)addOverlayForItinerary:(OTPItinerary *)itinerary
@@ -85,7 +53,7 @@ static const double kZoomRectHeightMin = 1920;
 
 - (void)addOverlayForLeg:(OTPLeg *)leg
 {
-    MKPolyline *polyline = [leg.legGeometry polylineValue];
+    MKPolyline *polyline = leg.polyline;
     
     [self addOverlay:polyline];
 }

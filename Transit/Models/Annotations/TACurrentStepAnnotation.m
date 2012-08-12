@@ -30,4 +30,9 @@
     _coordinate = newCoordinate;
 }
 
+- (void)setCoordinateToStep:(TAStep *)step
+{
+    [self setCoordinate:step.coordinate];
+}
+
 @end

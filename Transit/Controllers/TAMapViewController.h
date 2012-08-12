@@ -27,9 +27,12 @@
 @property (strong, nonatomic) UIBarButtonItem *overviewButton;
 @property (strong, nonatomic) UIBarButtonItem *resumeButton;
 
+@property (strong, nonatomic) TAStepScrollView *stepScrollView;
+
 @property (weak, nonatomic) MKMapView *mapView;
-@property (weak, nonatomic) TAStepScrollView *stepScrollView;
-@property (weak, nonatomic) UISegmentedControl *segmentedControl;
+
+@property (weak, nonatomic) UISegmentedControl *overviewSegmentedControl;
+@property (weak, nonatomic) UISegmentedControl *stepByStepSegmentedControl;
 
 - (void)overlayCurrentItinerary;
 

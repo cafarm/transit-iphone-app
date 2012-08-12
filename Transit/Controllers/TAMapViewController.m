@@ -17,6 +17,7 @@
 #import "TADirectionsTableViewController.h"
 #import "TATransitOptionsViewController.h"
 #import "TAStepView.h"
+#import "TAStepAnnotation.h"
 #import "TACurrentStepAnnotation.h"
 
 typedef enum {
@@ -25,24 +26,11 @@ typedef enum {
     TATransitOptions
 } TAMapViewControl;
 
-// TODO: perfect this number
-static const MKCoordinateRegion kSeattleRegion = {
-    .center = {
-        .latitude = 47.6097,
-        .longitude = -122.3331
-    },
-    .span = {
-        .latitudeDelta = .5,
-        .longitudeDelta = 0
-    }
-};
-
 @interface TAMapViewController ()
 
 @property (strong, nonatomic) TACurrentStepAnnotation *currentStepAnnotation;
 
-@property (nonatomic) BOOL shouldShowPreferredItinerary;
-@property (nonatomic) BOOL shouldOverlayPreferredItinerary;
+@property (nonatomic) BOOL isViewingStepByStep;
 
 @end
 
@@ -56,14 +44,16 @@ static const MKCoordinateRegion kSeattleRegion = {
 @synthesize overviewButton = _overviewButton;
 @synthesize resumeButton = _resumeButton;
 
-@synthesize mapView = _mapView;
 @synthesize stepScrollView = _stepScrollView;
-@synthesize segmentedControl = _segmentedControl;
+
+@synthesize mapView = _mapView;
+
+@synthesize overviewSegmentedControl = _overviewSegmentedControl;
+@synthesize stepByStepSegmentedControl = _stepByStepSegmentedControl;
 
 @synthesize currentStepAnnotation = _currentStepAnnotation;
 
-@synthesize shouldShowPreferredItinerary = _shouldShowPreferredItinerary;
-@synthesize shouldOverlayPreferredItinerary = _shouldOverlayPreferredItinerary;
+@synthesize isViewingStepByStep = _isViewingStepByStep;
 
 - (id)initWithObjectManager:(OTPObjectManager *)objectManager tripPlanNavigator:(TATripPlanNavigator *)tripPlanNavigator
 {
@@ -88,34 +78,47 @@ static const MKCoordinateRegion kSeattleRegion = {
     
     MKMapView *mapView = [[MKMapView alloc] initWithFrame:containerView.bounds];
     mapView.showsUserLocation = YES;
-    mapView.region = kSeattleRegion;
+    mapView.visibleMapRect = self.tripPlanNavigator.currentItinerary.boundingMapRect;
     mapView.delegate = self;
     _mapView = mapView;
     [containerView addSubview:mapView];
     
-    UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(7, 380, 117, 30)];
-    segmentedControl.momentary = YES;
-    [segmentedControl insertSegmentWithTitle:@"fol" atIndex:TACurrentLocation animated:NO];
-    [segmentedControl insertSegmentWithTitle:@"lst" atIndex:TADirectionsList animated:NO];
-    [segmentedControl insertSegmentWithTitle:@"opt" atIndex:TATransitOptions animated:NO];
-    [segmentedControl addTarget:self action:@selector(changeView:) forControlEvents:UIControlEventValueChanged];
-    _segmentedControl = segmentedControl;
-    [containerView addSubview:segmentedControl];
+    UISegmentedControl *overviewSegmentedControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(7, 380, 117, 30)];
+    overviewSegmentedControl.momentary = YES;
+    [overviewSegmentedControl insertSegmentWithTitle:@"fol" atIndex:TACurrentLocation animated:NO];
+    [overviewSegmentedControl insertSegmentWithTitle:@"lst" atIndex:TADirectionsList animated:NO];
+    [overviewSegmentedControl insertSegmentWithTitle:@"opt" atIndex:TATransitOptions animated:NO];
+    [overviewSegmentedControl addTarget:self action:@selector(changeView:) forControlEvents:UIControlEventValueChanged];
+    _overviewSegmentedControl = overviewSegmentedControl;
+    [containerView addSubview:overviewSegmentedControl];
     
-    TAStepScrollView *stepScrollView = [[TAStepScrollView alloc] initWithFrame:CGRectMake(0, 8, 320, 129)];
-    stepScrollView.delegate = self;
-    stepScrollView.dataSource = self;
-    [stepScrollView reloadData];
-    _stepScrollView = stepScrollView;
-    [containerView addSubview:stepScrollView];
+    UISegmentedControl *stepByStepSegmentedControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(7, 380, 39, 30)];
+    stepByStepSegmentedControl.momentary = YES;
+    [stepByStepSegmentedControl insertSegmentWithTitle:@"fol" atIndex:TACurrentLocation animated:NO];
+    [stepByStepSegmentedControl addTarget:self action:@selector(changeView:) forControlEvents:UIControlEventValueChanged];
+    stepByStepSegmentedControl.hidden = YES;
+    _stepByStepSegmentedControl = stepByStepSegmentedControl;
+    [containerView addSubview:stepByStepSegmentedControl];
     
     self.view = containerView;
 }
 
 - (void)viewDidLoad
-{    
-    // We want the map tiles to finish loading before showing (overviewing and overlaying) the preferred itinerary
-    self.shouldShowPreferredItinerary = YES;
+{
+    [self overlayCurrentItinerary];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+
+    BOOL isMovingFromParentViewController = self.isMovingFromParentViewController;
+    [self hideStepScrollViewWithCompletion:^(BOOL finished) {
+        // Don't remove the stepScrollView if we're presenting a view controller
+        if (isMovingFromParentViewController) {
+            [self.stepScrollView removeFromSuperview];
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -152,6 +155,17 @@ static const MKCoordinateRegion kSeattleRegion = {
     return _resumeButton;
 }
 
+- (TAStepScrollView *)stepScrollView
+{
+    if (_stepScrollView == nil) {
+        _stepScrollView = [[TAStepScrollView alloc] initWithFrame:CGRectMake(0, 72, 320, 129)];
+        _stepScrollView.delegate = self;
+        _stepScrollView.dataSource = self;
+        [_stepScrollView reloadData];
+    }
+    return _stepScrollView;
+}
+
 - (void)overlayCurrentItinerary
 {
     [self.mapView addOverlayForItinerary:self.tripPlanNavigator.currentItinerary];
@@ -164,14 +178,23 @@ static const MKCoordinateRegion kSeattleRegion = {
 }
 
 - (void)overviewCurrentItineraryAnimated:(BOOL)animate
-{
-    [self.mapView setVisibleMapRectToFitItinerary:self.tripPlanNavigator.currentItinerary animated:animate];
-    
-    if (self.tripPlanNavigator.isCurrentItineraryStarted) {
-        [self.navigationItem setRightBarButtonItem:self.resumeButton animated:animate];
-    } else {
-        [self.navigationItem setRightBarButtonItem:self.startButton animated:animate];
-    }
+{    
+    [self hideStepScrollViewWithCompletion:^(BOOL finished) {
+        [self.mapView viewForAnnotation:self.currentStepAnnotation].hidden = YES;
+        
+        // TODO: Animate this transition?
+        self.stepByStepSegmentedControl.hidden = YES;
+        self.overviewSegmentedControl.hidden = NO;
+
+        [self.mapView setVisibleMapRectToFitItinerary:self.tripPlanNavigator.currentItinerary animated:animate];
+        self.isViewingStepByStep = NO;
+        
+        if (self.tripPlanNavigator.isCurrentItineraryStarted) {
+            [self.navigationItem setRightBarButtonItem:self.resumeButton animated:animate];
+        } else {
+            [self.navigationItem setRightBarButtonItem:self.startButton animated:animate];
+        }
+    }];
 }
 
 - (void)startCurrentItinerary
@@ -183,10 +206,11 @@ static const MKCoordinateRegion kSeattleRegion = {
 {
     [self.tripPlanNavigator startCurrentItinerary];
     
-    [self.mapView setVisibleMapRectToFitStep:self.tripPlanNavigator.currentStep animated:animate];
     self.currentStepAnnotation = [self.mapView addAnnotationForCurrentStep:self.tripPlanNavigator.currentStep];
     
-    [self.navigationItem setRightBarButtonItem:self.overviewButton animated:animate];
+    [self.navigationController.view addSubview:self.stepScrollView];
+    
+    [self resumeCurrentItineraryAnimated:animate];
 }
 
 - (void)resumeCurrentItinerary
@@ -195,10 +219,18 @@ static const MKCoordinateRegion kSeattleRegion = {
 }
 
 - (void)resumeCurrentItineraryAnimated:(BOOL)animate
-{
-    [self.mapView setVisibleMapRectToFitStep:self.tripPlanNavigator.currentStep animated:animate];
-    
-    [self.navigationItem setRightBarButtonItem:self.overviewButton animated:animate];
+{    
+    [self showStepScrollViewWithCompletion:^(BOOL finished) {
+        [self.mapView viewForAnnotation:self.currentStepAnnotation].hidden = NO;
+
+        self.overviewSegmentedControl.hidden = YES;
+        self.stepByStepSegmentedControl.hidden = NO;
+        
+        [self.mapView setVisibleMapRectToFitStep:self.tripPlanNavigator.currentStep animated:animate];
+        self.isViewingStepByStep = YES;
+        
+        [self.navigationItem setRightBarButtonItem:self.overviewButton animated:animate];
+    }];
 }
 
 - (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay
@@ -219,15 +251,27 @@ static const MKCoordinateRegion kSeattleRegion = {
         if (!currentStepView) {
             currentStepView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"currentStepID"];
             currentStepView.image = [UIImage imageNamed:@"currentStepAnnotation.png"];
-            currentStepView.canShowCallout = NO;
+            currentStepView.enabled = NO;
+            currentStepView.hidden = YES;
         } else {
             currentStepView.annotation = annotation;
         }
         return currentStepView;
+    } else if ([annotation isKindOfClass:[TAStepAnnotation class]]) {
+        MKPinAnnotationView *stepView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"stepID"];
+        if (!stepView) {
+            stepView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"stepID"];
+            stepView.pinColor = MKPinAnnotationColorPurple;
+            stepView.canShowCallout = YES;
+        } else {
+            stepView.annotation = annotation;
+        }
+        return stepView;
     }
     return nil;
 }
 
+// FIXME: Why doesn't this work to put the current step annotation into the back?
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
 {
     for (MKAnnotationView * view in views) {
@@ -235,6 +279,24 @@ static const MKCoordinateRegion kSeattleRegion = {
             [view.superview bringSubviewToFront:view];
         } else {
             [view.superview sendSubviewToBack:view];
+        }
+    }
+}
+
+- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
+{
+    if (self.isViewingStepByStep) {
+        NSSet *visibleAnnotations = [mapView annotationsInMapRect:mapView.visibleMapRect];
+        if (![visibleAnnotations containsObject:self.currentStepAnnotation]) {
+            for (id<MKAnnotation> annotation in visibleAnnotations) {
+                if ([annotation isKindOfClass:[TAStepAnnotation class]]) {
+                    TAStep *step = ((TAStepAnnotation *)annotation).step;
+                    [self.tripPlanNavigator moveToStep:step];
+                    [self.stepScrollView scrollToStepAtIndex:self.tripPlanNavigator.currentStepIndex animated:YES];
+                    [self.currentStepAnnotation setCoordinateToStep:step];
+                    break;
+                }
+            }
         }
     }
 }
@@ -267,46 +329,25 @@ static const MKCoordinateRegion kSeattleRegion = {
 - (void)followCurrentLocation
 {
     [self.mapView setUserTrackingMode:MKUserTrackingModeFollow animated:YES];
-    [self.segmentedControl setTitle:@"hed" forSegmentAtIndex:TACurrentLocation];
+    [self.overviewSegmentedControl setTitle:@"hed" forSegmentAtIndex:TACurrentLocation];
 }
 
 - (void)followCurrentLocationWithHeading
 {
     [self.mapView setUserTrackingMode:MKUserTrackingModeFollowWithHeading animated:YES];
-    [self.segmentedControl setTitle:@"off" forSegmentAtIndex:TACurrentLocation];
+    [self.overviewSegmentedControl setTitle:@"off" forSegmentAtIndex:TACurrentLocation];
 }
 
 - (void)stopFollowingCurrentLocation
 {
     [self.mapView setUserTrackingMode:MKUserTrackingModeNone animated:YES];
-    [self.segmentedControl setTitle:@"fol" forSegmentAtIndex:TACurrentLocation];
+    [self.overviewSegmentedControl setTitle:@"fol" forSegmentAtIndex:TACurrentLocation];
 }
 
 - (void)mapView:(MKMapView *)mapView didChangeUserTrackingMode:(MKUserTrackingMode)mode animated:(BOOL)animated
 {
     if (mode == MKUserTrackingModeNone) {
-        [self.segmentedControl setTitle:@"fol" forSegmentAtIndex:TACurrentLocation];
-    }
-}
-
-- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
-{
-    if (self.shouldShowPreferredItinerary) {
-        self.shouldShowPreferredItinerary = NO;
-        
-        [self overviewCurrentItineraryAnimated:YES];
-        
-        // We want the map to complete it's animation before overlaying the preferred itinerary
-        self.shouldOverlayPreferredItinerary = YES;
-    }
-}
-
-- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
-{
-    if (self.shouldOverlayPreferredItinerary) {
-        [self overlayCurrentItinerary];
-        
-        self.shouldOverlayPreferredItinerary = NO;
+        [self.overviewSegmentedControl setTitle:@"fol" forSegmentAtIndex:TACurrentLocation];
     }
 }
 
@@ -328,6 +369,24 @@ static const MKCoordinateRegion kSeattleRegion = {
     [self presentViewController:navigationController animated:YES completion:nil];
 }
 
+- (void)showStepScrollViewWithCompletion:(void (^)(BOOL finished))completion
+{
+    [UIView animateWithDuration:0.24 animations:^{
+        self.stepScrollView.frame = CGRectMake(0, 72, 320, 129);
+    } completion:^(BOOL finished) {
+        completion(finished);
+    }];
+}
+
+- (void)hideStepScrollViewWithCompletion:(void (^)(BOOL finished))completion
+{
+    [UIView animateWithDuration:0.24 animations:^{
+        self.stepScrollView.frame = CGRectMake(0, -129, 320, 129);
+    } completion:^(BOOL finished) {
+        completion(finished);
+    }];
+}
+
 - (NSInteger)numberOfStepsInScrollView:(TAStepScrollView *)scrollView
 {
     return [self.tripPlanNavigator numberOfStepsInCurrentItinerary];
@@ -347,9 +406,13 @@ static const MKCoordinateRegion kSeattleRegion = {
 
 - (void)stepScrollView:(TAStepScrollView *)scrollView didScrollToStep:(TAStepView *)step atIndex:(NSInteger)index
 {
+    if (index == self.tripPlanNavigator.currentStepIndex) {
+        return;
+    }
+    
     [self.tripPlanNavigator moveToStepWithIndex:index];
     
-    [self.currentStepAnnotation setCoordinate:self.tripPlanNavigator.currentStep.coordinate];
+    [self.currentStepAnnotation setCoordinateToStep:self.tripPlanNavigator.currentStep];
     [self.mapView setVisibleMapRectToFitStep:self.tripPlanNavigator.currentStep animated:YES];
 }
 

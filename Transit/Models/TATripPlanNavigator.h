@@ -32,8 +32,10 @@
 // Steps
 // A step exists for each place in the itinerary except for the end of walking legs where a step is not useful to a traveler
 @property (readonly, strong, nonatomic) TAStep *currentStep;
+@property (readonly, nonatomic) NSUInteger currentStepIndex;
 @property (readonly, strong, nonatomic) NSArray *stepsInCurrentItinerary;
 - (NSUInteger)numberOfStepsInCurrentItinerary;
 - (TAStep *)moveToStepWithIndex:(NSInteger)index;
+- (void)moveToStep:(TAStep *)step;
 
 @end

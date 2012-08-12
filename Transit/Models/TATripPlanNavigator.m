@@ -72,6 +72,11 @@
     return itinerary;
 }
 
+- (NSUInteger)currentStepIndex
+{
+    return [self.stepsInCurrentItinerary indexOfObject:self.currentStep];
+}
+
 - (NSUInteger)numberOfStepsInCurrentItinerary
 {
     return [self.stepsInCurrentItinerary count];
@@ -82,6 +87,13 @@
     self.currentStep = [self.stepsInCurrentItinerary objectAtIndex:index];
     
     return self.currentStep;
+}
+
+- (void)moveToStep:(TAStep *)step
+{
+    NSAssert([self.stepsInCurrentItinerary containsObject:step], @"Step must be in current itinerary");
+    
+    self.currentStep = step;
 }
 
 @end

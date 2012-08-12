@@ -20,6 +20,6 @@
 
 @property (readonly, nonatomic) CLLocationCoordinate2D coordinate;
 
-- (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate;
+- (void)setCoordinateToStep:(TAStep *)step;
 
 @end

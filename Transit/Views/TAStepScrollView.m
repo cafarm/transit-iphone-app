@@ -26,6 +26,7 @@
 @property (strong, nonatomic) TAStepView *selectedStep;
 
 @property (nonatomic) BOOL isPendingDelegateDidScrollToStep;
+@property (nonatomic) BOOL isPendingTapGestureCompletion;
 
 @end
 
@@ -44,6 +45,7 @@
 @synthesize selectedStep = _selectedStep;
 
 @synthesize isPendingDelegateDidScrollToStep = _isPendingDelegateDidScrollToStep;
+@synthesize isPendingTapGestureCompletion = _isPendingTapGestureCompletion;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -245,7 +247,10 @@
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
-    [self delegateDidScrollToStep];
+    if (self.isPendingTapGestureCompletion) {
+        [self delegateDidScrollToStep];
+        self.isPendingTapGestureCompletion = NO;
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -385,6 +390,8 @@
     } else if (tappedX > rightOfScrollView) {
         [self scrollToStepAtIndex:(self.visibleIndexes.location + self.visibleIndexes.length - 1) animated:YES];
     }
+    
+    self.isPendingTapGestureCompletion = YES;
 }
 
 // Suppress gestures while the scrollView is unsettled

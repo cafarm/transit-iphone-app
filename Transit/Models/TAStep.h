@@ -53,4 +53,6 @@ typedef enum {
 @property (readonly, nonatomic) NSDate *scheduledArrival;
 @property (readonly, nonatomic) NSDate *scheduledDeparture;
 
+@property (readonly, nonatomic) MKMapRect boundingMapRect;
+
 @end

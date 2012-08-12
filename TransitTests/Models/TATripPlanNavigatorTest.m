@@ -62,22 +62,6 @@
     STAssertEquals(navigator.currentItinerary, [tripPlan.itineraries objectAtIndex:0], nil);
 }
 
-- (void)testInitCurrentLeg
-{
-    OTPTripPlan *tripPlan = [self tripPlan];
-    TATripPlanNavigator *navigator = [[TATripPlanNavigator alloc] initWithTripPlan:tripPlan];
-    STAssertEquals(navigator.currentLeg, [((OTPItinerary *)[tripPlan.itineraries objectAtIndex:0]).legs objectAtIndex:0], nil);
-}
-
-- (void)testInitCurrentStep
-{
-    OTPTripPlan *tripPlan = [self tripPlan];
-    OTPLeg *expectedLeg = [((OTPItinerary *)[tripPlan.itineraries objectAtIndex:0]).legs objectAtIndex:0];
-    TATripPlanNavigator *navigator = [[TATripPlanNavigator alloc] initWithTripPlan:tripPlan];
-    STAssertEquals(navigator.currentStep.leg, expectedLeg, nil);
-    STAssertEquals(navigator.currentStep.place, expectedLeg.from, nil);
-}
-
 - (void)testMoveToItineraryWithIndex
 {
     OTPTripPlan *tripPlan = [self tripPlan];
@@ -99,7 +83,7 @@
     OTPLeg *expectedLeg = [((OTPItinerary *)[tripPlan.itineraries objectAtIndex:0]).legs objectAtIndex:9];
     TATripPlanNavigator *navigator = [[TATripPlanNavigator alloc] initWithTripPlan:tripPlan];
     TAStep *step = [navigator moveToStepWithIndex:14];
-    STAssertEquals(step.leg, expectedLeg, nil);
+    STAssertEquals(step.placeLeg, expectedLeg, nil);
     STAssertEquals(step.place, expectedLeg.to, nil);
 }
 
