@@ -10,6 +10,7 @@
 #import "OTPObjectManager.h"
 #import "TALocationField.h"
 #import "TALocationManager.h"
+#import "TATripPlanNavigator.h"
 #import "TAMapViewController.h"
 
 static NSString *const kNavigationTitle = @"Transit";
@@ -230,8 +231,10 @@ static NSString *const kNavigationTitle = @"Transit";
             return;
         }
         
+        TATripPlanNavigator *tripPlanNavigator = [[TATripPlanNavigator alloc] initWithTripPlan:tripPlan];
+        
         TAMapViewController *mapController = [[TAMapViewController alloc] initWithObjectManager:self.objectManager
-                                                                                       tripPlan:tripPlan];
+                                                                              tripPlanNavigator:tripPlanNavigator];
         
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Edit"
                                                                                  style:UIBarButtonItemStyleBordered

@@ -8,61 +8,72 @@
 
 #import "MKMapView+Transit.h"
 #import "OTPItinerary.h"
+#import "TAStep.h"
 #import "OTPLeg.h"
 #import "OTPPlace.h"
-#import "TALegStartAnnotation.h"
+#import "OTPEncodedPolyline.h"
+#import "TAStepAnnotation.h"
+#import "TACurrentStepAnnotation.h"
+
+static const double kZoomRectWidthMin = 1280;
+static const double kZoomRectHeightMin = 1920;
 
 @implementation MKMapView (Transit)
 
-- (void)setRegionToFitItinerary:(OTPItinerary *)itinerary animated:(BOOL)animated
+- (void)setVisibleMapRectToFitItinerary:(OTPItinerary *)itinerary animated:(BOOL)animate
 {
-    NSMutableArray *places = [NSMutableArray arrayWithCapacity:([itinerary.legs count] + 1)];
+    UIEdgeInsets edgePadding = UIEdgeInsetsMake(0, 0, 0, 0);
+    [self setVisibleMapRectToFitLegs:itinerary.legs edgePadding:edgePadding animated:animate];
+}
 
-    for (OTPLeg *leg in itinerary.legs) {        
-        [places addObject:leg.from];
+- (void)setVisibleMapRectToFitStep:(TAStep *)step animated:(BOOL)animate
+{
+    UIEdgeInsets edgePadding = UIEdgeInsetsMake(self.bounds.size.height - 279, 0, 0, 0);
+    if (step.fromOrTo == TAFrom) {
+        // At the end of walking we don't have a step but we want to set the region to it's leg anyway
+        if (step.previousStep != nil && step.previousStep.mode == OTPWalk) {
+            [self setVisibleMapRectToFitLegs:step.previousStep.legs edgePadding:edgePadding animated:animate];
+        } else {
+            [self setVisibleMapRectToFitPlace:step.place edgePadding:edgePadding animated:animate];
+        }
+    } else {
+        [self setVisibleMapRectToFitLegs:step.legs edgePadding:edgePadding animated:animate];
+    }
+}
+
+- (void)setVisibleMapRectToFitLegs:(NSArray *)legs edgePadding:(UIEdgeInsets)edgePadding animated:(BOOL)animate
+{    
+    MKMapRect zoomRect = MKMapRectNull;
+    for (OTPLeg *leg in legs) {
+        MKPolyline *polyline = [leg.legGeometry polylineValue];
         
-        if (leg == itinerary.legs.lastObject) {
-            [places addObject:leg.to];
+        if (MKMapRectIsNull(zoomRect)) {
+            zoomRect = [polyline boundingMapRect];
+        } else {
+            zoomRect = MKMapRectUnion(zoomRect, [polyline boundingMapRect]);
         }
     }
-    [self setRegionToFitPlaces:places animated:animated];
-}
-
-- (void)setRegionToFitLeg:(OTPLeg *)leg animated:(BOOL)animated
-{
-    NSArray *places = [NSArray arrayWithObjects:leg.from, leg.to, nil];
-    [self setRegionToFitPlaces:places animated:animated];
-}
-
-- (void)setRegionToFitPlaces:(NSArray *)places animated:(BOOL)animated
-{
-    CLLocationCoordinate2D topLeftCoordinate = {
-        .latitude = -90,
-        .longitude = 180
-    };
     
-    CLLocationCoordinate2D bottomRightCoordinate = {
-        .latitude = 90,
-        .longitude = -180
-    };
-    
-    for (OTPPlace *place in places) {
-        topLeftCoordinate.longitude = fmin(topLeftCoordinate.longitude, [place.longitude doubleValue]);
-        topLeftCoordinate.latitude = fmax(topLeftCoordinate.latitude, [place.latitude doubleValue]);
-        bottomRightCoordinate.longitude = fmax(bottomRightCoordinate.longitude, [place.longitude doubleValue]);
-        bottomRightCoordinate.latitude = fmin(bottomRightCoordinate.latitude, [place.latitude doubleValue]);
+    // Don't allow the zoomRect to be too small
+    if (zoomRect.size.width < kZoomRectWidthMin && zoomRect.size.height < kZoomRectHeightMin) {
+        zoomRect = MKMapRectMake(zoomRect.origin.x, zoomRect.origin.x, kZoomRectWidthMin, kZoomRectHeightMin);
     }
     
-    MKCoordinateRegion region;
-    region.center.latitude = topLeftCoordinate.latitude - (topLeftCoordinate.latitude - bottomRightCoordinate.latitude) * 0.5;
-    region.center.longitude = topLeftCoordinate.longitude + (bottomRightCoordinate.longitude - topLeftCoordinate.longitude) * 0.5;
-    region.span.latitudeDelta = fabs(topLeftCoordinate.latitude - bottomRightCoordinate.latitude) * 1.1;
+    [self setVisibleMapRect:zoomRect edgePadding:edgePadding animated:animate];
+}
+
+- (void)setVisibleMapRectToFitPlace:(OTPPlace *)place edgePadding:(UIEdgeInsets)edgePadding animated:(BOOL)animate
+{
+    MKMapPoint point = place.mapPoint;
     
-    // add a little extra space on the sides
-    region.span.longitudeDelta = fabs(bottomRightCoordinate.longitude - topLeftCoordinate.longitude) * 1.1;
+    MKMapPoint origin = MKMapPointMake(point.x - 2 / 2, point.y - 2 / 2);
     
-    region = [self regionThatFits:region];
-    [self setRegion:region animated:animated];
+    MKMapRect zoomRect = MKMapRectMake(origin.x,
+                                       origin.y,
+                                       2, 2);
+        
+    [self setVisibleMapRect:zoomRect animated:animate];
+//    [self setCenterCoordinate:place.coordinate animated:animate];
 }
 
 - (void)addOverlayForItinerary:(OTPItinerary *)itinerary
@@ -74,12 +85,39 @@
 
 - (void)addOverlayForLeg:(OTPLeg *)leg
 {
-    TALegStartAnnotation *legStartAnnotation = [[TALegStartAnnotation alloc] initWithLeg:leg];
-    [self addAnnotation:legStartAnnotation];
-    
-    MKPolyline *polyline = leg.polyline;
+    MKPolyline *polyline = [leg.legGeometry polylineValue];
     
     [self addOverlay:polyline];
+}
+
+- (void)removeAllOverlays
+{
+    [self removeOverlays:self.overlays];
+}
+
+- (TACurrentStepAnnotation *)addAnnotationForCurrentStep:(TAStep *)step
+{
+    TACurrentStepAnnotation *stepAnnotation = [[TACurrentStepAnnotation alloc] initWithStep:step];
+    [self addAnnotation:stepAnnotation];
+    return stepAnnotation;
+}
+
+- (void)addAnnotationsForSteps:(NSArray *)steps
+{
+    for (TAStep *step in steps) {
+        TAStepAnnotation *stepAnnotation = [[TAStepAnnotation alloc] initWithStep:step];
+        [self addAnnotation:stepAnnotation];
+    }
+}
+
+- (void)removeAllAnnotations
+{
+    NSMutableArray *annotationsToRemove = [[NSMutableArray alloc] init];
+    for (id<MKAnnotation> annotation in self.annotations) {
+        if (![annotation isKindOfClass:[MKUserLocation class]]) {
+            [annotationsToRemove addObject:annotation];
+        }
+    }
 }
 
 @end

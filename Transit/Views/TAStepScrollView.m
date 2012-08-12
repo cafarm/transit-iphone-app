@@ -7,6 +7,8 @@
 //
 //  Modified from https://github.com/100grams/HGPageScrollView
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "TAStepScrollView.h"
 #import "TAStepView.h"
 

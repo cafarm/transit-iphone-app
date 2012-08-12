@@ -13,28 +13,29 @@
 
 @class OTPObjectManager;
 @class OTPTripPlan;
+@class TATripPlanNavigator;
 @class OTPItinerary;
 
 @interface TAMapViewController : UIViewController <MKMapViewDelegate, TAStepScrollViewDelegate, TAStepScrollViewDataSource, UIGestureRecognizerDelegate>
 
-- (id)initWithObjectManager:(OTPObjectManager *)objectManager tripPlan:(OTPTripPlan *)tripPlan;
+- (id)initWithObjectManager:(OTPObjectManager *)objectManager tripPlanNavigator:(TATripPlanNavigator *)tripPlanNavigator;
 
 @property (strong, nonatomic) OTPObjectManager *objectManager;
-@property (strong, nonatomic) OTPTripPlan *tripPlan;
-
-@property (weak, nonatomic) MKMapView *mapView;
-@property (weak, nonatomic) TAStepScrollView *stepScrollView;
-@property (weak, nonatomic) UISegmentedControl *segmentedControl;
+@property (strong, nonatomic) TATripPlanNavigator *tripPlanNavigator;
 
 @property (strong, nonatomic) UIBarButtonItem *startButton;
 @property (strong, nonatomic) UIBarButtonItem *overviewButton;
 @property (strong, nonatomic) UIBarButtonItem *resumeButton;
 
-- (void)overlayPreferredItinerary;
+@property (weak, nonatomic) MKMapView *mapView;
+@property (weak, nonatomic) TAStepScrollView *stepScrollView;
+@property (weak, nonatomic) UISegmentedControl *segmentedControl;
 
-- (void)overviewPreferredItineraryAnimated:(BOOL)animated;
-- (void)startPreferredItineraryAnimated:(BOOL)animated;
-- (void)resumePreferredItineraryAnimated:(BOOL)animated;
+- (void)overlayCurrentItinerary;
+
+- (void)overviewCurrentItineraryAnimated:(BOOL)animated;
+- (void)startCurrentItineraryAnimated:(BOOL)animated;
+- (void)resumeCurrentItineraryAnimated:(BOOL)animated;
 
 - (void)followCurrentLocation;
 - (void)followCurrentLocationWithHeading;

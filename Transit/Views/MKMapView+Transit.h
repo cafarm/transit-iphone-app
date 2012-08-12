@@ -9,13 +9,19 @@
 #import <MapKit/MapKit.h>
 
 @class OTPItinerary;
-@class OTPLeg;
+@class TAStep;
+@class TACurrentStepAnnotation;
 
 @interface MKMapView (Transit)
 
-- (void)setRegionToFitItinerary:(OTPItinerary *)itinerary animated:(BOOL)animated;
-- (void)setRegionToFitLeg:(OTPLeg *)leg animated:(BOOL)animated;
+- (void)setVisibleMapRectToFitItinerary:(OTPItinerary *)itinerary animated:(BOOL)animated;
+- (void)setVisibleMapRectToFitStep:(TAStep *)step animated:(BOOL)animated;
 
 - (void)addOverlayForItinerary:(OTPItinerary *)itinerary;
+- (void)removeAllOverlays;
+
+- (TACurrentStepAnnotation *)addAnnotationForCurrentStep:(TAStep *)step;
+- (void)addAnnotationsForSteps:(NSArray *)steps;
+- (void)removeAllAnnotations;
 
 @end

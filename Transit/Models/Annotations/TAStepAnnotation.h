@@ -1,8 +1,8 @@
 //
-//  TALegStartAnnotation.h
+//  TAStepAnnotation.h
 //  Transit
 //
-//  Created by Mark Cafaro on 8/2/12.
+//  Created by Mark Cafaro on 8/7/12.
 //  Copyright (c) 2012 Seven O' Eight. All rights reserved.
 //
 
@@ -10,13 +10,13 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 
-@class OTPLeg;
+@class TAStep;
 
-@interface TALegStartAnnotation : NSObject <MKAnnotation>
+@interface TAStepAnnotation : NSObject <MKAnnotation>
 
-- (id)initWithLeg:(OTPLeg *)leg;
+- (id)initWithStep:(TAStep *)step;
 
-@property (readonly, nonatomic) OTPLeg *leg;
+@property (readonly, nonatomic) TAStep *step;
 
 @property (readonly, nonatomic) CLLocationCoordinate2D coordinate;
 @property (readonly, copy, nonatomic) NSString *title;

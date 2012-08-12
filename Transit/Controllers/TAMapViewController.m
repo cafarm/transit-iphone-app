@@ -9,12 +9,15 @@
 #import "TAMapViewController.h"
 #import "MKMapView+Transit.h"
 #import "OTPTripPlan.h"
+#import "TATripPlanNavigator.h"
 #import "OTPItinerary.h"
 #import "OTPLeg.h"
 #import "OTPPlace.h"
+#import "TAStep.h"
 #import "TADirectionsTableViewController.h"
 #import "TATransitOptionsViewController.h"
 #import "TAStepView.h"
+#import "TACurrentStepAnnotation.h"
 
 typedef enum {
     TACurrentLocation,
@@ -36,6 +39,8 @@ static const MKCoordinateRegion kSeattleRegion = {
 
 @interface TAMapViewController ()
 
+@property (strong, nonatomic) TACurrentStepAnnotation *currentStepAnnotation;
+
 @property (nonatomic) BOOL shouldShowPreferredItinerary;
 @property (nonatomic) BOOL shouldOverlayPreferredItinerary;
 
@@ -44,26 +49,28 @@ static const MKCoordinateRegion kSeattleRegion = {
 
 @implementation TAMapViewController
 
-@synthesize mapView = _mapView;
-@synthesize stepScrollView = _stepScrollView;
-@synthesize segmentedControl = _segmentedControl;
+@synthesize objectManager = _objectManager;
+@synthesize tripPlanNavigator = _tripPlanNavigator;
 
 @synthesize startButton = _startButton;
 @synthesize overviewButton = _overviewButton;
 @synthesize resumeButton = _resumeButton;
 
+@synthesize mapView = _mapView;
+@synthesize stepScrollView = _stepScrollView;
+@synthesize segmentedControl = _segmentedControl;
+
+@synthesize currentStepAnnotation = _currentStepAnnotation;
+
 @synthesize shouldShowPreferredItinerary = _shouldShowPreferredItinerary;
 @synthesize shouldOverlayPreferredItinerary = _shouldOverlayPreferredItinerary;
 
-@synthesize objectManager = _objectManager;
-@synthesize tripPlan = _tripPlan;
-
-- (id)initWithObjectManager:(OTPObjectManager *)objectManager tripPlan:(OTPTripPlan *)tripPlan
+- (id)initWithObjectManager:(OTPObjectManager *)objectManager tripPlanNavigator:(TATripPlanNavigator *)tripPlanNavigator
 {
     self = [super init];
     if (self) {
         _objectManager = objectManager;
-        _tripPlan = tripPlan;
+        _tripPlanNavigator = tripPlanNavigator;
     }
     return self;
 }
@@ -72,15 +79,19 @@ static const MKCoordinateRegion kSeattleRegion = {
 {    
     _startButton = [[UIBarButtonItem alloc] initWithTitle:@"Start"
                                                     style:UIBarButtonItemStyleDone target:self
-                                                   action:@selector(startPreferredItinerary)];
+                                                   action:@selector(startCurrentItinerary)];
     
     self.navigationItem.rightBarButtonItem = self.startButton;
     
-    MKMapView *mapView = [[MKMapView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    // We need a container view because using the MKMapView as the root view freezes all the controls on animation
+    UIView *containerView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    
+    MKMapView *mapView = [[MKMapView alloc] initWithFrame:containerView.bounds];
     mapView.showsUserLocation = YES;
     mapView.region = kSeattleRegion;
     mapView.delegate = self;
     _mapView = mapView;
+    [containerView addSubview:mapView];
     
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(7, 380, 117, 30)];
     segmentedControl.momentary = YES;
@@ -89,16 +100,16 @@ static const MKCoordinateRegion kSeattleRegion = {
     [segmentedControl insertSegmentWithTitle:@"opt" atIndex:TATransitOptions animated:NO];
     [segmentedControl addTarget:self action:@selector(changeView:) forControlEvents:UIControlEventValueChanged];
     _segmentedControl = segmentedControl;
-    [mapView addSubview:segmentedControl];
+    [containerView addSubview:segmentedControl];
     
     TAStepScrollView *stepScrollView = [[TAStepScrollView alloc] initWithFrame:CGRectMake(0, 8, 320, 129)];
     stepScrollView.delegate = self;
     stepScrollView.dataSource = self;
     [stepScrollView reloadData];
     _stepScrollView = stepScrollView;
-    [mapView addSubview:stepScrollView];
+    [containerView addSubview:stepScrollView];
     
-    self.view = mapView;
+    self.view = containerView;
 }
 
 - (void)viewDidLoad
@@ -125,7 +136,7 @@ static const MKCoordinateRegion kSeattleRegion = {
         _overviewButton = [[UIBarButtonItem alloc] initWithTitle:@"Overview"
                                                            style:UIBarButtonItemStylePlain
                                                           target:self
-                                                          action:@selector(overviewPreferredItinerary)];
+                                                          action:@selector(overviewCurrentItinerary)];
     }
     return _overviewButton;
 }
@@ -136,75 +147,96 @@ static const MKCoordinateRegion kSeattleRegion = {
         _resumeButton = [[UIBarButtonItem alloc] initWithTitle:@"Resume"
                                                          style:UIBarButtonItemStyleDone
                                                         target:self
-                                                        action:@selector(resumePreferredItinerary)];
+                                                        action:@selector(resumeCurrentItinerary)];
     }
     return _resumeButton;
 }
 
-- (void)overlayPreferredItinerary
+- (void)overlayCurrentItinerary
 {
-    [self.mapView addOverlayForItinerary:self.tripPlan.preferredItinerary];
+    [self.mapView addOverlayForItinerary:self.tripPlanNavigator.currentItinerary];
+    [self.mapView addAnnotationsForSteps:self.tripPlanNavigator.stepsInCurrentItinerary];
 }
 
-- (void)overviewPreferredItinerary
+- (void)overviewCurrentItinerary
 {
-    [self overviewPreferredItineraryAnimated:YES];
+    [self overviewCurrentItineraryAnimated:YES];
 }
 
-- (void)overviewPreferredItineraryAnimated:(BOOL)animated
+- (void)overviewCurrentItineraryAnimated:(BOOL)animate
 {
-    [self.mapView setRegionToFitItinerary:self.tripPlan.preferredItinerary animated:animated];
+    [self.mapView setVisibleMapRectToFitItinerary:self.tripPlanNavigator.currentItinerary animated:animate];
     
-    if (self.tripPlan.preferredItinerary.isStarted) {
-        [self.navigationItem setRightBarButtonItem:self.resumeButton animated:YES];
+    if (self.tripPlanNavigator.isCurrentItineraryStarted) {
+        [self.navigationItem setRightBarButtonItem:self.resumeButton animated:animate];
     } else {
-        [self.navigationItem setRightBarButtonItem:self.startButton animated:YES];
+        [self.navigationItem setRightBarButtonItem:self.startButton animated:animate];
     }
 }
 
-- (void)startPreferredItinerary
+- (void)startCurrentItinerary
 {
-    [self startPreferredItineraryAnimated:YES];
+    [self startCurrentItineraryAnimated:YES];
 }
 
-- (void)startPreferredItineraryAnimated:(BOOL)animated
+- (void)startCurrentItineraryAnimated:(BOOL)animate
 {
-    self.tripPlan.preferredItinerary.currentLegIndex = 0;
+    [self.tripPlanNavigator startCurrentItinerary];
     
-    [self.mapView setRegionToFitLeg:self.tripPlan.preferredItinerary.currentLeg animated:animated];
+    [self.mapView setVisibleMapRectToFitStep:self.tripPlanNavigator.currentStep animated:animate];
+    self.currentStepAnnotation = [self.mapView addAnnotationForCurrentStep:self.tripPlanNavigator.currentStep];
     
-    [self.navigationItem setRightBarButtonItem:self.overviewButton animated:animated];
-    
-    self.tripPlan.preferredItinerary.isStarted = YES;
+    [self.navigationItem setRightBarButtonItem:self.overviewButton animated:animate];
 }
 
-- (void)resumePreferredItinerary
+- (void)resumeCurrentItinerary
 {
-    [self resumePreferredItineraryAnimated:YES];
+    [self resumeCurrentItineraryAnimated:YES];
 }
 
-- (void)resumePreferredItineraryAnimated:(BOOL)animated
+- (void)resumeCurrentItineraryAnimated:(BOOL)animate
 {
-    self.tripPlan.preferredItinerary.currentLegIndex++;
+    [self.mapView setVisibleMapRectToFitStep:self.tripPlanNavigator.currentStep animated:animate];
     
-    [self.mapView setRegionToFitLeg:self.tripPlan.preferredItinerary.currentLeg animated:animated];
-    
-    [self.navigationItem setRightBarButtonItem:self.overviewButton animated:animated];
+    [self.navigationItem setRightBarButtonItem:self.overviewButton animated:animate];
 }
 
 - (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay
 {
-	
-	if ([overlay isKindOfClass:[MKPolyline class]]) {
-		
+	if ([overlay isKindOfClass:[MKPolyline class]]) {		
 		MKPolylineView *polylineView = [[MKPolylineView alloc] initWithPolyline:overlay];
 		polylineView.strokeColor = [UIColor blueColor];
 		polylineView.lineWidth = 13 / 2;
 		return polylineView;
 	}
-	
-	return [[MKOverlayView alloc] initWithOverlay:overlay];
-	
+	return nil;
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+{
+    if ([annotation isKindOfClass:[TACurrentStepAnnotation class]]) {
+        MKAnnotationView *currentStepView = [mapView dequeueReusableAnnotationViewWithIdentifier:@"currentStepID"];
+        if (!currentStepView) {
+            currentStepView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"currentStepID"];
+            currentStepView.image = [UIImage imageNamed:@"currentStepAnnotation.png"];
+            currentStepView.canShowCallout = NO;
+        } else {
+            currentStepView.annotation = annotation;
+        }
+        return currentStepView;
+    }
+    return nil;
+}
+
+- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
+{
+    for (MKAnnotationView * view in views) {
+        if ([view isKindOfClass:[MKPinAnnotationView class]]) {
+            [view.superview bringSubviewToFront:view];
+        } else {
+            [view.superview sendSubviewToBack:view];
+        }
+    }
 }
 
 - (void)changeView:(id)sender
@@ -262,7 +294,7 @@ static const MKCoordinateRegion kSeattleRegion = {
     if (self.shouldShowPreferredItinerary) {
         self.shouldShowPreferredItinerary = NO;
         
-        [self overviewPreferredItineraryAnimated:YES];
+        [self overviewCurrentItineraryAnimated:YES];
         
         // We want the map to complete it's animation before overlaying the preferred itinerary
         self.shouldOverlayPreferredItinerary = YES;
@@ -272,7 +304,7 @@ static const MKCoordinateRegion kSeattleRegion = {
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
 {
     if (self.shouldOverlayPreferredItinerary) {
-        [self overlayPreferredItinerary];
+        [self overlayCurrentItinerary];
         
         self.shouldOverlayPreferredItinerary = NO;
     }
@@ -298,7 +330,7 @@ static const MKCoordinateRegion kSeattleRegion = {
 
 - (NSInteger)numberOfStepsInScrollView:(TAStepScrollView *)scrollView
 {
-    return [self.tripPlan.preferredItinerary.legs count];
+    return [self.tripPlanNavigator numberOfStepsInCurrentItinerary];
 }
 
 - (TAStepView *)stepScrollView:(TAStepScrollView *)scrollView viewForStepAtIndex:(NSInteger)index
@@ -315,9 +347,10 @@ static const MKCoordinateRegion kSeattleRegion = {
 
 - (void)stepScrollView:(TAStepScrollView *)scrollView didScrollToStep:(TAStepView *)step atIndex:(NSInteger)index
 {
-    self.tripPlan.preferredItinerary.currentLegIndex = index;
+    [self.tripPlanNavigator moveToStepWithIndex:index];
     
-    [self.mapView setRegionToFitLeg:self.tripPlan.preferredItinerary.currentLeg animated:YES];
+    [self.currentStepAnnotation setCoordinate:self.tripPlanNavigator.currentStep.coordinate];
+    [self.mapView setVisibleMapRectToFitStep:self.tripPlanNavigator.currentStep animated:YES];
 }
 
 @end
