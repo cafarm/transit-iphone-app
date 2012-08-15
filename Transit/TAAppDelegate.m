@@ -24,6 +24,7 @@
     TALocationInputViewController *inputController = [[TALocationInputViewController alloc] initWithObjectManager:self.objectManager];
     
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:inputController];
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];

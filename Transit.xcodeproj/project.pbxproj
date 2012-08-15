@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F06D20715DB446200F91575 /* libPlacesClient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F06D20215DB443100F91575 /* libPlacesClient.a */; };
+		1F06D20A15DB447F00F91575 /* libPlacesClient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F06D20215DB443100F91575 /* libPlacesClient.a */; };
 		1F342CBD15AE236300E2A6E8 /* TADirectionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F342CBC15AE236300E2A6E8 /* TADirectionsTableViewController.m */; };
 		1F342CC615AE4DE800E2A6E8 /* TATransitOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F342CC515AE4DE800E2A6E8 /* TATransitOptionsViewController.m */; };
 		1F34CAB715D70DAE00322C04 /* TACurrentStepAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F34CAB615D70DAE00322C04 /* TACurrentStepAnnotation.m */; };
+		1F36463E15DB50A000E2B156 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F36463315DB505A00E2B156 /* libRestKit.a */; };
 		1F50B1F315CA6CD3003AC67D /* TALocationField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F50B1F215CA6CD3003AC67D /* TALocationField.m */; };
 		1F50B1F715CB51F7003AC67D /* TALocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F50B1F615CB51F7003AC67D /* TALocationManager.m */; };
 		1F59515D15AC0D98007A4554 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F59515C15AC0D98007A4554 /* UIKit.framework */; };
@@ -58,6 +61,69 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1F06D20115DB443100F91575 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F06D1F815DB443100F91575 /* PlacesClient.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1FFC610B15DA0D8700830612;
+			remoteInfo = PlacesClient;
+		};
+		1F06D20315DB443100F91575 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F06D1F815DB443100F91575 /* PlacesClient.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1FFC611C15DA0D8700830612;
+			remoteInfo = PlacesClientTests;
+		};
+		1F06D20515DB445900F91575 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F06D1F815DB443100F91575 /* PlacesClient.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1FFC610A15DA0D8700830612;
+			remoteInfo = PlacesClient;
+		};
+		1F36463215DB505A00E2B156 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F36462715DB505900E2B156 /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160D1614564E810060A5C5;
+			remoteInfo = RestKit;
+		};
+		1F36463415DB505A00E2B156 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F36462715DB505900E2B156 /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160D2614564E820060A5C5;
+			remoteInfo = RestKitTests;
+		};
+		1F36463615DB505A00E2B156 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F36462715DB505900E2B156 /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160E62145651060060A5C5;
+			remoteInfo = RestKitFramework;
+		};
+		1F36463815DB505A00E2B156 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F36462715DB505900E2B156 /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160E78145651060060A5C5;
+			remoteInfo = RestKitFrameworkTests;
+		};
+		1F36463A15DB505A00E2B156 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F36462715DB505900E2B156 /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 259C301615128079003066A2;
+			remoteInfo = RestKitResources;
+		};
+		1F36463C15DB508500E2B156 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F36462715DB505900E2B156 /* RestKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 25160D1514564E810060A5C5;
+			remoteInfo = RestKit;
+		};
 		1F59517E15AC0D98007A4554 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1F59514F15AC0D98007A4554 /* Project object */;
@@ -86,16 +152,10 @@
 			remoteGlobalIDString = 1F2F403F15BCE06500121A2F;
 			remoteInfo = OTPClient;
 		};
-		1FCCF78615D2020B00AD2A4C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1F634A9415C1F4CC00192802 /* OTPClient.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 1F2F403F15BCE06500121A2F;
-			remoteInfo = OTPClient;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1F06D1F815DB443100F91575 /* PlacesClient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PlacesClient.xcodeproj; path = "Libraries/google-places-api-client/PlacesClient.xcodeproj"; sourceTree = "<group>"; };
 		1F12167A15C207AE007B75A5 /* MACLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MACLog.h; path = SupportingFiles/MACLog.h; sourceTree = "<group>"; };
 		1F342CBB15AE236300E2A6E8 /* TADirectionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TADirectionsTableViewController.h; path = Controllers/TADirectionsTableViewController.h; sourceTree = "<group>"; };
 		1F342CBC15AE236300E2A6E8 /* TADirectionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TADirectionsTableViewController.m; path = Controllers/TADirectionsTableViewController.m; sourceTree = "<group>"; };
@@ -103,6 +163,7 @@
 		1F342CC515AE4DE800E2A6E8 /* TATransitOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TATransitOptionsViewController.m; path = Controllers/TATransitOptionsViewController.m; sourceTree = "<group>"; };
 		1F34CAB515D70DAE00322C04 /* TACurrentStepAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TACurrentStepAnnotation.h; path = Models/Annotations/TACurrentStepAnnotation.h; sourceTree = "<group>"; };
 		1F34CAB615D70DAE00322C04 /* TACurrentStepAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TACurrentStepAnnotation.m; path = Models/Annotations/TACurrentStepAnnotation.m; sourceTree = "<group>"; };
+		1F36462715DB505900E2B156 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = Libraries/RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		1F50B1F115CA6CD3003AC67D /* TALocationField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TALocationField.h; path = Views/TALocationField.h; sourceTree = "<group>"; };
 		1F50B1F215CA6CD3003AC67D /* TALocationField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TALocationField.m; path = Views/TALocationField.m; sourceTree = "<group>"; };
 		1F50B1F515CB51F7003AC67D /* TALocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TALocationManager.h; path = Stores/TALocationManager.h; sourceTree = "<group>"; };
@@ -148,6 +209,7 @@
 		1FF9F62F15CCBA9C00AEBA28 /* TAStepScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TAStepScrollView.m; path = Views/TAStepScrollView.m; sourceTree = "<group>"; };
 		1FF9F63115CCE0C500AEBA28 /* TAStepView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TAStepView.h; path = Views/TAStepView.h; sourceTree = "<group>"; };
 		1FF9F63215CCE0C500AEBA28 /* TAStepView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TAStepView.m; path = Views/TAStepView.m; sourceTree = "<group>"; };
+		1FFC60FE15D9D99900830612 /* Seattle, WA, USA.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "Seattle, WA, USA.gpx"; path = "TransitTests/Resources/Seattle, WA, USA.gpx"; sourceTree = SOURCE_ROOT; };
 		1FFD6C0915AD1D6100A4C388 /* TAMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TAMapViewController.h; path = Controllers/TAMapViewController.h; sourceTree = "<group>"; };
 		1FFD6C0A15AD1D6200A4C388 /* TAMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TAMapViewController.m; path = Controllers/TAMapViewController.m; sourceTree = "<group>"; };
 		1FFD6C0E15AD1DA500A4C388 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -158,6 +220,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F36463E15DB50A000E2B156 /* libRestKit.a in Frameworks */,
+				1F06D20715DB446200F91575 /* libPlacesClient.a in Frameworks */,
 				1F634AA315C1F6C600192802 /* libOTPClient.a in Frameworks */,
 				1FD199CB15BBB14900BA8D48 /* libxml2.2.dylib in Frameworks */,
 				1FD199C915BBB12B00BA8D48 /* QuartzCore.framework in Frameworks */,
@@ -178,6 +242,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F06D20A15DB447F00F91575 /* libPlacesClient.a in Frameworks */,
 				1FCCF79215D2028B00AD2A4C /* CoreGraphics.framework in Frameworks */,
 				1F59517D15AC0D98007A4554 /* Foundation.framework in Frameworks */,
 				1F59517C15AC0D98007A4554 /* UIKit.framework in Frameworks */,
@@ -198,6 +263,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F06D1F915DB443100F91575 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1F06D20215DB443100F91575 /* libPlacesClient.a */,
+				1F06D20415DB443100F91575 /* PlacesClientTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1F36462815DB505900E2B156 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1F36463315DB505A00E2B156 /* libRestKit.a */,
+				1F36463515DB505A00E2B156 /* RestKitTests.octest */,
+				1F36463715DB505A00E2B156 /* RestKit.framework */,
+				1F36463915DB505A00E2B156 /* RestKitFrameworkTests.octest */,
+				1F36463B15DB505A00E2B156 /* RestKitResources.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		1F50B1F415CB51C9003AC67D /* Stores */ = {
 			isa = PBXGroup;
 			children = (
@@ -275,6 +361,7 @@
 		1F59518015AC0D98007A4554 /* TransitTests */ = {
 			isa = PBXGroup;
 			children = (
+				1FFC60FF15D9D9FC00830612 /* Resources */,
 				1FCCF78215D1FF2C00AD2A4C /* Models */,
 				1FBE2FD315CBA69100928B87 /* Fixtures */,
 				1F59518115AC0D98007A4554 /* Supporting Files */,
@@ -333,7 +420,9 @@
 			isa = PBXGroup;
 			children = (
 				1FD199CA15BBB14900BA8D48 /* libxml2.2.dylib */,
+				1F06D1F815DB443100F91575 /* PlacesClient.xcodeproj */,
 				1F634A9415C1F4CC00192802 /* OTPClient.xcodeproj */,
+				1F36462715DB505900E2B156 /* RestKit.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -353,6 +442,14 @@
 				1FCCF78415D1FF6A00AD2A4C /* TATripPlanNavigatorTest.m */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		1FFC60FF15D9D9FC00830612 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1FFC60FE15D9D99900830612 /* Seattle, WA, USA.gpx */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		1FFD6C0415AC1B8D00A4C388 /* Models */ = {
@@ -411,6 +508,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				1F36463D15DB508500E2B156 /* PBXTargetDependency */,
+				1F06D20615DB445900F91575 /* PBXTargetDependency */,
 				1F634AA215C1F69A00192802 /* PBXTargetDependency */,
 			);
 			name = Transit;
@@ -430,7 +529,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				1FCCF78715D2020B00AD2A4C /* PBXTargetDependency */,
 				1F59517F15AC0D98007A4554 /* PBXTargetDependency */,
 			);
 			name = TransitTests;
@@ -463,6 +561,14 @@
 					ProductGroup = 1F634A9515C1F4CC00192802 /* Products */;
 					ProjectRef = 1F634A9415C1F4CC00192802 /* OTPClient.xcodeproj */;
 				},
+				{
+					ProductGroup = 1F06D1F915DB443100F91575 /* Products */;
+					ProjectRef = 1F06D1F815DB443100F91575 /* PlacesClient.xcodeproj */;
+				},
+				{
+					ProductGroup = 1F36462815DB505900E2B156 /* Products */;
+					ProjectRef = 1F36462715DB505900E2B156 /* RestKit.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -473,6 +579,55 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		1F06D20215DB443100F91575 /* libPlacesClient.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPlacesClient.a;
+			remoteRef = 1F06D20115DB443100F91575 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1F06D20415DB443100F91575 /* PlacesClientTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = PlacesClientTests.octest;
+			remoteRef = 1F06D20315DB443100F91575 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1F36463315DB505A00E2B156 /* libRestKit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRestKit.a;
+			remoteRef = 1F36463215DB505A00E2B156 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1F36463515DB505A00E2B156 /* RestKitTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RestKitTests.octest;
+			remoteRef = 1F36463415DB505A00E2B156 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1F36463715DB505A00E2B156 /* RestKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = RestKit.framework;
+			remoteRef = 1F36463615DB505A00E2B156 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1F36463915DB505A00E2B156 /* RestKitFrameworkTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RestKitFrameworkTests.octest;
+			remoteRef = 1F36463815DB505A00E2B156 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1F36463B15DB505A00E2B156 /* RestKitResources.bundle */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RestKitResources.bundle;
+			remoteRef = 1F36463A15DB505A00E2B156 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		1F634A9E15C1F4CC00192802 /* libOTPClient.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -561,6 +716,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1F06D20615DB445900F91575 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PlacesClient;
+			targetProxy = 1F06D20515DB445900F91575 /* PBXContainerItemProxy */;
+		};
+		1F36463D15DB508500E2B156 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = RestKit;
+			targetProxy = 1F36463C15DB508500E2B156 /* PBXContainerItemProxy */;
+		};
 		1F59517F15AC0D98007A4554 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 1F59515715AC0D98007A4554 /* Transit */;
@@ -570,11 +735,6 @@
 			isa = PBXTargetDependency;
 			name = OTPClient;
 			targetProxy = 1F634AA115C1F69A00192802 /* PBXContainerItemProxy */;
-		};
-		1FCCF78715D2020B00AD2A4C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = OTPClient;
-			targetProxy = 1FCCF78615D2020B00AD2A4C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

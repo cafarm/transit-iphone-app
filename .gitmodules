@@ -1,3 +1,9 @@
 [submodule "Libraries/opentripplanner-api-client"]
 	path = Libraries/opentripplanner-api-client
 	url = https://github.com/cafarm/opentripplanner-api-client.git
+[submodule "Libraries/google-places-api-client"]
+	path = Libraries/google-places-api-client
+	url = https://github.com/cafarm/google-places-api-client.git
+[submodule "Libraries/RestKit"]
+	path = Libraries/RestKit
+	url = git://github.com/RestKit/RestKit.git
