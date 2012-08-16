@@ -8,7 +8,10 @@
 
 #import "TALocationInputViewController.h"
 #import "OTPObjectManager.h"
+#import "GPObjectManager.h"
 #import "TALocationField.h"
+#import "TALocationCompletionsController.h"
+#import "TALocationCompletion.h"
 #import "TALocationManager.h"
 #import "TATripPlanNavigator.h"
 #import "TAMapViewController.h"
@@ -16,6 +19,8 @@
 static NSString *const kNavigationTitle = @"Transit";
 
 @interface TALocationInputViewController ()
+
+@property (weak, nonatomic) TALocationField *currentField;
 
 @property (nonatomic) CLLocationCoordinate2D startCoordinate;
 @property (nonatomic) CLLocationCoordinate2D endCoordinate;
@@ -25,9 +30,12 @@ static NSString *const kNavigationTitle = @"Transit";
 
 @end
 
+
 @implementation TALocationInputViewController
 
-@synthesize objectManager = _objectManager;
+@synthesize otpObjectManager = _otpObjectManager;
+@synthesize gpObjectManager = _gpObjectManager;
+@synthesize locationManager = _locationManager;
 
 @synthesize clearButton = _clearButton;
 @synthesize routeButton = _routeButton;
@@ -35,19 +43,26 @@ static NSString *const kNavigationTitle = @"Transit";
 @synthesize startField = _startField;
 @synthesize endField = _endField;
 @synthesize swapFieldsButton = _swapFieldsButton;
-@synthesize suggestedLocationsTable = _suggestedLocationsTable;
+@synthesize completionsTable = _suggestionsTable;
 
-@synthesize locationManager = _locationManager;
+@synthesize currentField = _currentField;
+
+@synthesize completionsController = _completionsController;
+
 @synthesize geocoder = _geocoder;
 
 @synthesize startCoordinate = _startCoordinate;
 @synthesize endCoordinate = _endCoordinate;
 
-- (id)initWithObjectManager:(OTPObjectManager *)objectManager
+- (id)initWithOTPObjectManager:(OTPObjectManager *)otpObjectManager
+               gpObjectManager:(GPObjectManager *)gpObjectManager
+               locationManager:(TALocationManager *)locationManager
 {
     self = [super initWithNibName:@"TALocationInputViewController" bundle:nil];
     if (self) {        
-        _objectManager = objectManager;
+        _otpObjectManager = otpObjectManager;
+        _gpObjectManager = gpObjectManager;
+        _locationManager = locationManager;
     }
     return self;
 }
@@ -82,14 +97,23 @@ static NSString *const kNavigationTitle = @"Transit";
     self.endField.delegate = self;
     
     [self.endField becomeFirstResponder];
+    
+    self.completionsTable.delegate = self;
+    self.completionsTable.dataSource = self;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    [super viewDidAppear:animated];
     
     // It takes a few seconds to find the current location, so we'll prepare it in the background in anticipation
     [self.locationManager startUpdatingLocation];
+    
+    self.completionsController.delegate = self;
+    [self.completionsController fetchCompletions];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -105,24 +129,42 @@ static NSString *const kNavigationTitle = @"Transit";
     
 }
 
+- (void)keyboardDidShow:(NSNotification *)notification
+{
+    NSDictionary* info = [notification userInfo];
+    CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    CGRect tableFrame = self.completionsTable.frame;
+    self.completionsTable.frame = CGRectMake(tableFrame.origin.x, tableFrame.origin.y, tableFrame.size.width, tableFrame.size.height - keyboardSize.height);
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    NSDictionary* info = [notification userInfo];
+    CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    CGRect tableFrame = self.completionsTable.frame;
+    self.completionsTable.frame = CGRectMake(tableFrame.origin.x, tableFrame.origin.y, tableFrame.size.width, tableFrame.size.height + keyboardSize.height);
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
-- (TALocationManager *)locationManager
+- (TALocationCompletionsController *)completionsController
 {
-    if (_locationManager == nil) {
-        _locationManager = [[TALocationManager alloc] init];
-        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-        _locationManager.distanceFilter = 10;
+    if (_completionsController == nil) {
+        _completionsController = [[TALocationCompletionsController alloc] initWithInput:self.currentField.text
+                                                                        gpObjectManager:self.gpObjectManager
+                                                                        locationManager:self.locationManager];
     }
-    return _locationManager;
+    return _completionsController;
 }
 
 - (CLGeocoder *)geocoder
 {
-    if (!_geocoder) {
+    if (_geocoder == nil) {
         _geocoder = [[CLGeocoder alloc] init];
     }
     return _geocoder;
@@ -130,6 +172,10 @@ static NSString *const kNavigationTitle = @"Transit";
 
 - (void)clearFields
 {
+    // Fetch new location completions
+    self.completionsController.input = @"";
+    [self.completionsController fetchCompletions];
+    
     self.startField.text = @"";
     self.endField.text = @"";
     
@@ -222,7 +268,7 @@ static NSString *const kNavigationTitle = @"Transit";
 
 - (void)pushMapViewController
 {
-    [self.objectManager loadTripPlanFrom:self.startCoordinate
+    [self.otpObjectManager loadTripPlanFrom:self.startCoordinate
                                       to:self.endCoordinate
                        completionHandler:^(OTPTripPlan *tripPlan, NSError *error)
     {
@@ -233,7 +279,7 @@ static NSString *const kNavigationTitle = @"Transit";
         
         TATripPlanNavigator *tripPlanNavigator = [[TATripPlanNavigator alloc] initWithTripPlan:tripPlan];
         
-        TAMapViewController *mapController = [[TAMapViewController alloc] initWithObjectManager:self.objectManager
+        TAMapViewController *mapController = [[TAMapViewController alloc] initWithObjectManager:self.otpObjectManager
                                                                               tripPlanNavigator:tripPlanNavigator];
         
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Edit"
@@ -268,6 +314,7 @@ static NSString *const kNavigationTitle = @"Transit";
     self.startField.enabled = NO;
     self.endField.enabled = NO;
     self.swapFieldsButton.enabled = NO;
+    self.completionsTable.allowsSelection = NO;
     [self.view endEditing:YES];
 }
 
@@ -277,6 +324,7 @@ static NSString *const kNavigationTitle = @"Transit";
     self.startField.enabled = YES;
     self.endField.enabled = YES;
     self.swapFieldsButton.enabled = YES;
+    self.completionsTable.allowsSelection = YES;
     [self.endField becomeFirstResponder];
 
     if ([self.startField.text length] > 0 && [self.endField.text length] > 0) {
@@ -290,6 +338,12 @@ static NSString *const kNavigationTitle = @"Transit";
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
+    // Fetch new location completions
+    self.completionsController.input = textField.text;
+    [self.completionsController fetchCompletions];
+    
+    self.currentField = (TALocationField *)textField;
+    
     if (textField == self.endField) {
         if ([self.startField.text length] > 0) {
             self.endField.returnKeyType = UIReturnKeyRoute;
@@ -319,7 +373,11 @@ static NSString *const kNavigationTitle = @"Transit";
 - (BOOL)textField:(UITextField *)textField
     shouldChangeCharactersInRange:(NSRange)range
                 replacementString:(NSString *)string
-{    
+{
+    // Fetch new location completions
+    self.completionsController.input = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    [self.completionsController fetchCompletions];
+    
     int currentLength = [textField.text length];
     int newLength = currentLength - range.length + [string length];
     
@@ -345,6 +403,10 @@ static NSString *const kNavigationTitle = @"Transit";
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField
 {
+    // Fetch new location completions
+    self.completionsController.input = @"";
+    [self.completionsController fetchCompletions];
+    
     if ([self textFieldsWillBeEmpty:textField]) {
         self.clearButton.enabled = NO;
     }
@@ -364,6 +426,33 @@ static NSString *const kNavigationTitle = @"Transit";
 {
     return ((textField == self.startField) && ([self.endField.text length] > 0))
             || ((textField == self.endField) && ([self.startField.text length] > 0));
+}
+
+- (void)controllerDidChangeContent:(TALocationCompletionsController *)controller
+{
+    [self.completionsTable reloadData];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.completionsController numberOfRows];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
+	if (cell == nil)
+	{
+		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellID"];
+	}
+	
+	// get the view controller's info dictionary based on the indexPath's row
+//	NSDictionary* item = [listContent objectAtIndex:indexPath.row];
+    
+    TALocationCompletion *completion = [self.completionsController completionAtIndexPath:indexPath.row];
+	cell.textLabel.text = completion.description;
+	
+	return cell;
 }
 
 @end

@@ -19,5 +19,15 @@ end
 
 get '/ws/plan' do
   content_type 'application/json'
-  render_fixture('response.json')
+  render_fixture('tripPlanResponse.json')
+end
+
+get '/place/autocomplete/json' do
+  content_type 'application/json'
+  render_fixture('autocompleteResponse.json')
+end
+
+get '/place/details/json' do
+  content_type 'application/json'
+  render_fixture('detailsResponse.json')
 end

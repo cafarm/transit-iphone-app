@@ -8,6 +8,8 @@
 
 #import "TALocationManager.h"
 
+CLLocationDistance TARadiusOfInterest = 25000;
+
 @interface TALocationManager ()
 
 @property (readwrite, strong, nonatomic) CLLocation *currentLocation;
@@ -59,7 +61,7 @@
 - (CLRegion *)currentRegion
 {
     return [[CLRegion alloc] initCircularRegionWithCenter:self.currentLocation.coordinate
-                                                   radius:16000 // ~10 miles
+                                                   radius:TARadiusOfInterest
                                                identifier:@"currentRegion"];
 }
 
@@ -67,13 +69,13 @@
 {
     CLLocation *mostRecentLocation = [locations lastObject];
     
-    // test that this isn't cached data
+    // Test that this isn't cached data
     NSTimeInterval locationAge = -[[mostRecentLocation timestamp] timeIntervalSinceNow];
     if (locationAge > 5.0) {
         return;
     }
     
-    // test that the horizontal accuracy does not indicate and invalid measurment
+    // Test that the horizontal accuracy does not indicate and invalid measurment
     if (mostRecentLocation.horizontalAccuracy < 0) {
         return;
     }

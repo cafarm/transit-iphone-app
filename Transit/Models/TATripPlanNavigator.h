@@ -28,7 +28,6 @@
 // Sets current leg and place to first leg and place in new itinerary
 - (OTPItinerary *)moveToItineraryWithIndex:(NSUInteger)index;
 
-
 // Steps
 // A step exists for each place in the itinerary except for the end of walking legs where a step is not useful to a traveler
 @property (readonly, strong, nonatomic) TAStep *currentStep;

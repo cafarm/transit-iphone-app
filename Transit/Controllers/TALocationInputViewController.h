@@ -8,16 +8,23 @@
 
 #import <UIKit/UIKit.h>
 #import "TALocationManager.h"
+#import "TALocationCompletionsController.h"
 
 @class OTPObjectManager;
+@class GPObjectManager;
+@class TALocationCompletionsController;
 @class TALocationField;
 @class TAMapViewController;
 
-@interface TALocationInputViewController : UIViewController <UITextFieldDelegate, TALocationManagerDelegate, UIAlertViewDelegate>
+@interface TALocationInputViewController : UIViewController <TALocationCompletionsControllerDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate>
 
-- (id)initWithObjectManager:(OTPObjectManager *)objectManager;
+- (id)initWithOTPObjectManager:(OTPObjectManager *)otpObjectManager
+               gpObjectManager:(GPObjectManager *)gpObjectManager
+               locationManager:(TALocationManager *)locationManager;
 
-@property (strong, nonatomic) OTPObjectManager *objectManager;
+@property (readonly, nonatomic) OTPObjectManager *otpObjectManager;
+@property (readonly, nonatomic) GPObjectManager *gpObjectManager;
+@property (readonly, nonatomic) TALocationManager *locationManager;
 
 @property (weak, nonatomic) UIBarButtonItem *clearButton;
 @property (weak, nonatomic) UIBarButtonItem *routeButton;
@@ -25,9 +32,10 @@
 @property (weak, nonatomic) IBOutlet TALocationField *startField;
 @property (weak, nonatomic) IBOutlet TALocationField *endField;
 @property (weak, nonatomic) IBOutlet UIButton *swapFieldsButton;
-@property (weak, nonatomic) IBOutlet UITableView *suggestedLocationsTable;
+@property (weak, nonatomic) IBOutlet UITableView *completionsTable;
 
-@property (strong, nonatomic) TALocationManager *locationManager;
+@property (strong, nonatomic) TALocationCompletionsController *completionsController;
+
 @property (strong, nonatomic) CLGeocoder *geocoder;
 
 - (void)clearFields;

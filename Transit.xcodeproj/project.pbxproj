@@ -13,6 +13,8 @@
 		1F342CC615AE4DE800E2A6E8 /* TATransitOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F342CC515AE4DE800E2A6E8 /* TATransitOptionsViewController.m */; };
 		1F34CAB715D70DAE00322C04 /* TACurrentStepAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F34CAB615D70DAE00322C04 /* TACurrentStepAnnotation.m */; };
 		1F36463E15DB50A000E2B156 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F36463315DB505A00E2B156 /* libRestKit.a */; };
+		1F36465115DB671400E2B156 /* TALocationCompletionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F36465015DB671400E2B156 /* TALocationCompletionsController.m */; };
+		1F36465415DB6B3B00E2B156 /* TALocationCompletion.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F36465315DB6B3B00E2B156 /* TALocationCompletion.m */; };
 		1F50B1F315CA6CD3003AC67D /* TALocationField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F50B1F215CA6CD3003AC67D /* TALocationField.m */; };
 		1F50B1F715CB51F7003AC67D /* TALocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F50B1F615CB51F7003AC67D /* TALocationManager.m */; };
 		1F59515D15AC0D98007A4554 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F59515C15AC0D98007A4554 /* UIKit.framework */; };
@@ -164,6 +166,10 @@
 		1F34CAB515D70DAE00322C04 /* TACurrentStepAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TACurrentStepAnnotation.h; path = Models/Annotations/TACurrentStepAnnotation.h; sourceTree = "<group>"; };
 		1F34CAB615D70DAE00322C04 /* TACurrentStepAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TACurrentStepAnnotation.m; path = Models/Annotations/TACurrentStepAnnotation.m; sourceTree = "<group>"; };
 		1F36462715DB505900E2B156 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = Libraries/RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
+		1F36464F15DB671400E2B156 /* TALocationCompletionsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TALocationCompletionsController.h; path = Stores/TALocationCompletionsController.h; sourceTree = "<group>"; };
+		1F36465015DB671400E2B156 /* TALocationCompletionsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TALocationCompletionsController.m; path = Stores/TALocationCompletionsController.m; sourceTree = "<group>"; };
+		1F36465215DB6B3B00E2B156 /* TALocationCompletion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TALocationCompletion.h; path = Models/TALocationCompletion.h; sourceTree = "<group>"; };
+		1F36465315DB6B3B00E2B156 /* TALocationCompletion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TALocationCompletion.m; path = Models/TALocationCompletion.m; sourceTree = "<group>"; };
 		1F50B1F115CA6CD3003AC67D /* TALocationField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TALocationField.h; path = Views/TALocationField.h; sourceTree = "<group>"; };
 		1F50B1F215CA6CD3003AC67D /* TALocationField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TALocationField.m; path = Views/TALocationField.m; sourceTree = "<group>"; };
 		1F50B1F515CB51F7003AC67D /* TALocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TALocationManager.h; path = Stores/TALocationManager.h; sourceTree = "<group>"; };
@@ -289,6 +295,8 @@
 			children = (
 				1F50B1F515CB51F7003AC67D /* TALocationManager.h */,
 				1F50B1F615CB51F7003AC67D /* TALocationManager.m */,
+				1F36464F15DB671400E2B156 /* TALocationCompletionsController.h */,
+				1F36465015DB671400E2B156 /* TALocationCompletionsController.m */,
 			);
 			name = Stores;
 			sourceTree = "<group>";
@@ -460,6 +468,8 @@
 				1F5F66A915D0CF91002B84DE /* TATripPlanNavigator.m */,
 				1FCCF79315D20CFA00AD2A4C /* TAStep.h */,
 				1FCCF79415D20CFA00AD2A4C /* TAStep.m */,
+				1F36465215DB6B3B00E2B156 /* TALocationCompletion.h */,
+				1F36465315DB6B3B00E2B156 /* TALocationCompletion.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -702,6 +712,8 @@
 				1FCCF79515D20CFA00AD2A4C /* TAStep.m in Sources */,
 				1FCCF79815D23C8C00AD2A4C /* TAStepAnnotation.m in Sources */,
 				1F34CAB715D70DAE00322C04 /* TACurrentStepAnnotation.m in Sources */,
+				1F36465115DB671400E2B156 /* TALocationCompletionsController.m in Sources */,
+				1F36465415DB6B3B00E2B156 /* TALocationCompletion.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

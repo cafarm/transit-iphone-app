@@ -8,6 +8,8 @@
 
 #import <CoreLocation/CoreLocation.h>
 
+extern CLLocationDistance TARadiusOfInterest;
+
 @protocol TALocationManagerDelegate;
 
 @interface TALocationManager : NSObject <CLLocationManagerDelegate>
@@ -24,6 +26,7 @@
 @property (readonly, strong, nonatomic) CLRegion *currentRegion;
 
 @end
+
 
 @protocol TALocationManagerDelegate <NSObject>
 

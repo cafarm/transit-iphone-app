@@ -8,20 +8,31 @@
 
 #import "TAAppDelegate.h"
 #import "OTPObjectManager.h"
+#import "GPObjectManager.h"
+#import "TALocationManager.h"
 #import "TALocationInputViewController.h"
 
 @implementation TAAppDelegate
 
-@synthesize objectManager=_objectManager;
+@synthesize otpObjectManager=_otpObjectManager;
 @synthesize navigationController=_navigationController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
-    self.objectManager = [[OTPObjectManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://localhost:4567"]];
+    self.otpObjectManager = [[OTPObjectManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://localhost:4567"]];
     
-    TALocationInputViewController *inputController = [[TALocationInputViewController alloc] initWithObjectManager:self.objectManager];
+    //self.gpObjectManager = [[GPObjectManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://localhost:4567"] apiKey:@"AIzaSyCXTU7jtaUbbQ4ZouFEKabc2VfJv260YhE"];
+    self.gpObjectManager = [[GPObjectManager alloc] initWithBaseURL:[NSURL URLWithString:@"https://maps.googleapis.com/maps/api"] apiKey:@"AIzaSyCXTU7jtaUbbQ4ZouFEKabc2VfJv260YhE"];
+    
+    self.locationManager = [[TALocationManager alloc] init];
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    self.locationManager.distanceFilter = 10;
+    
+    TALocationInputViewController *inputController = [[TALocationInputViewController alloc] initWithOTPObjectManager:self.otpObjectManager
+                                                                                                     gpObjectManager:self.gpObjectManager
+                                                                                                     locationManager:self.locationManager];
     
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:inputController];
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
