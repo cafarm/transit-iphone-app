@@ -1,0 +1,175 @@
+{
+   "predictions" : [
+      {
+         "description" : "Chipotle Mexican Grill, 4th Avenue, Seattle, WA, United States",
+         "id" : "db041c33c89d8ed71daedf34fe781fe0ee5a99d7",
+         "matched_substrings" : [
+            {
+               "length" : 6,
+               "offset" : 0
+            }
+         ],
+         "reference" : "CoQBdwAAAEdboelq1A0WAnx5owe7C-AXqyTZYmIxWsJU5LvBBnffgiqOUOVrwKBxdAUFrI0K9WdEvi1xzijctqwA-a_UUZxUCPjcGXgTzfQQ1wkMliQ40ntEMAnJ08Zg-QBCPM9HxauBGm86vs4e8aSR5BAV9NQNJtUtKgLjDDpl2lp0BAJdEhDMTtwMkLf_G3f_g4v0W6DqGhRUaQ5BbOT5idq8JyARYzkq_zwK0g",
+         "terms" : [
+            {
+               "offset" : 0,
+               "value" : "Chipotle Mexican Grill"
+            },
+            {
+               "offset" : 24,
+               "value" : "4th Avenue"
+            },
+            {
+               "offset" : 36,
+               "value" : "Seattle"
+            },
+            {
+               "offset" : 45,
+               "value" : "WA"
+            },
+            {
+               "offset" : 49,
+               "value" : "United States"
+            }
+         ],
+         "types" : [ "establishment" ]
+      },
+      {
+         "description" : "Chipotle Mexican Grill, Northeast 4th Street, Bellevue, WA, United States",
+         "id" : "2d0ac4e7bb6d4380483b578b8f933be7c8cbdf47",
+         "matched_substrings" : [
+            {
+               "length" : 6,
+               "offset" : 0
+            }
+         ],
+         "reference" : "CpQBgQAAAONjXFcVJ53czE6ZIRZtcGN5B6CPqlxZ0SBeey6UhrxLbPXK16_quRqKxG0qahuacma17c8OZHxSLHt8EbL9F6YugLt5Qba8itoSN70k_WavYVfDZnVEWH0HSeO-HrtAdhGoJxqubmRR5jkFEXST3qdCuXV04I09JRY54UwZeq5sBzvVbDj-g05hNT2r36PPbxIQ_qUeMojsIEr26SQEIVQHyBoUJHDlonfYKv94RthCJn3j2mThXeI",
+         "terms" : [
+            {
+               "offset" : 0,
+               "value" : "Chipotle Mexican Grill"
+            },
+            {
+               "offset" : 24,
+               "value" : "Northeast 4th Street"
+            },
+            {
+               "offset" : 46,
+               "value" : "Bellevue"
+            },
+            {
+               "offset" : 56,
+               "value" : "WA"
+            },
+            {
+               "offset" : 60,
+               "value" : "United States"
+            }
+         ],
+         "types" : [ "establishment" ]
+      },
+      {
+         "description" : "Chipotle Mexican Grill, University Way Northeast, Seattle, WA, United States",
+         "id" : "a246472a728e7412d53154269e29815870880bce",
+         "matched_substrings" : [
+            {
+               "length" : 6,
+               "offset" : 0
+            }
+         ],
+         "reference" : "CpQBhQAAAJNIJd6oP1o37uVZWmtW0GiTdlzSKvrDWhn01_TaiZPpZpQdM_wAIP2ArrkiDcZ_fNQIbAm4VjTW3y2e5HkPxHnyWZnDzOE_lHsUaJqwhfpR_E0ev4J5U2oZHgApM_1NgYexkN5nG067CB5nZgeu4bQx_1LUOiDK87f8azH0piMbR-U2bRRFEl72YmxNdUIykhIQn2LXbMINUqICaDZuWIyp-xoUM7IuvNMqQdtbVGgCQC34huBnoNA",
+         "terms" : [
+            {
+               "offset" : 0,
+               "value" : "Chipotle Mexican Grill"
+            },
+            {
+               "offset" : 24,
+               "value" : "University Way Northeast"
+            },
+            {
+               "offset" : 50,
+               "value" : "Seattle"
+            },
+            {
+               "offset" : 59,
+               "value" : "WA"
+            },
+            {
+               "offset" : 63,
+               "value" : "United States"
+            }
+         ],
+         "types" : [ "establishment" ]
+      },
+      {
+         "description" : "Chipotle Mexican Grill, 196th Street Southwest, Lynnwood, WA, United States",
+         "id" : "2ed37e25021386086f95ae5926a54d2c09b82ee5",
+         "matched_substrings" : [
+            {
+               "length" : 6,
+               "offset" : 0
+            }
+         ],
+         "reference" : "CpQBhAAAACcBmc_VDt6u9WOnak6Am_dlSlF46KVQfci-Jq5w7P3unhP_CVMURhPWGHKX7BvuY_EDW4XUgjvxyoBf_RsH9E7B9IClb3c0jBuxzSKZNN2HNlCltOgaJ4xgYo6Al3qQ3HWcShYcq5svOV0ZUuiWxA8CONU1POlyyk6NeClHS5JJKXEjl69NLa0wFSSY-OewXRIQ18hDu_D6Q1h9fxO7ygicsRoUxUo7bnCffb6OwqjQxCn777FI-nQ",
+         "terms" : [
+            {
+               "offset" : 0,
+               "value" : "Chipotle Mexican Grill"
+            },
+            {
+               "offset" : 24,
+               "value" : "196th Street Southwest"
+            },
+            {
+               "offset" : 48,
+               "value" : "Lynnwood"
+            },
+            {
+               "offset" : 58,
+               "value" : "WA"
+            },
+            {
+               "offset" : 62,
+               "value" : "United States"
+            }
+         ],
+         "types" : [ "establishment" ]
+      },
+      {
+         "description" : "Chipotle Mexican Grill, Redmond Way, Redmond, WA, United States",
+         "id" : "19da54190468fa687b05c4322528f3f2f26416fc",
+         "matched_substrings" : [
+            {
+               "length" : 6,
+               "offset" : 0
+            }
+         ],
+         "reference" : "CoQBdwAAAH-77hJm6KkUvTk8cpbQqQOGMrWG7A4PWUoEaEq0CPhvtRgC0J7HMq6yuU140afH95D5gzt7JMm0ThuOEUHlB9nSdxe--MijXo9Kph4Cw24ytHJd8_M97z12jnxrU9d1SfbczOzIF_zvyw-nMe4JekBVgS0cShO4IAI3C6Dnt9QeEhBPWGQf4MAuCz4rnZzCEGw6GhS4xhm-5cm74ecMqeO7Kexl6wET9w",
+         "terms" : [
+            {
+               "offset" : 0,
+               "value" : "Chipotle Mexican Grill"
+            },
+            {
+               "offset" : 24,
+               "value" : "Redmond Way"
+            },
+            {
+               "offset" : 37,
+               "value" : "Redmond"
+            },
+            {
+               "offset" : 46,
+               "value" : "WA"
+            },
+            {
+               "offset" : 50,
+               "value" : "United States"
+            }
+         ],
+         "types" : [ "establishment" ]
+      }
+   ],
+   "status" : "OK"
+}
