@@ -8,15 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "TALocationManager.h"
-#import "TALocationCompletionsController.h"
+#import "TACompletionsController.h"
+#import "TALocationField.h"
 
 @class OTPObjectManager;
 @class GPObjectManager;
-@class TALocationCompletionsController;
-@class TALocationField;
+@class TACompletionsController;
 @class TAMapViewController;
 
-@interface TALocationInputViewController : UIViewController <TALocationCompletionsControllerDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate>
+@interface TALocationInputViewController : UIViewController <TACompletionsControllerDelegate, UITableViewDataSource, UITableViewDelegate, TALocationFieldDelegate, UIAlertViewDelegate>
 
 - (id)initWithOTPObjectManager:(OTPObjectManager *)otpObjectManager
                gpObjectManager:(GPObjectManager *)gpObjectManager
@@ -34,7 +34,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *swapFieldsButton;
 @property (weak, nonatomic) IBOutlet UITableView *completionsTable;
 
-@property (strong, nonatomic) TALocationCompletionsController *completionsController;
+@property (strong, nonatomic) TACompletionsController *completionsController;
 
 @property (strong, nonatomic) CLGeocoder *geocoder;
 

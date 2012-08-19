@@ -2,33 +2,96 @@
 //  TALocationField.m
 //  Transit
 //
-//  Created by Mark Cafaro on 8/2/12.
+//  Created by Mark Cafaro on 8/18/12.
 //  Copyright (c) 2012 Seven O' Eight. All rights reserved.
 //
 
 #import "TALocationField.h"
+#import "UIColor+Transit.h"
+
+@interface TALocationField ()
+
+@property (strong, nonatomic) UITextField *textField;
+
+@property (strong, nonatomic) UITextField *currentLocationField;
+@property (strong, nonatomic) UIImageView *currentLocationTag;
+
+@end
+
 
 @implementation TALocationField
 
+@synthesize text = _text;
+
 @synthesize leftViewText = _leftViewText;
 
-@synthesize isCurrentLocation = _isCurrentLocation;
+@synthesize isComplete = _isComplete;
 
-- (id)initWithFrame:(CGRect)frame
+@synthesize contentType = _contentType;
+
+@synthesize delegate = _delegate;
+
+@synthesize textField = _textField;
+
+@synthesize currentLocationField = _currentLocationField;
+@synthesize currentLocationTag = _currentLocationTag;
+
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithFrame:frame];
+    self = [super initWithCoder:aDecoder];
     if (self) {
-        // Initialization code
+        self.backgroundColor = [UIColor clearColor];
+        
+        _textField = [[UITextField alloc] initWithFrame:self.bounds];
+        _textField.font = [UIFont systemFontOfSize:15];
+        _textField.autocorrectionType = UITextAutocorrectionTypeNo;
+        _textField.keyboardType = UIKeyboardTypeDefault;
+        _textField.returnKeyType = UIReturnKeyNext;
+        _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        _textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+        _textField.backgroundColor = [UIColor whiteColor];
+        _textField.delegate = self;
+        [self addSubview:_textField];
+                
+        // A convenient way to hide the input cursor and show the current location text when needed
+        _currentLocationField = [[UITextField alloc] initWithFrame:self.bounds];
+        _currentLocationField.font = _textField.font;
+        _currentLocationField.contentVerticalAlignment = _textField.contentVerticalAlignment;
+        _currentLocationField.backgroundColor = _textField.backgroundColor;
+        _currentLocationField.text = @"Current Location";
+        _currentLocationField.textColor = [UIColor currentLocationColor];
+        _currentLocationField.hidden = YES;
+        _currentLocationField.delegate = self;
+        [self addSubview:_currentLocationField];
+        
+        _currentLocationTag = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"CurrentLocationTag"]];
+        CGRect tagFrame = _currentLocationTag.frame;
+        _currentLocationTag.frame = CGRectMake(tagFrame.origin.x + 37, tagFrame.origin.y + 4, tagFrame.size.width, tagFrame.size.height);
+        _currentLocationTag.hidden = YES;
+        [self addSubview:_currentLocationTag];
+        
+        _contentType = TALocationFieldContentTypeDefault;
     }
     return self;
 }
 
+- (void)setText:(NSString *)text
+{
+    self.textField.text = text;
+}
+
+- (NSString *)text
+{
+    return self.textField.text;
+}
+
 - (void)setLeftViewText:(NSString *)leftViewText
 {
-    self.leftViewMode = UITextFieldViewModeAlways;
+    self.textField.leftViewMode = UITextFieldViewModeAlways;
+    self.currentLocationField.leftViewMode = UITextFieldViewModeAlways;
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, -1, 45, 31)];
-    label.font = self.font;
+    label.font = self.textField.font;
     label.textAlignment = UITextAlignmentRight;
     label.textColor = [UIColor grayColor];
     label.backgroundColor = [UIColor clearColor];
@@ -38,22 +101,223 @@
     UIView *view = [[UIView alloc] init];
     view.frame = label.frame;
     view.backgroundColor = [UIColor clearColor];
+    view.userInteractionEnabled = NO;
     [view addSubview:label];
     
-    self.leftView = view;
+    self.textField.leftView = view;
+    
+    NSData *temp = [NSKeyedArchiver archivedDataWithRootObject:view];
+    UIView *viewCopy = [NSKeyedUnarchiver unarchiveObjectWithData:temp];
+    self.currentLocationField.leftView = viewCopy;
     
     _leftViewText = leftViewText;
 }
 
-- (void)setIsCurrentLocation:(BOOL)isCurrentLocation
+- (BOOL)isComplete
 {
-    if (isCurrentLocation) {
-        self.text = @"Current Location";
+    return [self.textField.text length] > 0 || self.contentType == TALocationFieldContentTypeCurrentLocation;
+}
+
+- (void)setContentType:(TALocationFieldContentType)contentType
+{
+    if (contentType != TALocationFieldContentTypeCurrentLocation) {
+        self.currentLocationTag.hidden = YES;
+        self.currentLocationField.hidden = YES;
     } else {
-        self.text = @"";
+        if (self.isFirstResponder) {
+            self.currentLocationTag.hidden = NO;
+            self.currentLocationField.clearButtonMode = UITextFieldViewModeAlways;
+        } else {
+            self.currentLocationTag.hidden = YES;
+            self.currentLocationField.clearButtonMode = UITextFieldViewModeNever;
+        }
+        self.currentLocationField.hidden = NO;
+        self.textField.text = @"";
+    }
+    _contentType = contentType;
+}
+
+- (BOOL)isFirstResponder
+{
+    return self.textField.isFirstResponder;
+}
+
+- (BOOL)becomeFirstResponder
+{
+    return [self.textField becomeFirstResponder];
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    BOOL shouldBegin = YES;
+    
+    if ([self.delegate respondsToSelector:@selector(locationFieldShouldBeginEditing:)]) {
+        shouldBegin = [self.delegate locationFieldShouldBeginEditing:self];
     }
     
-    _isCurrentLocation = isCurrentLocation;
+    return shouldBegin;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if (self.contentType == TALocationFieldContentTypeCurrentLocation) {
+        self.currentLocationTag.hidden = NO;
+        self.currentLocationField.clearButtonMode = UITextFieldViewModeAlways;
+        [self.textField becomeFirstResponder];
+    }
+    
+    if ([self.delegate respondsToSelector:@selector(locationFieldDidBeginEditing:)]) {
+        [self.delegate locationFieldDidBeginEditing:self];
+    }
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    BOOL shouldEnd = YES;
+    
+    if ([self.delegate respondsToSelector:@selector(locationFieldShouldEndEditing:)]) {
+        shouldEnd = [self.delegate locationFieldShouldEndEditing:self];
+    }
+    
+    return shouldEnd;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if (self.contentType == TALocationFieldContentTypeCurrentLocation) {
+        self.currentLocationTag.hidden = YES;
+        self.currentLocationField.clearButtonMode = UITextFieldViewModeNever;
+    }
+    
+    if ([self.delegate respondsToSelector:@selector(locationFieldDidEndEditing:)]) {
+        [self.delegate locationFieldDidEndEditing:self];
+    }
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    BOOL shouldChange = YES;
+    
+    if ([self.delegate respondsToSelector:@selector(locationField:shouldChangeCharactersInRange:replacementString:)]) {
+        shouldChange = [self.delegate locationField:self shouldChangeCharactersInRange:range replacementString:string];
+    }
+    
+    if (shouldChange) {
+        self.contentType = TALocationFieldContentTypeDefault;
+        self.currentLocationTag.hidden = YES;
+        self.currentLocationField.hidden = YES;
+    }
+    
+    return shouldChange;
+}
+
+- (BOOL)textFieldShouldClear:(UITextField *)textField
+{
+    BOOL shouldClear = YES;
+    
+    if ([self.delegate respondsToSelector:@selector(locationFieldShouldClear:)]) {
+        shouldClear = [self.delegate locationFieldShouldClear:self];
+    }
+    
+    if (shouldClear) {
+        self.contentType = TALocationFieldContentTypeDefault;
+        self.currentLocationTag.hidden = YES;
+        self.currentLocationField.hidden = YES;
+        if (textField == self.currentLocationField) {
+            return NO;
+        }
+    }
+    
+    return shouldClear;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if ([self.delegate respondsToSelector:@selector(locationFieldShouldReturn:)]) {
+        return [self.delegate locationFieldShouldReturn:self];
+    } else {
+        return YES;
+    }
+}
+
+- (void)setAutocapitalizationType:(UITextAutocapitalizationType)autocapitalizationType
+{
+    self.textField.autocapitalizationType = autocapitalizationType;
+}
+
+- (UITextAutocapitalizationType)autocapitalizationType
+{
+    return self.textField.autocapitalizationType;
+}
+
+- (void)setAutocorrectionType:(UITextAutocorrectionType)autocorrectionType
+{
+    self.textField.autocorrectionType = autocorrectionType;
+}
+
+- (UITextAutocorrectionType)autocorrectionType
+{
+    return self.textField.autocorrectionType;
+}
+
+- (void)setEnablesReturnKeyAutomatically:(BOOL)enablesReturnKeyAutomatically
+{
+    self.textField.enablesReturnKeyAutomatically = enablesReturnKeyAutomatically;
+}
+
+- (BOOL)enablesReturnKeyAutomatically
+{
+    return self.textField.enablesReturnKeyAutomatically;
+}
+
+- (void)setKeyboardAppearance:(UIKeyboardAppearance)keyboardAppearance
+{
+    self.textField.keyboardAppearance = keyboardAppearance;
+}
+
+- (UIKeyboardAppearance)keyboardAppearance
+{
+    return self.textField.keyboardAppearance;
+}
+
+- (void)setKeyboardType:(UIKeyboardType)keyboardType
+{
+    self.textField.keyboardType = keyboardType;
+}
+
+- (UIKeyboardType)keyboardType
+{
+    return self.textField.keyboardType;
+}
+
+- (void)setReturnKeyType:(UIReturnKeyType)returnKeyType
+{
+    self.textField.returnKeyType = returnKeyType;
+}
+
+- (UIReturnKeyType)returnKeyType
+{
+    return self.textField.returnKeyType;
+}
+
+- (void)setSecureTextEntry:(BOOL)secureTextEntry
+{
+    self.textField.secureTextEntry = secureTextEntry;
+}
+
+- (BOOL)isSecureTextEntry
+{
+    return self.textField.isSecureTextEntry;
+}
+
+- (void)setSpellCheckingType:(UITextSpellCheckingType)spellCheckingType
+{
+    self.textField.spellCheckingType = spellCheckingType;
+}
+
+- (UITextSpellCheckingType)spellCheckingType
+{
+    return self.textField.spellCheckingType;
 }
 
 /*

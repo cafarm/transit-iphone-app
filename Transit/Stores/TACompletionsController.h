@@ -9,12 +9,13 @@
 #import <Foundation/Foundation.h>
 
 @class GPObjectManager;
-@class TALocationCompletion;
+@class TACompletion;
+@class TATripPlanCompletion;
 @class TALocationManager;
 
-@protocol TALocationCompletionsControllerDelegate;
+@protocol TACompletionsControllerDelegate;
 
-@interface TALocationCompletionsController : NSObject
+@interface TACompletionsController : NSObject
 
 - (id)initWithInput:(NSString *)input
     gpObjectManager:(GPObjectManager *)gpObjectManager
@@ -24,21 +25,22 @@
 @property (readonly, strong, nonatomic) GPObjectManager *gpObjectManager;
 @property (readonly, strong, nonatomic) TALocationManager *locationManager;
 
-- (void)fetchCompletions;
-@property (weak, nonatomic) id<TALocationCompletionsControllerDelegate> delegate;
-
+- (void)fetchCompletionsIncludingCurrentLocation:(BOOL)shouldIncludeCurrentLocation;
+@property (weak, nonatomic) id<TACompletionsControllerDelegate> delegate;
 @property (readonly, strong, nonatomic) NSArray *fetchedCompletions;
-- (TALocationCompletion *)completionAtIndexPath:(NSUInteger)indexPath;
+- (TACompletion *)completionAtIndexPath:(NSUInteger)indexPath;
 
 - (NSUInteger)numberOfRows;
+
+- (void)addTripPlanCompletion:(TATripPlanCompletion *)completion;
 
 @end
 
 
-@protocol TALocationCompletionsControllerDelegate <NSObject>
+@protocol TACompletionsControllerDelegate <NSObject>
 
 @optional
 
-- (void)controllerDidChangeContent:(TALocationCompletionsController *)controller;
+- (void)controllerDidChangeContent:(TACompletionsController *)controller;
 
 @end
