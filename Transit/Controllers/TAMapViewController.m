@@ -7,19 +7,16 @@
 //
 
 #import "TAMapViewController.h"
-#import "MKMapView+Transit.h"
 #import "TALocationManager.h"
-#import "OTPTripPlan.h"
 #import "TATripPlanNavigator.h"
-#import "OTPItinerary.h"
-#import "OTPLeg.h"
-#import "OTPPlace.h"
 #import "TAStep.h"
 #import "TADirectionsTableViewController.h"
 #import "TATransitOptionsViewController.h"
 #import "TAStepView.h"
 #import "TAStepAnnotation.h"
 #import "TACurrentStepAnnotation.h"
+#import "OTPClient.h"
+#import "MKMapView+Transit.h"
 
 typedef enum {
     TACurrentLocation,

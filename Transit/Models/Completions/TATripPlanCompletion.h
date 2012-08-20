@@ -10,7 +10,7 @@
 
 @class TAPlacemark;
 
-@interface TATripPlanCompletion : TACompletion
+@interface TATripPlanCompletion : TACompletion <NSCoding>
 
 - (id)initWithFrom:(TAPlacemark *)from to:(TAPlacemark *)to;
 

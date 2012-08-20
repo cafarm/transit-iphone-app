@@ -9,11 +9,8 @@
 #import <SenTestingKit/SenTestingKit.h>
 
 #import "TATripPlanNavigator.h"
-#import "OTPTripPlan.h"
-#import "OTPItinerary.h"
-#import "OTPLeg.h"
-#import "OTPPlace.h"
 #import "TAStep.h"
+#import "OTPClient.h"
 
 @interface TATripPlanNavigatorTest : SenTestCase
 
@@ -36,9 +33,9 @@
             leg.to = [[OTPPlace alloc] init];
             
             if (j % 2 == 0) {
-                leg.mode = OTPWalk;
+                leg.mode = OTPLegTraverseModeWalk;
             } else {
-                leg.mode = OTPBus;
+                leg.mode = OTPLegTraverseModeBus;
             }
             
             leg.itinerary = itinerary;

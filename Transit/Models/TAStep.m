@@ -7,8 +7,7 @@
 //
 
 #import "TAStep.h"
-#import "OTPItinerary.h"
-#import "OTPPlace.h"
+#import "OTPClient.h"
 
 @interface TAStep ()
 
@@ -41,7 +40,7 @@
         if (!currentLeg.isInterlinedWithPreviousLeg) {
             // We're on a new set of legs, we always need a "from" step in that case
             fromStep = [[TAStep alloc] initWithLegs:[NSMutableArray arrayWithObject:currentLeg]
-                                           fromOrTo:TAFrom
+                                           fromOrTo:TAStepFrom
                                        previousStep:[steps lastObject]];
             [steps addObject:fromStep];
         } else {
@@ -56,10 +55,10 @@
         }
         
         // If we're on the last leg or we're ending a leg set and it wasn't a walking leg set, add a "to" step
-        if (nextLeg == nil || (!nextLeg.isInterlinedWithPreviousLeg && currentLeg.mode != OTPWalk)) {
+        if (nextLeg == nil || (!nextLeg.isInterlinedWithPreviousLeg && currentLeg.mode != OTPLegTraverseModeWalk)) {
             
             TAStep *toStep = [[TAStep alloc] initWithLegs:fromStep.legs
-                                                 fromOrTo:TATo
+                                                 fromOrTo:TAStepTo
                                              previousStep:[steps lastObject]];
             [steps addObject:toStep];
         }
@@ -67,7 +66,7 @@
     return steps;
 }
 
-- (id)initWithLegs:(NSMutableArray *)legs fromOrTo:(TAFromOrTo)fromOrTo previousStep:(TAStep *)previousStep
+- (id)initWithLegs:(NSMutableArray *)legs fromOrTo:(TAStepFromOrTo)fromOrTo previousStep:(TAStep *)previousStep
 {
     self = [super init];
     if (self) {
@@ -85,7 +84,7 @@
 - (OTPLeg *)placeLeg
 {
     if (_placeLeg == nil) {
-        if (self.fromOrTo == TAFrom) {
+        if (self.fromOrTo == TAStepFrom) {
             return [self.legs objectAtIndex:0];
         } else {
             return [self.legs lastObject];
@@ -97,7 +96,7 @@
 - (OTPPlace *)place
 {
     if (_place == nil) {
-        if (self.fromOrTo == TAFrom) {
+        if (self.fromOrTo == TAStepFrom) {
             return self.placeLeg.from;
         } else {
             return self.placeLeg.to;
@@ -106,7 +105,7 @@
     return _place;
 }
 
-- (OTPTraverseMode)mode
+- (OTPLegTraverseMode)mode
 {
     return self.placeLeg.mode;
 }

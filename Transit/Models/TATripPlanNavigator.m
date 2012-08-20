@@ -7,11 +7,8 @@
 //
 
 #import "TATripPlanNavigator.h"
-#import "OTPTripPlan.h"
-#import "OTPItinerary.h"
-#import "OTPLeg.h"
-#import "OTPPlace.h"
 #import "TAStep.h"
+#import "OTPClient.h"
 
 @interface TATripPlanNavigator ()
 

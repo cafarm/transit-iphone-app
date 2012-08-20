@@ -10,15 +10,19 @@
 
 @class CLPlacemark;
 @class CLLocation;
+@class GPDetailsResult;
 
-@interface TAPlacemark : NSObject
+@interface TAPlacemark : NSObject <NSCoding>
 
 + (TAPlacemark *)currentLocation;
-+ (TAPlacemark *)placemarkWithCLPlacemark:(CLPlacemark *)clPlacemark;
++ (TAPlacemark *)placemarkWithCLPlacemark:(CLPlacemark *)placemark;
++ (TAPlacemark *)placemarkWithGPDetailsResult:(GPDetailsResult *)result;
 
-- (id)initWithName:(NSString *)name location:(CLLocation *)location isCurrentLocation:(BOOL)isCurrentLocation;
+- (id)initWithName:(NSString *)name vicinity:(NSString *)vicinity types:(NSArray *)types location:(CLLocation *)location isCurrentLocation:(BOOL)isCurrentLocation;
 
 @property (readonly, nonatomic) NSString *name;
+@property (readonly, nonatomic) NSString *vicinity;
+@property (readonly, nonatomic) NSArray *types;
 @property (readonly, nonatomic) CLLocation *location;
 @property (readonly, nonatomic) BOOL isCurrentLocation;
 

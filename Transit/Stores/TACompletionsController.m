@@ -7,13 +7,12 @@
 //
 
 #import "TACompletionsController.h"
-#import "GPObjectManager.h"
 #import "TALocationManager.h"
 #import "TACurrentLocationCompletion.h"
 #import "TATripPlanCompletion.h"
 #import "TAPlaceCompletion.h"
 #import "TAAttributionCompletion.h"
-#import "GPAutocompletePrediction.h"
+#import "GPClient.h"
 
 @interface TACompletionsController()
 
@@ -174,6 +173,9 @@
     }
 
     [self.tripPlanCompletions insertObject:completion atIndex:0];
+    
+    NSString *path = [self tripPlanCompletionArchivePath];
+    [NSKeyedArchiver archiveRootObject:self.tripPlanCompletions toFile:path];
 }
 
 - (NSString *)tripPlanCompletionArchivePath

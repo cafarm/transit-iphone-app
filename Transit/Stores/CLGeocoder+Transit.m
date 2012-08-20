@@ -26,12 +26,8 @@
                                       completionHandler:^(GPDetailsResult *result, NSError *error)
         {
             TAPlacemark *placemark;
-            if (error == nil) {
-                GPDetailsLocation *resultLocation = result.geometry.location;
-                CLLocation *location = [[CLLocation alloc] initWithLatitude:[resultLocation.latitude doubleValue]
-                                                                  longitude:[resultLocation.longitude doubleValue]];
-                
-                placemark = [[TAPlacemark alloc] initWithName:result.name location:location isCurrentLocation:NO];
+            if (error == nil) {                
+                placemark = [TAPlacemark placemarkWithGPDetailsResult:result];
             }
             completionHandler(placemark, error);
         }];

@@ -7,8 +7,6 @@
 //
 
 #import "TALocationInputViewController.h"
-#import "OTPObjectManager.h"
-#import "GPObjectManager.h"
 #import "TALocationField.h"
 #import "TACompletionsController.h"
 #import "TAAttributionCompletion.h"
@@ -21,6 +19,8 @@
 #import "TAPlaceCompletion.h"
 #import "TAAttributionCompletion.h"
 #import "TAPlacemark.h"
+#import "OTPClient.h"
+#import "GPClient.h"
 #import "CLGeocoder+Transit.h"
 
 static NSString *const kNavigationTitle = @"Transit";
@@ -299,6 +299,10 @@ static NSString *const kNavigationTitle = @"Transit";
             return;
         }
         
+        // Add this trip to the completions so the user can come back to it at a later date
+        TATripPlanCompletion *completion = [[TATripPlanCompletion alloc] initWithFrom:self.startPlacemark to:self.endPlacemark];
+        [self.completionsController addTripPlanCompletion:completion];
+        
         TATripPlanNavigator *tripPlanNavigator = [[TATripPlanNavigator alloc] initWithTripPlan:tripPlan];
         
         TAMapViewController *mapController = [[TAMapViewController alloc] initWithObjectManager:self.otpObjectManager
@@ -521,7 +525,7 @@ static NSString *const kNavigationTitle = @"Transit";
         {
             cell = [[TACompletionTableViewCell alloc] initWithStyle:TACompletionTableViewCellStyleCurrentLocation reuseIdentifier:@"currenLocationCellID"];
         }
-        cell.textLabel.text = @"Current Location";
+        cell.textLabel.text = TALocationFieldCurrentLocationText;
         cell.imageView.image = [UIImage imageNamed:@"CurrentStepAnnotation"];
         
     } else if ([completion isKindOfClass:[TATripPlanCompletion class]]) {
@@ -530,8 +534,9 @@ static NSString *const kNavigationTitle = @"Transit";
         {
             cell = [[TACompletionTableViewCell alloc] initWithStyle:TACompletionTableViewCellStyleTripPlan reuseIdentifier:@"tripPlanCellID"];
         }
-        cell.textLabel.text = ((TATripPlanCompletion *)completion).from.name;
-        cell.detailTextLabel.text = ((TATripPlanCompletion *)completion).to.name;
+        TATripPlanCompletion *tripPlanCompletion = (TATripPlanCompletion *)completion;
+        cell.textLabel.text = tripPlanCompletion.from.description;
+        cell.detailTextLabel.text = tripPlanCompletion.to.description;
         cell.imageView.image = [UIImage imageNamed:@"CurrentStepAnnotation"];
         
     } else if ([completion isKindOfClass:[TAPlaceCompletion class]]) {
@@ -560,12 +565,18 @@ static NSString *const kNavigationTitle = @"Transit";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TACompletion *completion = [self.completionsController completionAtIndexPath:indexPath.row];
+    
+    // We don't have to do any geocoding with stored trip completions, just load the from and to and push the map
+    if ([completion isKindOfClass:[TATripPlanCompletion class]]) {
+        self.startPlacemark = ((TATripPlanCompletion *)completion).from;
+        self.endPlacemark = ((TATripPlanCompletion *)completion).to;
+        [self pushMapViewController];
+        return;
+    }
 
     if ([completion isKindOfClass:[TACurrentLocationCompletion class]]) {
         [self firstResponderField].contentType = TALocationFieldContentTypeCurrentLocation;
         
-    } else if ([completion isKindOfClass:[TATripPlanCompletion class]]) {
-
     } else if ([completion isKindOfClass:[TAPlaceCompletion class]]) {
         self.firstResponderField.contentType = TALocationFieldContentTypeGooglePlace;
         

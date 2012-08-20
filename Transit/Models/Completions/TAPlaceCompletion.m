@@ -7,8 +7,7 @@
 //
 
 #import "TAPlaceCompletion.h"
-#import "GPAutocompletePrediction.h"
-#import "GPAutocompleteTerm.h"
+#import "GPClient.h"
 
 @implementation TAPlaceCompletion
 

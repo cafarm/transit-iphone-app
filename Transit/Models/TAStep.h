@@ -9,16 +9,16 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
-#import "OTPLeg.h"
+#import "OTPClient.h"
 
 @class OTPItinerary;
 @class OTPPlace;
 @class OTPAgencyAndID;
 
 typedef enum {
-    TAFrom,
-    TATo
-} TAFromOrTo;
+    TAStepFrom,
+    TAStepTo
+} TAStepFromOrTo;
 
 @interface TAStep : NSObject
 
@@ -28,17 +28,17 @@ typedef enum {
 // - Interlined legs
 + (NSArray *)stepsWithItinerary:(OTPItinerary *)itinerary;
 
-- (id)initWithLegs:(NSArray *)legs fromOrTo:(TAFromOrTo)fromOrTo previousStep:(TAStep *)previousStep;
+- (id)initWithLegs:(NSArray *)legs fromOrTo:(TAStepFromOrTo)fromOrTo previousStep:(TAStep *)previousStep;
 
 @property (readonly, strong, nonatomic) NSMutableArray *legs;
 @property (readonly, nonatomic) OTPPlace *place;
 @property (readonly, nonatomic) OTPLeg *placeLeg;
 
-@property (readonly, nonatomic) TAFromOrTo fromOrTo;
+@property (readonly, nonatomic) TAStepFromOrTo fromOrTo;
 
 @property (readonly, nonatomic) TAStep *previousStep;
 
-@property (readonly, nonatomic) OTPTraverseMode mode;
+@property (readonly, nonatomic) OTPLegTraverseMode mode;
 @property (readonly, nonatomic) NSString *route;
 @property (readonly, nonatomic) NSString *fromRoute;
 @property (readonly, nonatomic) NSString *tripShortName;

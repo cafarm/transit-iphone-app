@@ -24,4 +24,15 @@
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    return [self initWithFrom:[aDecoder decodeObjectForKey:@"from"] to:[aDecoder decodeObjectForKey:@"to"]];
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.from forKey:@"from"];
+    [aCoder encodeObject:self.to forKey:@"to"];
+}
+
 @end

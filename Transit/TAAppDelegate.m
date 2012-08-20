@@ -7,10 +7,10 @@
 //
 
 #import "TAAppDelegate.h"
-#import "OTPObjectManager.h"
-#import "GPObjectManager.h"
 #import "TALocationManager.h"
 #import "TALocationInputViewController.h"
+#import "OTPClient.h"
+#import "GPClient.h"
 
 @implementation TAAppDelegate
 
