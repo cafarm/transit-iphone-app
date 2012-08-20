@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+FOUNDATION_EXPORT NSString *const TALocationFieldCurrentLocationText;
+
 typedef enum {
     TALocationFieldContentTypeDefault,
     TALocationFieldContentTypeCurrentLocation,
@@ -25,6 +27,9 @@ typedef enum {
 @property (readonly, nonatomic) BOOL isComplete;
 
 @property (nonatomic) TALocationFieldContentType contentType;
+
+// A hidden reference for displayed content, only used for Google Places at the moment
+@property (weak, nonatomic) id contentReference;
 
 @property (weak, nonatomic) id<TALocationFieldDelegate> delegate;
 

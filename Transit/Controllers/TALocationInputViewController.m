@@ -21,13 +21,14 @@
 #import "TAPlaceCompletion.h"
 #import "TAAttributionCompletion.h"
 #import "TAPlacemark.h"
+#import "CLGeocoder+Transit.h"
 
 static NSString *const kNavigationTitle = @"Transit";
 
 @interface TALocationInputViewController ()
 
-@property (nonatomic) CLLocationCoordinate2D startCoordinate;
-@property (nonatomic) CLLocationCoordinate2D endCoordinate;
+@property (strong, nonatomic) TAPlacemark *startPlacemark;
+@property (strong, nonatomic) TAPlacemark *endPlacemark;
 
 - (void)lockAllViews;
 - (void)unlockAllViews;
@@ -49,12 +50,14 @@ static NSString *const kNavigationTitle = @"Transit";
 @synthesize swapFieldsButton = _swapFieldsButton;
 @synthesize completionsTable = _suggestionsTable;
 
+@synthesize firstResponderField = _firstResponderField;
+
 @synthesize completionsController = _completionsController;
 
 @synthesize geocoder = _geocoder;
 
-@synthesize startCoordinate = _startCoordinate;
-@synthesize endCoordinate = _endCoordinate;
+@synthesize startPlacemark = _startPlacemark;
+@synthesize endPlacemark = _endPlacemark;
 
 - (id)initWithOTPObjectManager:(OTPObjectManager *)otpObjectManager
                gpObjectManager:(GPObjectManager *)gpObjectManager
@@ -116,7 +119,7 @@ static NSString *const kNavigationTitle = @"Transit";
     // It takes a few seconds to find the current location, so we'll prepare it in the background in anticipation
     [self.locationManager startUpdatingLocation];
     
-    [self fetchCompletionsWithInput:[self firstResponderField].text];
+    [self fetchCompletionsWithField:self.firstResponderField];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -159,6 +162,11 @@ static NSString *const kNavigationTitle = @"Transit";
     return _completionsController;
 }
 
+- (void)fetchCompletionsWithField:(TALocationField *)field
+{
+    field.contentType != TALocationFieldContentTypeCurrentLocation ? [self fetchCompletionsWithInput:field.text] : [self fetchCompletionsWithInput:@""];
+}
+
 - (void)fetchCompletionsWithInput:(NSString *)input
 {
     // Trim leading whitespace
@@ -169,7 +177,7 @@ static NSString *const kNavigationTitle = @"Transit";
     
     BOOL isSubstringOfCurrentLocation;
     if (![input isEqualToString:@""]) {
-        NSRange range = [@"Current Location" rangeOfString:input options:NSAnchoredSearch | NSCaseInsensitiveSearch];
+        NSRange range = [TALocationFieldCurrentLocationText rangeOfString:input options:NSAnchoredSearch | NSCaseInsensitiveSearch];
         isSubstringOfCurrentLocation = range.location != NSNotFound;
     } else {
         isSubstringOfCurrentLocation = YES;
@@ -193,16 +201,16 @@ static NSString *const kNavigationTitle = @"Transit";
 - (void)clearFields
 {
     self.startField.contentType = TALocationFieldContentTypeDefault;
-    self.startField.text = @"";
+    self.startField.text = nil;
     
     self.endField.contentType = TALocationFieldContentTypeDefault;
-    self.endField.text = @"";
+    self.endField.text = nil;
     
     [self.startField becomeFirstResponder];
     
     [self toggleButtons];
     
-    [self fetchCompletionsWithInput:[self firstResponderField].text];
+    [self fetchCompletionsWithField:[self firstResponderField]];
 }
 
 - (IBAction)swapFields
@@ -215,6 +223,10 @@ static NSString *const kNavigationTitle = @"Transit";
     
     self.endField.text = tempString;
     self.endField.contentType = tempType;
+    
+    if (self.firstResponderField == self.endField) {
+        [self toggleEndFieldReturnKey];
+    }
 }
 
 - (void)routeTrip
@@ -234,67 +246,39 @@ static NSString *const kNavigationTitle = @"Transit";
     
     // TODO: Verify the current location has been found
     
-    if (self.startField.contentType == TALocationFieldContentTypeCurrentLocation) {
-        self.startCoordinate = self.locationManager.currentLocation.coordinate;
+    [self.geocoder geocodeField:self.startField
+                       inRegion:self.locationManager.currentRegion
+                gpObjectManager:self.gpObjectManager
+              completionHandler:^(TAPlacemark *placemark, NSError *error)
+    {
+        if (error) {
+            [self showAlertViewWithError:error];
+            return;
+        }
+        self.startPlacemark = placemark;
         
-        [self geocodeEndFieldWithCompletionHandler:^{
+        [self.geocoder geocodeField:self.endField
+                           inRegion:self.locationManager.currentRegion
+                    gpObjectManager:self.gpObjectManager
+                  completionHandler:^(TAPlacemark *placemark, NSError *error)
+        {
+            if (error) {
+                [self showAlertViewWithError:error];
+                return;
+            }
+            self.endPlacemark = placemark;
             [self pushMapViewController];
         }];
-        
-    } else if (self.endField.contentType == TALocationFieldContentTypeCurrentLocation) {
-        self.endCoordinate = self.locationManager.currentLocation.coordinate;
-        
-        [self geocodeStartFieldWithCompletionHandler:^{
-            [self pushMapViewController];
-        }];
-        
-    } else {
-        [self geocodeStartFieldWithCompletionHandler:^{
-            [self geocodeEndFieldWithCompletionHandler:^{
-                [self pushMapViewController];
-            }];
-        }];
-    }
-}
-
-- (void)geocodeStartFieldWithCompletionHandler:(void (^)(void))completionHandler
-{
-    [self.geocoder geocodeAddressString:self.startField.text
-                               inRegion:self.locationManager.currentRegion
-                      completionHandler:^(NSArray *placemarks, NSError *error)
-     {
-         if (error) {
-             [self showAlertViewWithError:error];
-             return;
-         }
-         
-         self.startCoordinate = ((CLPlacemark *)[placemarks objectAtIndex:0]).location.coordinate;
-         
-         completionHandler();
-     }];
-}
-
-- (void)geocodeEndFieldWithCompletionHandler:(void (^)(void))completionHandler
-{
-    [self.geocoder geocodeAddressString:self.endField.text
-                               inRegion:self.locationManager.currentRegion
-                      completionHandler:^(NSArray *placemarks, NSError *error)
-     {
-         if (error) {
-             [self showAlertViewWithError:error];
-             return;
-         }
-         
-         self.endCoordinate = ((CLPlacemark *)[placemarks objectAtIndex:0]).location.coordinate;
-         
-         completionHandler();
-     }];
+    }];
 }
 
 - (void)pushMapViewController
 {
-    [self.otpObjectManager loadTripPlanFrom:self.startCoordinate
-                                         to:self.endCoordinate
+    CLLocationCoordinate2D startCoordinate = self.startPlacemark.isCurrentLocation ? self.locationManager.currentLocation.coordinate : self.startPlacemark.location.coordinate;
+    CLLocationCoordinate2D endCoordinate = self.endPlacemark.isCurrentLocation ? self.locationManager.currentLocation.coordinate : self.endPlacemark.location.coordinate;
+    
+    [self.otpObjectManager loadTripPlanFrom:startCoordinate
+                                         to:endCoordinate
                           completionHandler:^(OTPTripPlan *tripPlan, NSError *error)
     {
         if (error) {
@@ -370,23 +354,22 @@ static NSString *const kNavigationTitle = @"Transit";
     }
 }
 
+- (void)toggleEndFieldReturnKey
+{
+    if (self.startField.isComplete) {
+        self.endField.returnKeyType = UIReturnKeyRoute;
+    } else {
+        self.endField.returnKeyType = UIReturnKeyNext;
+    }
+}
+
 - (void)locationFieldDidBeginEditing:(TALocationField *)locationField
 {    
     if (locationField == self.endField) {
-        if (self.startField.isComplete) {
-            self.endField.returnKeyType = UIReturnKeyRoute;
-            if (self.endField.contentType != TALocationFieldContentTypeCurrentLocation) {
-                self.endField.enablesReturnKeyAutomatically = YES;
-            } else {
-                self.endField.enablesReturnKeyAutomatically = NO;
-            }
-        } else {
-            self.endField.returnKeyType = UIReturnKeyNext;
-            self.endField.enablesReturnKeyAutomatically = NO;
-        }
+        [self toggleEndFieldReturnKey];
     }
     
-    [self fetchCompletionsWithInput:[self firstResponderField].text];
+    [self fetchCompletionsWithField:self.firstResponderField];
 }
 
 - (BOOL)locationFieldShouldReturn:(TALocationField *)locationField
@@ -435,6 +418,7 @@ static NSString *const kNavigationTitle = @"Transit";
 
 - (BOOL)locationFieldShouldClear:(TALocationField *)locationField
 {
+    // Again, a bunch of work because we don't know when the field "did" clear!
     if ([self locationFieldsWillBeEmpty]) {
         self.clearButton.enabled = NO;
         self.swapFieldsButton.enabled = NO;
@@ -550,8 +534,11 @@ static NSString *const kNavigationTitle = @"Transit";
     } else if ([completion isKindOfClass:[TATripPlanCompletion class]]) {
 
     } else if ([completion isKindOfClass:[TAPlaceCompletion class]]) {
+        self.firstResponderField.contentType = TALocationFieldContentTypeGooglePlace;
+        
         TAPlaceCompletion *placeCompletion = (TAPlaceCompletion *)completion;
         self.firstResponderField.text = [NSString stringWithFormat:@"%@, %@", placeCompletion.mainTerm, placeCompletion.subTerms];
+        self.firstResponderField.contentReference = placeCompletion.reference;
     }
     
     if (self.firstResponderField == self.endField && [self locationFieldsWillBeComplete]) {

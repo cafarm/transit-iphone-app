@@ -9,6 +9,8 @@
 #import "TALocationField.h"
 #import "UIColor+Transit.h"
 
+NSString *const TALocationFieldCurrentLocationText = @"Current Location";
+
 @interface TALocationField ()
 
 @property (strong, nonatomic) UITextField *textField;
@@ -28,6 +30,7 @@
 @synthesize isComplete = _isComplete;
 
 @synthesize contentType = _contentType;
+@synthesize contentReference = _contentReference;
 
 @synthesize delegate = _delegate;
 
@@ -49,6 +52,7 @@
         _textField.returnKeyType = UIReturnKeyNext;
         _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+        _textField.enablesReturnKeyAutomatically = YES;
         _textField.backgroundColor = [UIColor whiteColor];
         _textField.delegate = self;
         [self addSubview:_textField];
@@ -58,12 +62,13 @@
         _currentLocationField.font = _textField.font;
         _currentLocationField.contentVerticalAlignment = _textField.contentVerticalAlignment;
         _currentLocationField.backgroundColor = _textField.backgroundColor;
-        _currentLocationField.text = @"Current Location";
+        _currentLocationField.text = TALocationFieldCurrentLocationText;
         _currentLocationField.textColor = [UIColor currentLocationColor];
         _currentLocationField.hidden = YES;
         _currentLocationField.delegate = self;
         [self addSubview:_currentLocationField];
         
+        // The current location tag displayed when a user selects the current location field
         _currentLocationTag = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"CurrentLocationTag"]];
         CGRect tagFrame = _currentLocationTag.frame;
         _currentLocationTag.frame = CGRectMake(tagFrame.origin.x + 37, tagFrame.origin.y + 4, tagFrame.size.width, tagFrame.size.height);
@@ -115,11 +120,14 @@
 
 - (BOOL)isComplete
 {
-    return [self.textField.text length] > 0 || self.contentType == TALocationFieldContentTypeCurrentLocation;
+    return [self.textField.text length] > 0;
 }
 
 - (void)setContentType:(TALocationFieldContentType)contentType
 {
+    // Clear out the content reference because it's no longer valid
+    self.contentReference = nil;
+    
     if (contentType != TALocationFieldContentTypeCurrentLocation) {
         self.currentLocationTag.hidden = YES;
         self.currentLocationField.hidden = YES;
@@ -132,7 +140,7 @@
             self.currentLocationField.clearButtonMode = UITextFieldViewModeNever;
         }
         self.currentLocationField.hidden = NO;
-        self.textField.text = @"";
+        self.textField.text = TALocationFieldCurrentLocationText;
     }
     _contentType = contentType;
 }
@@ -198,14 +206,23 @@
 {
     BOOL shouldChange = YES;
     
+    // Changing characters with a current location field replaces the entire contents of the field
+    if (self.contentType == TALocationFieldContentTypeCurrentLocation) {
+        range.length = [TALocationFieldCurrentLocationText length];
+        range.location = 0;
+    }
+    
     if ([self.delegate respondsToSelector:@selector(locationField:shouldChangeCharactersInRange:replacementString:)]) {
         shouldChange = [self.delegate locationField:self shouldChangeCharactersInRange:range replacementString:string];
     }
     
-    if (shouldChange) {
+    if (shouldChange) {        
+        if (self.contentType == TALocationFieldContentTypeCurrentLocation) {
+            self.textField.text = nil;
+            self.currentLocationTag.hidden = YES;
+            self.currentLocationField.hidden = YES;
+        }
         self.contentType = TALocationFieldContentTypeDefault;
-        self.currentLocationTag.hidden = YES;
-        self.currentLocationField.hidden = YES;
     }
     
     return shouldChange;
@@ -220,9 +237,13 @@
     }
     
     if (shouldClear) {
+        if (self.contentType == TALocationFieldContentTypeCurrentLocation) {
+            self.textField.text = nil;
+            self.currentLocationTag.hidden = YES;
+            self.currentLocationField.hidden = YES;
+        }
         self.contentType = TALocationFieldContentTypeDefault;
-        self.currentLocationTag.hidden = YES;
-        self.currentLocationField.hidden = YES;
+        
         if (textField == self.currentLocationField) {
             return NO;
         }
@@ -233,11 +254,13 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    BOOL shouldReturn = YES;
+    
     if ([self.delegate respondsToSelector:@selector(locationFieldShouldReturn:)]) {
-        return [self.delegate locationFieldShouldReturn:self];
-    } else {
-        return YES;
+        shouldReturn = [self.delegate locationFieldShouldReturn:self];
     }
+    
+    return shouldReturn;
 }
 
 - (void)setAutocapitalizationType:(UITextAutocapitalizationType)autocapitalizationType
@@ -319,14 +342,5 @@
 {
     return self.textField.spellCheckingType;
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end

@@ -34,6 +34,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *swapFieldsButton;
 @property (weak, nonatomic) IBOutlet UITableView *completionsTable;
 
+@property (readonly, nonatomic) TALocationField *firstResponderField;
+
 @property (strong, nonatomic) TACompletionsController *completionsController;
 
 @property (strong, nonatomic) CLGeocoder *geocoder;

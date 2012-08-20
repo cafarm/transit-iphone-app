@@ -15,6 +15,7 @@
 		1F36463E15DB50A000E2B156 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F36463315DB505A00E2B156 /* libRestKit.a */; };
 		1F36465115DB671400E2B156 /* TACompletionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F36465015DB671400E2B156 /* TACompletionsController.m */; };
 		1F36465415DB6B3B00E2B156 /* TACompletion.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F36465315DB6B3B00E2B156 /* TACompletion.m */; };
+		1F39061A15E1A6BA00D05A59 /* CLGeocoder+Transit.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F39061915E1A6BA00D05A59 /* CLGeocoder+Transit.m */; };
 		1F50B1F715CB51F7003AC67D /* TALocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F50B1F615CB51F7003AC67D /* TALocationManager.m */; };
 		1F56EB7F15DF2DCD009D25C9 /* TACurrentLocationCompletion.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F56EB7E15DF2DCD009D25C9 /* TACurrentLocationCompletion.m */; };
 		1F56EB8215DF55DB009D25C9 /* TAPlacemark.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F56EB8115DF55DB009D25C9 /* TAPlacemark.m */; };
@@ -182,6 +183,8 @@
 		1F36465015DB671400E2B156 /* TACompletionsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TACompletionsController.m; path = Stores/TACompletionsController.m; sourceTree = "<group>"; };
 		1F36465215DB6B3B00E2B156 /* TACompletion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TACompletion.h; path = Models/Completions/TACompletion.h; sourceTree = "<group>"; };
 		1F36465315DB6B3B00E2B156 /* TACompletion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TACompletion.m; path = Models/Completions/TACompletion.m; sourceTree = "<group>"; };
+		1F39061815E1A6BA00D05A59 /* CLGeocoder+Transit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CLGeocoder+Transit.h"; path = "Stores/CLGeocoder+Transit.h"; sourceTree = "<group>"; };
+		1F39061915E1A6BA00D05A59 /* CLGeocoder+Transit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CLGeocoder+Transit.m"; path = "Stores/CLGeocoder+Transit.m"; sourceTree = "<group>"; };
 		1F50B1F515CB51F7003AC67D /* TALocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TALocationManager.h; path = Stores/TALocationManager.h; sourceTree = "<group>"; };
 		1F50B1F615CB51F7003AC67D /* TALocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TALocationManager.m; path = Stores/TALocationManager.m; sourceTree = "<group>"; };
 		1F56EB7D15DF2DCD009D25C9 /* TACurrentLocationCompletion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TACurrentLocationCompletion.h; path = Models/Completions/TACurrentLocationCompletion.h; sourceTree = "<group>"; };
@@ -328,6 +331,8 @@
 				1F50B1F615CB51F7003AC67D /* TALocationManager.m */,
 				1F36464F15DB671400E2B156 /* TACompletionsController.h */,
 				1F36465015DB671400E2B156 /* TACompletionsController.m */,
+				1F39061815E1A6BA00D05A59 /* CLGeocoder+Transit.h */,
+				1F39061915E1A6BA00D05A59 /* CLGeocoder+Transit.m */,
 			);
 			name = Stores;
 			sourceTree = "<group>";
@@ -800,6 +805,7 @@
 				1F56EB8215DF55DB009D25C9 /* TAPlacemark.m in Sources */,
 				1FA819FA15E0791900189843 /* TALocationField.m in Sources */,
 				1F9EA46715E0BFF300EAC57D /* UIColor+Transit.m in Sources */,
+				1F39061A15E1A6BA00D05A59 /* CLGeocoder+Transit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
