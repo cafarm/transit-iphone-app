@@ -23,6 +23,7 @@ get '/ws/plan' do
 end
 
 get '/place/autocomplete/json' do
+  sleep 4
   content_type 'application/json'
   render_fixture('autocompleteResponse.json')
 end

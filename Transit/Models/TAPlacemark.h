@@ -14,13 +14,12 @@
 @interface TAPlacemark : NSObject
 
 + (TAPlacemark *)currentLocation;
++ (TAPlacemark *)placemarkWithCLPlacemark:(CLPlacemark *)clPlacemark;
 
-- (id)initWithCLPlacemark:(CLPlacemark *)placemark isCurrentLocation:(BOOL)isCurrentLocation;
-- (id)initWithCLPlacemark:(CLPlacemark *)placemark;
-
-@property (readonly, nonatomic) BOOL isCurrentLocation;
+- (id)initWithName:(NSString *)name location:(CLLocation *)location isCurrentLocation:(BOOL)isCurrentLocation;
 
 @property (readonly, nonatomic) NSString *name;
 @property (readonly, nonatomic) CLLocation *location;
+@property (readonly, nonatomic) BOOL isCurrentLocation;
 
 @end

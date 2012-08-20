@@ -14,6 +14,8 @@ extern CLLocationDistance TARadiusOfInterest;
 
 @interface TALocationManager : NSObject <CLLocationManagerDelegate>
 
++ (CLAuthorizationStatus)authorizationStatus;
+
 @property (weak, nonatomic) id<TALocationManagerDelegate> delegate;
 
 - (void)startUpdatingLocation;
@@ -34,5 +36,7 @@ extern CLLocationDistance TARadiusOfInterest;
 
 - (void)locationManager:(TALocationManager *)manager didUpdateCurrentLocation:(CLLocation *)currentLocation;
 - (void)locationManager:(TALocationManager *)manager didFailWithError:(NSError *)error;
+
+- (void)locationManager:(TALocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status;
 
 @end

@@ -8,11 +8,8 @@
 
 #import "CLGeocoder+Transit.h"
 #import "TALocationField.h"
-#import "GPObjectManager.h"
 #import "TAPlaceMark.h"
-#import "GPDetailsResult.h"
-#import "GPDetailsGeometry.h"
-#import "GPDetailsLocation.h"
+#import "GPClient.h"
 
 @implementation CLGeocoder (Transit)
 
@@ -30,7 +27,11 @@
         {
             TAPlacemark *placemark;
             if (error == nil) {
-
+                GPDetailsLocation *resultLocation = result.geometry.location;
+                CLLocation *location = [[CLLocation alloc] initWithLatitude:[resultLocation.latitude doubleValue]
+                                                                  longitude:[resultLocation.longitude doubleValue]];
+                
+                placemark = [[TAPlacemark alloc] initWithName:result.name location:location isCurrentLocation:NO];
             }
             completionHandler(placemark, error);
         }];
@@ -42,7 +43,7 @@
          {
              TAPlacemark *placemark;
              if (error == nil) {
-                 placemark = [[TAPlacemark alloc] initWithCLPlacemark:[placemarks objectAtIndex:0]];
+                 placemark = [TAPlacemark placemarkWithCLPlacemark:[placemarks objectAtIndex:0]];
              }
              completionHandler(placemark, error);
          }];

@@ -12,15 +12,17 @@
 #import "TAStepScrollView.h"
 
 @class OTPObjectManager;
+@class TALocationManager;
 @class OTPTripPlan;
 @class TATripPlanNavigator;
 @class OTPItinerary;
 
 @interface TAMapViewController : UIViewController <MKMapViewDelegate, TAStepScrollViewDelegate, TAStepScrollViewDataSource, UIGestureRecognizerDelegate>
 
-- (id)initWithObjectManager:(OTPObjectManager *)objectManager tripPlanNavigator:(TATripPlanNavigator *)tripPlanNavigator;
+- (id)initWithObjectManager:(OTPObjectManager *)objectManager locationManager:(TALocationManager *)locationManager tripPlanNavigator:(TATripPlanNavigator *)tripPlanNavigator;
 
-@property (strong, nonatomic) OTPObjectManager *objectManager;
+@property (readonly, nonatomic) OTPObjectManager *objectManager;
+@property (readonly, nonatomic) TALocationManager *locationManager;
 @property (strong, nonatomic) TATripPlanNavigator *tripPlanNavigator;
 
 @property (strong, nonatomic) UIBarButtonItem *startButton;

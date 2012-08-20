@@ -16,7 +16,9 @@
 @class TACompletionsController;
 @class TAMapViewController;
 
-@interface TALocationInputViewController : UIViewController <TACompletionsControllerDelegate, UITableViewDataSource, UITableViewDelegate, TALocationFieldDelegate, UIAlertViewDelegate>
+@interface TALocationInputViewController : UIViewController <TACompletionsControllerDelegate, UITableViewDataSource,
+                                                             UITableViewDelegate, TALocationFieldDelegate,
+                                                             UIAlertViewDelegate, TALocationManagerDelegate>
 
 - (id)initWithOTPObjectManager:(OTPObjectManager *)otpObjectManager
                gpObjectManager:(GPObjectManager *)gpObjectManager

@@ -8,6 +8,7 @@
 
 #import "TAMapViewController.h"
 #import "MKMapView+Transit.h"
+#import "TALocationManager.h"
 #import "OTPTripPlan.h"
 #import "TATripPlanNavigator.h"
 #import "OTPItinerary.h"
@@ -38,6 +39,7 @@ typedef enum {
 @implementation TAMapViewController
 
 @synthesize objectManager = _objectManager;
+@synthesize locationManager = _locationManager;
 @synthesize tripPlanNavigator = _tripPlanNavigator;
 
 @synthesize startButton = _startButton;
@@ -55,11 +57,12 @@ typedef enum {
 
 @synthesize isViewingStepByStep = _isViewingStepByStep;
 
-- (id)initWithObjectManager:(OTPObjectManager *)objectManager tripPlanNavigator:(TATripPlanNavigator *)tripPlanNavigator
+- (id)initWithObjectManager:(OTPObjectManager *)objectManager locationManager:(TALocationManager *)locationManager tripPlanNavigator:(TATripPlanNavigator *)tripPlanNavigator
 {
     self = [super init];
     if (self) {
         _objectManager = objectManager;
+        _locationManager = locationManager;
         _tripPlanNavigator = tripPlanNavigator;
     }
     return self;
@@ -158,7 +161,7 @@ typedef enum {
 - (TAStepScrollView *)stepScrollView
 {
     if (_stepScrollView == nil) {
-        _stepScrollView = [[TAStepScrollView alloc] initWithFrame:CGRectMake(0, 72, 320, 129)];
+        _stepScrollView = [[TAStepScrollView alloc] initWithFrame:CGRectMake(0, -129, 320, 129)];
         _stepScrollView.delegate = self;
         _stepScrollView.dataSource = self;
         [_stepScrollView reloadData];
@@ -209,8 +212,9 @@ typedef enum {
     self.currentStepAnnotation = [self.mapView addAnnotationForCurrentStep:self.tripPlanNavigator.currentStep];
     
     [self.navigationController.view addSubview:self.stepScrollView];
-    
-    [self resumeCurrentItineraryAnimated:animate];
+    [self showStepScrollViewWithCompletion:^(BOOL finished) {
+        [self resumeCurrentItineraryAnimated:animate];
+    }];
 }
 
 - (void)resumeCurrentItinerary

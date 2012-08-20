@@ -29,7 +29,7 @@ typedef enum {
 @property (nonatomic) TALocationFieldContentType contentType;
 
 // A hidden reference for displayed content, only used for Google Places at the moment
-@property (weak, nonatomic) id contentReference;
+@property (strong, nonatomic) id contentReference;
 
 @property (weak, nonatomic) id<TALocationFieldDelegate> delegate;
 

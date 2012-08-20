@@ -91,17 +91,23 @@ static NSString *const kNavigationTitle = @"Transit";
                                                                    action:@selector(routeTrip)];
     
     self.navigationItem.rightBarButtonItem = routeButton;
-    routeButton.enabled = NO;
     self.routeButton = routeButton;
     
     self.startField.leftViewText = @"Start:  ";
-    self.startField.contentType = TALocationFieldContentTypeCurrentLocation;
     self.startField.delegate = self;
     
     self.endField.leftViewText = @"End:  ";
     self.endField.delegate = self;
     
-    [self.endField becomeFirstResponder];
+    // If we have authorization to current location, set the start field to current location
+    if ([TALocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized
+        || [TALocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
+        
+        self.startField.contentType = TALocationFieldContentTypeCurrentLocation;
+        [self.endField becomeFirstResponder];
+    } else {
+        [self.startField becomeFirstResponder];
+    }
     
     self.completionsTable.delegate = self;
     self.completionsTable.dataSource = self;
@@ -110,6 +116,8 @@ static NSString *const kNavigationTitle = @"Transit";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    
+    [self toggleButtons];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -117,6 +125,7 @@ static NSString *const kNavigationTitle = @"Transit";
     [super viewDidAppear:animated];
     
     // It takes a few seconds to find the current location, so we'll prepare it in the background in anticipation
+    self.locationManager.delegate = self;
     [self.locationManager startUpdatingLocation];
     
     [self fetchCompletionsWithField:self.firstResponderField];
@@ -185,7 +194,8 @@ static NSString *const kNavigationTitle = @"Transit";
     
     BOOL shouldIncludeCurrentLocation = isSubstringOfCurrentLocation
                                          && self.startField.contentType != TALocationFieldContentTypeCurrentLocation
-                                         && self.endField.contentType != TALocationFieldContentTypeCurrentLocation;
+                                         && self.endField.contentType != TALocationFieldContentTypeCurrentLocation
+                                         && [TALocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized;
     
     [self.completionsController fetchCompletionsIncludingCurrentLocation:shouldIncludeCurrentLocation];
 }
@@ -217,12 +227,15 @@ static NSString *const kNavigationTitle = @"Transit";
 {
     NSString *tempString = self.startField.text;
     TALocationFieldContentType tempType = self.startField.contentType;
+    id tempReference = self.startField.contentReference;
     
     self.startField.text = self.endField.text;
     self.startField.contentType = self.endField.contentType;
+    self.startField.contentReference = self.endField.contentReference;
     
     self.endField.text = tempString;
     self.endField.contentType = tempType;
+    self.endField.contentReference = tempReference;
     
     if (self.firstResponderField == self.endField) {
         [self toggleEndFieldReturnKey];
@@ -289,6 +302,7 @@ static NSString *const kNavigationTitle = @"Transit";
         TATripPlanNavigator *tripPlanNavigator = [[TATripPlanNavigator alloc] initWithTripPlan:tripPlan];
         
         TAMapViewController *mapController = [[TAMapViewController alloc] initWithObjectManager:self.otpObjectManager
+                                                                                locationManager:self.locationManager
                                                                               tripPlanNavigator:tripPlanNavigator];
         
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Edit"
@@ -450,6 +464,25 @@ static NSString *const kNavigationTitle = @"Transit";
 - (TALocationField *)firstResponderField
 {
     return self.startField.isFirstResponder ? self.startField : self.endField;
+}
+
+- (void)locationManager:(TALocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    if (status != kCLAuthorizationStatusAuthorized) {
+        if (self.startField.contentType == TALocationFieldContentTypeCurrentLocation) {
+            self.startField.text = nil;
+            self.startField.contentType = TALocationFieldContentTypeDefault;
+            [self.startField becomeFirstResponder];
+        }
+        
+        if (self.endField.contentType == TALocationFieldContentTypeCurrentLocation) {
+            self.startField.text = nil;
+            self.endField.contentType = TALocationFieldContentTypeDefault;
+        }
+        
+        [self toggleButtons];
+        [self.completionsTable reloadData];
+    }
 }
 
 - (void)controllerDidChangeContent:(TACompletionsController *)controller

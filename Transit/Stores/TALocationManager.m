@@ -28,6 +28,11 @@ CLLocationDistance TARadiusOfInterest = 25000;
 
 @synthesize clLocationManager = _clLocationManager;
 
++ (CLAuthorizationStatus)authorizationStatus
+{
+    return [CLLocationManager authorizationStatus];
+}
+
 - (id)init
 {
     self = [super init];
@@ -82,12 +87,23 @@ CLLocationDistance TARadiusOfInterest = 25000;
     
     self.currentLocation = mostRecentLocation;
     
-    [self.delegate locationManager:self didUpdateCurrentLocation:self.currentLocation];
+    if ([self.delegate respondsToSelector:@selector(locationManager:didUpdateCurrentLocation:)]) {
+        [self.delegate locationManager:self didUpdateCurrentLocation:self.currentLocation];
+    }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    [self.delegate locationManager:self didFailWithError:error];
+    if ([self.delegate respondsToSelector:@selector(locationManager:didFailWithError:)]) {
+        [self.delegate locationManager:self didFailWithError:error];
+    }
+}
+
+- (void)locationManager:(TALocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    if ([self.delegate respondsToSelector:@selector(locationManager:didChangeAuthorizationStatus:)]) {
+        [self.delegate locationManager:self didChangeAuthorizationStatus:status];
+    }
 }
 
 @end

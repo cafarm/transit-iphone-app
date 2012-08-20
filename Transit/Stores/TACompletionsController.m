@@ -75,12 +75,12 @@
     }
     
     if ([self.input isEqualToString:@""]) {
-        self.fetchedPlaceCompletions = nil;
         self.fetchedTripPlanCompletions = self.tripPlanCompletions;
     } else {
         self.fetchedTripPlanCompletions = nil;
-        [self fetchPlaceCompletions];
     }
+    
+    [self fetchPlaceCompletions];
     
     if ([self.delegate respondsToSelector:@selector(controllerDidChangeContent:)]) {
         [self.delegate controllerDidChangeContent:self];
@@ -88,28 +88,61 @@
 }
 
 - (void)fetchPlaceCompletions
-{    
-    [self.gpObjectManager loadAutocompletePredictionsWithInput:self.input
-                                                      location:self.locationManager.currentLocation.coordinate
-                                                        radius:TARadiusOfInterest
-                                             completionHandler:^(NSArray *predictions, NSError *error)
-     {
-         self.fetchedPlaceCompletions = nil;
-         if (error == nil) {
-             self.fetchedPlaceCompletions = [NSMutableArray arrayWithCapacity:[predictions count] + 1];
-             for (GPAutocompletePrediction *prediction in predictions) {
-                 [self.fetchedPlaceCompletions addObject:[TAPlaceCompletion completionWithPrediction:prediction]];
-             }
-             
-             // Add the required attribution to the bottom if predictions were provided
-             if ([predictions count] > 0) {
-                 [self.fetchedPlaceCompletions addObject:[TAAttributionCompletion google]];
-             }
-         }
-         if ([self.delegate respondsToSelector:@selector(controllerDidChangeContent:)]) {
-             [self.delegate controllerDidChangeContent:self];
-         }
-     }];
+{
+    // Only allow a single request and one queued request at a time
+    static BOOL inFetch = NO;
+    static BOOL hasQueuedFetch = NO;
+    
+    if (inFetch) {
+        hasQueuedFetch = YES;
+    } else {
+        inFetch = YES;
+        
+        // Don't bother with a remote fetch if the input is empty
+        if ([self.input isEqualToString:@""]) {
+            self.fetchedPlaceCompletions = nil;
+            
+            if ([self.delegate respondsToSelector:@selector(controllerDidChangeContent:)]) {
+                [self.delegate controllerDidChangeContent:self];
+            }
+            
+            inFetch = NO;
+            if (hasQueuedFetch) {
+                hasQueuedFetch = NO;
+                [self fetchPlaceCompletions];
+            }
+        } else {
+        
+            [self.gpObjectManager loadAutocompletePredictionsWithInput:self.input
+                                                              location:self.locationManager.currentLocation.coordinate
+                                                                radius:TARadiusOfInterest
+                                                     completionHandler:^(NSArray *predictions, NSError *error)
+             {
+                 self.fetchedPlaceCompletions = nil;
+                 if (error == nil) {
+                     self.fetchedPlaceCompletions = [NSMutableArray arrayWithCapacity:[predictions count] + 1];
+                     for (GPAutocompletePrediction *prediction in predictions) {
+                         [self.fetchedPlaceCompletions addObject:[TAPlaceCompletion completionWithPrediction:prediction]];
+                     }
+                     
+                     // Add the required attribution to the bottom if predictions were provided
+                     if ([predictions count] > 0) {
+                         [self.fetchedPlaceCompletions addObject:[TAAttributionCompletion google]];
+                     }
+                 }
+                 
+                 if ([self.delegate respondsToSelector:@selector(controllerDidChangeContent:)]) {
+                     [self.delegate controllerDidChangeContent:self];
+                 }
+                 
+                 inFetch = NO;
+                 if (hasQueuedFetch) {
+                     hasQueuedFetch = NO;
+                    [self fetchPlaceCompletions];
+                 }
+             }];
+        }
+    }
 }
 
 - (NSArray *)fetchedCompletions
