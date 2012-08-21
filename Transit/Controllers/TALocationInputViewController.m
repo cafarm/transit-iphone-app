@@ -10,7 +10,6 @@
 #import "TALocationField.h"
 #import "TACompletionsController.h"
 #import "TAAttributionCompletion.h"
-#import "TACompletionTableViewCell.h"
 #import "TALocationManager.h"
 #import "TATripPlanNavigator.h"
 #import "TAMapViewController.h"
@@ -22,6 +21,8 @@
 #import "OTPClient.h"
 #import "GPClient.h"
 #import "CLGeocoder+Transit.h"
+#import "UIColor+Transit.h"
+#import "UITableViewCell+Transit.h"
 
 static NSString *const kNavigationTitle = @"Transit";
 
@@ -48,9 +49,14 @@ static NSString *const kNavigationTitle = @"Transit";
 @synthesize startField = _startField;
 @synthesize endField = _endField;
 @synthesize swapFieldsButton = _swapFieldsButton;
-@synthesize completionsTable = _suggestionsTable;
+@synthesize completionsTable = _completionsTable;
 
 @synthesize firstResponderField = _firstResponderField;
+
+@synthesize currentLocationCompletionCell = _currentLocationCompletionCell;
+@synthesize tripPlanCompletionCell = _tripPlanCompletionCell;
+@synthesize placeCompletionCell = _placeCompletionCell;
+@synthesize attributionCompletionCell = _attributionCompletionCell;
 
 @synthesize completionsController = _completionsController;
 
@@ -147,7 +153,7 @@ static NSString *const kNavigationTitle = @"Transit";
 {
     NSDictionary* info = [notification userInfo];
     CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    
+
     CGRect tableFrame = self.completionsTable.frame;
     self.completionsTable.frame = CGRectMake(tableFrame.origin.x, tableFrame.origin.y, tableFrame.size.width, tableFrame.size.height - keyboardSize.height);
 }
@@ -255,6 +261,16 @@ static NSString *const kNavigationTitle = @"Transit";
         return;
     }
     
+    // The Apple geocoder is so bad, if we have a Google completion available use it even if the user didn't select it
+    // TODO: We should really geocode both fields with Google at this point
+    if (self.firstResponderField.contentType == TALocationFieldContentTypeDefault) {
+        TAPlaceCompletion *placeCompletion = [self.completionsController.fetchedPlaceCompletions objectAtIndex:0];
+        if (placeCompletion != nil) {
+            self.firstResponderField.contentType = TALocationFieldContentTypeGooglePlace;
+            self.firstResponderField.contentReference = placeCompletion.reference;
+        }
+    }
+    
     [self lockAllViews];
     
     // TODO: Verify the current location has been found
@@ -319,8 +335,15 @@ static NSString *const kNavigationTitle = @"Transit";
 
 - (void)showAlertViewWithError:(NSError *)error
 {
+    NSString *message;
+    if (error.domain == kCLErrorDomain) {
+        message = @"Directions could not be found between these locations.";
+    } else {
+        message = error.localizedDescription;
+    }
+    
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Directions Not Available"
-                                                        message:error.localizedDescription
+                                                        message:message
                                                        delegate:self
                                               cancelButtonTitle:nil
                                               otherButtonTitles:@"OK", nil];
@@ -517,46 +540,46 @@ static NSString *const kNavigationTitle = @"Transit";
 {
     TACompletion *completion = [self.completionsController completionAtIndexPath:indexPath.row];
     
-    TACompletionTableViewCell *cell = nil;
+    UITableViewCell *cell = nil;
     
     if ([completion isKindOfClass:[TACurrentLocationCompletion class]]) {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"currenLocationCellID"];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"currentLocationCompletionCellID"];
         if (cell == nil)
         {
-            cell = [[TACompletionTableViewCell alloc] initWithStyle:TACompletionTableViewCellStyleCurrentLocation reuseIdentifier:@"currenLocationCellID"];
+            [[NSBundle mainBundle] loadNibNamed:@"TACurrentLocationCompletionTableViewCell" owner:self options:nil];
+            cell = self.currentLocationCompletionCell;
+            self.currentLocationCompletionCell = nil;
         }
-        cell.textLabel.text = TALocationFieldCurrentLocationText;
-        cell.imageView.image = [UIImage imageNamed:@"CurrentStepAnnotation"];
+        [UITableViewCell styleCurrentLocationCompletionCell:cell withCompletion:(TACurrentLocationCompletion *)completion];
         
     } else if ([completion isKindOfClass:[TATripPlanCompletion class]]) {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"tripPlanCellID"];
-        if (cell == nil)
-        {
-            cell = [[TACompletionTableViewCell alloc] initWithStyle:TACompletionTableViewCellStyleTripPlan reuseIdentifier:@"tripPlanCellID"];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"tripPlanCompletionCellID"];
+        if (cell == nil) {
+            [[NSBundle mainBundle] loadNibNamed:@"TATripPlanCompletionTableViewCell" owner:self options:nil];
+            cell = self.tripPlanCompletionCell;
+            self.tripPlanCompletionCell = nil;
         }
-        TATripPlanCompletion *tripPlanCompletion = (TATripPlanCompletion *)completion;
-        cell.textLabel.text = tripPlanCompletion.from.description;
-        cell.detailTextLabel.text = tripPlanCompletion.to.description;
-        cell.imageView.image = [UIImage imageNamed:@"CurrentStepAnnotation"];
+        [UITableViewCell styleTripPlanCompletionCell:cell withCompletion:(TATripPlanCompletion *)completion];
         
     } else if ([completion isKindOfClass:[TAPlaceCompletion class]]) {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"placeCellID"];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"placeCompletionCellID"];
         if (cell == nil)
         {
-            cell = [[TACompletionTableViewCell alloc] initWithStyle:TACompletionTableViewCellStylePlace reuseIdentifier:@"placeCellID"];
+            [[NSBundle mainBundle] loadNibNamed:@"TAPlaceCompletionTableViewCell" owner:self options:nil];
+            cell = self.placeCompletionCell;
+            self.placeCompletionCell = nil;
         }
-        cell.textLabel.text = ((TAPlaceCompletion *)completion).mainTerm;
-        cell.detailTextLabel.text = ((TAPlaceCompletion *)completion).subTerms;
-        cell.imageView.image = [UIImage imageNamed:@"CurrentStepAnnotation"];
+        [UITableViewCell stylePlaceCompletionCell:cell withCompletion:(TAPlaceCompletion *)completion];
         
     } else if ([completion isKindOfClass:[TAAttributionCompletion class]]) {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"attributionCellID"];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"attributionCompletionCellID"];
         if (cell == nil)
         {
-            cell = [[TACompletionTableViewCell alloc] initWithStyle:TACompletionTableViewCellStyleAttribution reuseIdentifier:@"attributionCellID"];
+            [[NSBundle mainBundle] loadNibNamed:@"TAAttributionCompletionTableViewCell" owner:self options:nil];
+            cell = self.attributionCompletionCell;
+            self.attributionCompletionCell = nil;
         }
-        cell.imageView.image = [UIImage imageNamed:@"PoweredByGoogle"];
-        cell.userInteractionEnabled = NO;
+        [UITableViewCell styleAttributionCompletionCell:cell withCompletion:(TAAttributionCompletion *)completion];
     }
     
 	return cell;
@@ -564,6 +587,8 @@ static NSString *const kNavigationTitle = @"Transit";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
     TACompletion *completion = [self.completionsController completionAtIndexPath:indexPath.row];
     
     // We don't have to do any geocoding with stored trip completions, just load the from and to and push the map

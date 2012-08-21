@@ -12,6 +12,7 @@
 @class TACompletion;
 @class TATripPlanCompletion;
 @class TALocationManager;
+@class TACurrentLocationCompletion;
 
 @protocol TACompletionsControllerDelegate;
 
@@ -29,6 +30,10 @@
 @property (weak, nonatomic) id<TACompletionsControllerDelegate> delegate;
 @property (readonly, strong, nonatomic) NSArray *fetchedCompletions;
 - (TACompletion *)completionAtIndexPath:(NSUInteger)indexPath;
+
+@property (readonly, strong, nonatomic) TACurrentLocationCompletion *fetchedCurrentLocationCompletion;
+@property (readonly, strong, nonatomic) NSMutableArray *fetchedTripPlanCompletions;
+@property (readonly, strong, nonatomic) NSMutableArray *fetchedPlaceCompletions;
 
 - (NSUInteger)numberOfRows;
 

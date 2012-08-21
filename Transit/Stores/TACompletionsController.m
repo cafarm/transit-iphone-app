@@ -16,9 +16,9 @@
 
 @interface TACompletionsController()
 
-@property (strong, nonatomic) TACurrentLocationCompletion *fetchedCurrentLocationCompletion;
-@property (strong, nonatomic) NSMutableArray *fetchedTripPlanCompletions;
-@property (strong, nonatomic) NSMutableArray *fetchedPlaceCompletions;
+@property (readwrite, strong, nonatomic) TACurrentLocationCompletion *fetchedCurrentLocationCompletion;
+@property (readwrite, strong, nonatomic) NSMutableArray *fetchedTripPlanCompletions;
+@property (readwrite, strong, nonatomic) NSMutableArray *fetchedPlaceCompletions;
 
 @property (strong, nonatomic) TACurrentLocationCompletion *currentLocationCompletion;
 @property (strong, nonatomic) NSMutableArray *tripPlanCompletions;

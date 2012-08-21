@@ -38,6 +38,11 @@
 
 @property (readonly, nonatomic) TALocationField *firstResponderField;
 
+@property (weak, nonatomic) IBOutlet UITableViewCell *currentLocationCompletionCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *tripPlanCompletionCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *placeCompletionCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *attributionCompletionCell;
+
 @property (strong, nonatomic) TACompletionsController *completionsController;
 
 @property (strong, nonatomic) CLGeocoder *geocoder;

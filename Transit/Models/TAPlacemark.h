@@ -18,10 +18,10 @@
 + (TAPlacemark *)placemarkWithCLPlacemark:(CLPlacemark *)placemark;
 + (TAPlacemark *)placemarkWithGPDetailsResult:(GPDetailsResult *)result;
 
-- (id)initWithName:(NSString *)name vicinity:(NSString *)vicinity types:(NSArray *)types location:(CLLocation *)location isCurrentLocation:(BOOL)isCurrentLocation;
+- (id)initWithName:(NSString *)name locality:(NSString *)locality types:(NSArray *)types location:(CLLocation *)location isCurrentLocation:(BOOL)isCurrentLocation;
 
 @property (readonly, nonatomic) NSString *name;
-@property (readonly, nonatomic) NSString *vicinity;
+@property (readonly, nonatomic) NSString *locality;
 @property (readonly, nonatomic) NSArray *types;
 @property (readonly, nonatomic) CLLocation *location;
 @property (readonly, nonatomic) BOOL isCurrentLocation;
