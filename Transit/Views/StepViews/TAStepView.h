@@ -10,6 +10,8 @@
 
 @interface TAStepView : UIView
 
+- (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier;
+
 @property (readwrite, copy, nonatomic) NSString *reuseIdentifier;
 @property (strong, nonatomic) CALayer *maskLayer;
 

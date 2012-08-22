@@ -13,11 +13,11 @@
 @synthesize reuseIdentifier = _reuseIdentifier;
 @synthesize maskLayer = _maskLayer;
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        _reuseIdentifier = reuseIdentifier;
     }
     return self;
 }

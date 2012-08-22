@@ -20,7 +20,7 @@
     self = [super init];
     if (self) {
         _step = step;
-        _coordinate = step.coordinate;
+        _coordinate = step.place.coordinate;
     }
     return self;
 }
@@ -32,7 +32,7 @@
 
 - (void)setCoordinateToStep:(TAStep *)step
 {
-    [self setCoordinate:step.coordinate];
+    [self setCoordinate:step.place.coordinate];
 }
 
 @end

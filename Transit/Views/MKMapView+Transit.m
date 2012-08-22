@@ -7,7 +7,8 @@
 //
 
 #import "MKMapView+Transit.h"
-#import "TAStep.h"
+#import "TAWalkStep.h"
+#import "TATransitStep.h"
 #import "TAStepAnnotation.h"
 #import "TACurrentStepAnnotation.h"
 #import "OTPClient.h"
@@ -27,9 +28,9 @@ static const double kZoomRectHeightMin = 1920;
 //    UIEdgeInsets edgePadding = UIEdgeInsetsMake(self.bounds.size.height - 279, 0, 0, 0);
     UIEdgeInsets edgePadding = UIEdgeInsetsMake(0, 0, 0, 0);
 
-    if (step.fromOrTo == TAStepFrom) {
+    if ([step isKindOfClass:[TAWalkStep class]] || !((TATransitStep *)step).isArrival) {
         // At the end of walking we don't have a step but we want to set the region to it's leg anyway
-        if (step.previousStep != nil && step.previousStep.mode == OTPLegTraverseModeWalk) {
+        if (step.previousStep != nil && [step.previousStep isKindOfClass:[TAWalkStep class]]) {
             [self setVisibleMapRect:step.previousStep.boundingMapRect edgePadding:edgePadding animated:animate];
         } else {
             MKMapPoint point = step.place.mapPoint;

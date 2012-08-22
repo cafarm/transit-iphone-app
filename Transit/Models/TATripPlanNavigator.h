@@ -34,6 +34,7 @@
 @property (readonly, nonatomic) NSUInteger currentStepIndex;
 @property (readonly, strong, nonatomic) NSArray *stepsInCurrentItinerary;
 - (NSUInteger)numberOfStepsInCurrentItinerary;
+- (TAStep *)stepWithIndex:(NSInteger)index;
 - (TAStep *)moveToStepWithIndex:(NSInteger)index;
 - (void)moveToStep:(TAStep *)step;
 

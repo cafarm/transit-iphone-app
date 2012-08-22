@@ -46,7 +46,7 @@
 
 - (OTPItinerary *)currentItinerary
 {
-    return self.currentStep.placeLeg.itinerary;
+    return self.currentStep.place.leg.itinerary;
 }
 
 - (void)startCurrentItinerary
@@ -77,6 +77,11 @@
 - (NSUInteger)numberOfStepsInCurrentItinerary
 {
     return [self.stepsInCurrentItinerary count];
+}
+
+- (TAStep *)stepWithIndex:(NSInteger)index
+{
+    return [self.stepsInCurrentItinerary objectAtIndex:index];
 }
 
 - (TAStep *)moveToStepWithIndex:(NSInteger)index

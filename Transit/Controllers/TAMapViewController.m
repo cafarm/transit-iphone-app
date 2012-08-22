@@ -9,12 +9,15 @@
 #import "TAMapViewController.h"
 #import "TALocationManager.h"
 #import "TATripPlanNavigator.h"
-#import "TAStep.h"
+#import "TAWalkStep.h"
+#import "TATransitStep.h"
 #import "TADirectionsTableViewController.h"
 #import "TATransitOptionsViewController.h"
 #import "TAStepView.h"
 #import "TAStepAnnotation.h"
 #import "TACurrentStepAnnotation.h"
+#import "TAWalkStepView.h"
+#import "TATransitStepView.h"
 #import "OTPClient.h"
 #import "MKMapView+Transit.h"
 
@@ -126,11 +129,6 @@ typedef enum {
     [super didReceiveMemoryWarning];
     
     // TODO: find out how to properly release strong references
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (UIBarButtonItem *)overviewButton
@@ -395,13 +393,27 @@ typedef enum {
 
 - (TAStepView *)stepScrollView:(TAStepScrollView *)scrollView viewForStepAtIndex:(NSInteger)index
 {
-    static NSString *stepID = @"stepID";
-    TAStepView *stepView = [scrollView dequeueReusableStepWithIdentifier:stepID];
-    if (!stepView) {
-        stepView = [[TAStepView alloc] initWithFrame:CGRectMake(0, 0, 268, 129)];
-        stepView.backgroundColor = [UIColor grayColor];
-        stepView.reuseIdentifier = stepID;
+    TAStep *step = [self.tripPlanNavigator stepWithIndex:index];
+    
+    TAStepView *stepView = nil;
+    
+    if ([step isKindOfClass:[TAWalkStep class]]) {
+        TAWalkStepView *walkStepView = (TAWalkStepView *)[scrollView dequeueReusableStepWithIdentifier:@"walkStepViewID"];
+        if (walkStepView == nil) {
+            walkStepView = [[TAWalkStepView alloc] initWithReuseIdentifier:@"walkStepViewID"];
+        }
+        
+        stepView = walkStepView;
+
+    } else {
+        TATransitStepView *transitStepView = (TATransitStepView *)[scrollView dequeueReusableStepWithIdentifier:@"transitStepViewID"];
+        if (transitStepView == nil) {
+            transitStepView = [[TATransitStepView alloc] initWithReuseIdentifier:@"transitStepViewID"];
+        }
+        
+        stepView = transitStepView;
     }
+
     return stepView;
 }
 

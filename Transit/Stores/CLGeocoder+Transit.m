@@ -22,8 +22,8 @@
         completionHandler([TAPlacemark currentLocation], nil);
         
     } else if (field.contentType == TALocationFieldContentTypeGooglePlace) {
-        [gpObjectManager loadDetailsResultWithReference:field.contentReference
-                                      completionHandler:^(GPDetailsResult *result, NSError *error)
+        [gpObjectManager fetchDetailsResultWithReference:field.contentReference
+                                       completionHandler:^(GPDetailsResult *result, NSError *error)
         {
             TAPlacemark *placemark;
             if (error == nil) {                

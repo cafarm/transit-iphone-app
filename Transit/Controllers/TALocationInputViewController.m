@@ -22,7 +22,6 @@
 #import "GPClient.h"
 #import "CLGeocoder+Transit.h"
 #import "UIColor+Transit.h"
-#import "UITableViewCell+Transit.h"
 
 static NSString *const kNavigationTitle = @"Transit";
 
@@ -306,9 +305,10 @@ static NSString *const kNavigationTitle = @"Transit";
     CLLocationCoordinate2D startCoordinate = self.startPlacemark.isCurrentLocation ? self.locationManager.currentLocation.coordinate : self.startPlacemark.location.coordinate;
     CLLocationCoordinate2D endCoordinate = self.endPlacemark.isCurrentLocation ? self.locationManager.currentLocation.coordinate : self.endPlacemark.location.coordinate;
     
-    [self.otpObjectManager loadTripPlanFrom:startCoordinate
-                                         to:endCoordinate
-                          completionHandler:^(OTPTripPlan *tripPlan, NSError *error)
+    self.otpObjectManager.from = startCoordinate;
+    self.otpObjectManager.to = endCoordinate;
+    
+    [self.otpObjectManager fetchTripPlanWithCompletionHandler:^(OTPTripPlan *tripPlan, NSError *error)
     {
         if (error) {
             [self showAlertViewWithError:error];
@@ -550,7 +550,9 @@ static NSString *const kNavigationTitle = @"Transit";
             cell = self.currentLocationCompletionCell;
             self.currentLocationCompletionCell = nil;
         }
-        [UITableViewCell styleCurrentLocationCompletionCell:cell withCompletion:(TACurrentLocationCompletion *)completion];
+        UILabel *label = (UILabel *)[cell viewWithTag:1];
+        label.text = TALocationFieldCurrentLocationText;
+        label.textColor = [UIColor currentLocationColor];
         
     } else if ([completion isKindOfClass:[TATripPlanCompletion class]]) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"tripPlanCompletionCellID"];
@@ -559,7 +561,16 @@ static NSString *const kNavigationTitle = @"Transit";
             cell = self.tripPlanCompletionCell;
             self.tripPlanCompletionCell = nil;
         }
-        [UITableViewCell styleTripPlanCompletionCell:cell withCompletion:(TATripPlanCompletion *)completion];
+        TATripPlanCompletion *tripPlanCompletion = (TATripPlanCompletion *)completion;
+        
+        // From name label
+        [self formatTripPlanNameLabel:(UILabel *)[cell viewWithTag:1] withPlacemark:tripPlanCompletion.from];
+        // From locality label
+        [self formatTripPlanLocalityLabel:(UILabel *)[cell viewWithTag:2] withNameLabel:(UILabel *)[cell viewWithTag:1] Placemark:tripPlanCompletion.from];
+        // To name label
+        [self formatTripPlanNameLabel:(UILabel *)[cell viewWithTag:3] withPlacemark:tripPlanCompletion.to];
+        // To locality label
+        [self formatTripPlanLocalityLabel:(UILabel *)[cell viewWithTag:4] withNameLabel:(UILabel *)[cell viewWithTag:3] Placemark:tripPlanCompletion.to];
         
     } else if ([completion isKindOfClass:[TAPlaceCompletion class]]) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"placeCompletionCellID"];
@@ -569,7 +580,13 @@ static NSString *const kNavigationTitle = @"Transit";
             cell = self.placeCompletionCell;
             self.placeCompletionCell = nil;
         }
-        [UITableViewCell stylePlaceCompletionCell:cell withCompletion:(TAPlaceCompletion *)completion];
+        TAPlaceCompletion *placeCompletion = (TAPlaceCompletion *)completion;
+        
+        UILabel *nameLabel = (UILabel *)[cell viewWithTag:1];
+        nameLabel.text = placeCompletion.mainTerm;
+        
+        UILabel *detailsLabel = (UILabel *)[cell viewWithTag:2];
+        detailsLabel.text = placeCompletion.subTerms;
         
     } else if ([completion isKindOfClass:[TAAttributionCompletion class]]) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"attributionCompletionCellID"];
@@ -579,11 +596,46 @@ static NSString *const kNavigationTitle = @"Transit";
             cell = self.attributionCompletionCell;
             self.attributionCompletionCell = nil;
         }
-        [UITableViewCell styleAttributionCompletionCell:cell withCompletion:(TAAttributionCompletion *)completion];
+        // No extra setup necessary
     }
     
 	return cell;
 }
+
+- (void)formatTripPlanNameLabel:(UILabel *)label withPlacemark:(TAPlacemark *)placemark
+{
+    // Size the label to fit the text
+    CGSize constrainedSize = CGSizeMake(300 - label.frame.origin.x, label.frame.size.height);
+    CGSize textSize = [placemark.name sizeWithFont:label.font constrainedToSize:constrainedSize lineBreakMode:UILineBreakModeTailTruncation];
+    label.frame = CGRectMake(label.frame.origin.x, label.frame.origin.y, textSize.width, label.frame.size.height);
+    label.text = placemark.name;
+    
+    if (placemark.isCurrentLocation) {
+        label.textColor = [UIColor currentLocationColor];
+    } else {
+        label.textColor = [UIColor blackColor];
+    }
+}
+
+- (void)formatTripPlanLocalityLabel:(UILabel *)label withNameLabel:(UILabel *)nameLabel Placemark:(TAPlacemark *)placemark
+{
+    // Only add locality to establishments
+    if ([placemark.types containsObject:[NSNumber numberWithInt:GPDetailsResultTypeEstablishment]]) {
+        CGFloat labelX = nameLabel.frame.origin.x + nameLabel.frame.size.width + 5;
+        CGFloat remainingSpace = 300 - labelX;
+        
+        if (remainingSpace > 0) {
+            label.frame = CGRectMake(labelX, label.frame.origin.y, remainingSpace, label.frame.size.height);
+            label.text = [NSString stringWithFormat:@"(%@)", placemark.locality];
+        } else {
+            label.text = nil;
+        }
+        
+    } else {
+        label.text = nil;
+    }
+}
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

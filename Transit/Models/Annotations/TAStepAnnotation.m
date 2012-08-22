@@ -24,12 +24,12 @@
 
 - (CLLocationCoordinate2D)coordinate
 {
-    return self.step.coordinate;
+    return self.step.place.coordinate;
 }
 
 - (NSString *)title
 {
-    return [NSString stringWithFormat:@"%@", self.step.fromRoute];
+    return [NSString stringWithFormat:@"%@", self.step.route];
 }
 
 @end

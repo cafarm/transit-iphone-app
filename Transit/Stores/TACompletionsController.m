@@ -112,10 +112,10 @@
             }
         } else {
         
-            [self.gpObjectManager loadAutocompletePredictionsWithInput:self.input
-                                                              location:self.locationManager.currentLocation.coordinate
-                                                                radius:TARadiusOfInterest
-                                                     completionHandler:^(NSArray *predictions, NSError *error)
+            [self.gpObjectManager fetchAutocompletePredictionsWithInput:self.input
+                                                               location:self.locationManager.currentLocation.coordinate
+                                                                 radius:TARadiusOfInterest
+                                                      completionHandler:^(NSArray *predictions, NSError *error)
              {
                  self.fetchedPlaceCompletions = nil;
                  if (error == nil) {
