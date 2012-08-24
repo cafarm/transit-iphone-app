@@ -12,7 +12,7 @@
 
 - (id)initWithReuseIdentifier:(NSString *)reuseIdentifier;
 
-@property (strong, nonatomic) IBOutlet UIView *view;
+@property (weak, nonatomic) IBOutlet UIView *view;
 @property (weak, nonatomic) IBOutlet UILabel *detailsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;

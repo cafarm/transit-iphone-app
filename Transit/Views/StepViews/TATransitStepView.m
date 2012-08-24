@@ -28,6 +28,7 @@ static NSInteger const kNumberOfLinesMax = 3;
         [[NSBundle mainBundle] loadNibNamed:@"TATransitStepView" owner:self options:nil];
         self.view.frame = self.bounds;
         [self addSubview:self.view];
+        [self addLabelShadows];
     }
     return self;
 }

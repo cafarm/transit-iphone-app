@@ -14,6 +14,7 @@
 
 @synthesize reuseIdentifier = _reuseIdentifier;
 @synthesize maskLayer = _maskLayer;
+@synthesize view = _view;
 @synthesize detailsLabel = _detailsLabel;
 @synthesize imageView = _imageView;
 
@@ -67,6 +68,26 @@
     
     // Move the image to best fit the new frame
     [self positionImageViewForNumberOfLines:newNumberOfLines];
+}
+
+- (void)addLabelShadows
+{
+    // Add drop shadows to all labels
+    NSShadow *textDropShadow = [[NSShadow alloc] init];
+    textDropShadow.shadowBlurRadius = 2;
+    textDropShadow.shadowColor = [UIColor blackColor];
+    
+    for (UIView *view in self.view.subviews) {
+        if ([view isKindOfClass:[UILabel class]]) {
+            UILabel *label = (UILabel*)view;
+            
+            NSAttributedString *text = label.attributedText;
+            NSDictionary *attributes = [text attributesAtIndex:0 effectiveRange:NULL];
+            NSMutableDictionary *attributesMutable = [NSMutableDictionary dictionaryWithDictionary:attributes];
+            [attributesMutable setObject:textDropShadow forKey:NSShadowAttributeName];
+            label.attributedText = [[NSAttributedString alloc] initWithString:label.text attributes:attributesMutable];
+        }
+    }
 }
 
 - (NSUInteger)minNumberOfDetailLines

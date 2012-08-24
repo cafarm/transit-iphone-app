@@ -411,18 +411,19 @@ typedef enum {
         TAWalkStep *walkStep = (TAWalkStep *)step;
         
         NSString *detailsText;
-        NSString *distanceText;
         NSDictionary *detailsAttributes = [walkStepView.detailsLabel.attributedText attributesAtIndex:0 effectiveRange:NULL];
+        NSString *distanceText;
+        NSDictionary *distanceAttributes = [walkStepView.distanceLabel.attributedText attributesAtIndex:0 effectiveRange:NULL];
         if (walkStep.isDestination) {
             detailsText = [NSString stringWithFormat:@"ARRIVE AT %@", [walkStep.place.name uppercaseString]];
-            distanceText = nil;
+            distanceText = @" ";
         } else {
             detailsText = [NSString stringWithFormat:@"WALK TO %@", [walkStep.to.name uppercaseString]];
             distanceText = [NSString stringWithFormat:@"%.01f miles", [walkStep.distance floatValue] * 0.000621371f];
         }
         
         walkStepView.detailsLabel.attributedText = [[NSAttributedString alloc] initWithString:detailsText attributes:detailsAttributes];
-        walkStepView.distanceLabel.text = distanceText;
+        walkStepView.distanceLabel.attributedText = [[NSAttributedString alloc] initWithString:distanceText attributes:distanceAttributes];
         [walkStepView setNeedsLayout];
         
         stepView = walkStepView;
@@ -436,9 +437,11 @@ typedef enum {
         TATransitStep *transitStep = (TATransitStep *)step;
         
         NSString *routeText;
+        NSDictionary *routeAttributes = [transitStepView.routeLabel.attributedText attributesAtIndex:0 effectiveRange:NULL];
         NSString *detailsText;
-        NSString *dateText;
         NSDictionary *detailsAttributes = [transitStepView.detailsLabel.attributedText attributesAtIndex:0 effectiveRange:NULL];
+        NSString *dateText;
+        NSDictionary *dateAttributes = [transitStepView.dateLabel.attributedText attributesAtIndex:0 effectiveRange:NULL];
         self.dateFormatter.dateStyle = NSDateFormatterNoStyle;
         self.dateFormatter.timeStyle = NSDateFormatterShortStyle;
         if (transitStep.isArrival) {
@@ -450,9 +453,9 @@ typedef enum {
             detailsText = [NSString stringWithFormat:@"TOWARDS %@", [transitStep.headSign uppercaseString]];
             dateText = [NSString stringWithFormat:@"Departs at %@", [self.dateFormatter stringFromDate:transitStep.scheduledDate]];
         }
-        transitStepView.routeLabel.text = routeText;
+        transitStepView.routeLabel.attributedText = [[NSAttributedString alloc] initWithString:routeText attributes:routeAttributes];
         transitStepView.detailsLabel.attributedText = [[NSAttributedString alloc] initWithString:detailsText attributes:detailsAttributes];
-        transitStepView.dateLabel.text = dateText;
+        transitStepView.dateLabel.attributedText = [[NSAttributedString alloc] initWithString:dateText attributes:dateAttributes];
         [transitStepView setNeedsLayout];
         
         stepView = transitStepView;

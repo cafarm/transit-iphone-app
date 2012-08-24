@@ -24,6 +24,7 @@
         [[NSBundle mainBundle] loadNibNamed:@"TAWalkStepView" owner:self options:nil];
         self.view.frame = self.bounds;
         [self addSubview:self.view];
+        [self addLabelShadows];
     }
     return self;
 }

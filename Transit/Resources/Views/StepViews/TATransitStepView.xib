@@ -39,7 +39,7 @@
 					<object class="IBUILabel" id="381355154">
 						<reference key="NSNextResponder" ref="842583451"/>
 						<int key="NSvFlags">290</int>
-						<string key="NSFrame">{{80, 18}, {175, 30}}</string>
+						<string key="NSFrame">{{80, 11}, {174, 44}}</string>
 						<reference key="NSSuperview" ref="842583451"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="449361315"/>
@@ -54,24 +54,26 @@
 						<int key="IBUIBaselineAdjustment">0</int>
 						<float key="IBUIMinimumFontSize">16</float>
 						<int key="IBUILineBreakMode">3</int>
-						<string key="IBUIText">Get off 156</string>
-						<object class="NSColor" key="IBUITextColor">
-							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MQA</bytes>
-							<object class="NSColorSpace" key="NSCustomColorSpace">
-								<int key="NSID">2</int>
-							</object>
-						</object>
-						<object class="IBUIFontDescription" key="IBUIFontDescription">
-							<string key="name">Avenir-Heavy</string>
-							<string key="family">Avenir</string>
-							<int key="traits">2</int>
-							<double key="pointSize">32</double>
-						</object>
-						<object class="NSFont" key="IBUIFont">
-							<string key="NSName">Avenir-Heavy</string>
-							<double key="NSSize">32</double>
-							<int key="NSfFlags">16</int>
+						<bool key="IBUIUsesAttributedText">YES</bool>
+						<object class="NSAttributedString" key="IBUIAttributedText">
+							<string key="NSString">Get off 156</string>
+							<dictionary key="NSAttributes">
+								<object class="NSColor" key="NSColor">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MQA</bytes>
+									<object class="NSColorSpace" key="NSCustomColorSpace">
+										<int key="NSID">2</int>
+									</object>
+								</object>
+								<object class="NSFont" key="NSFont">
+									<string key="NSName">Avenir-Heavy</string>
+									<double key="NSSize">32</double>
+									<int key="NSfFlags">16</int>
+								</object>
+								<object class="NSMutableParagraphStyle" key="NSParagraphStyle">
+									<nil key="NSTabStops"/>
+								</object>
+							</dictionary>
 						</object>
 						<int key="IBUIAutoshrinkMode">2</int>
 					</object>
@@ -130,19 +132,22 @@
 						<int key="IBUIBaselineAdjustment">0</int>
 						<int key="IBUINumberOfLines">0</int>
 						<int key="IBUILineBreakMode">3</int>
-						<string key="IBUIText">Arrives in 9 minutes</string>
-						<reference key="IBUITextColor" ref="68883690"/>
-						<int key="IBUITextAlignment">2</int>
-						<object class="IBUIFontDescription" key="IBUIFontDescription">
-							<string key="name">AvenirNext-MediumItalic</string>
-							<string key="family">Avenir Next</string>
-							<int key="traits">1</int>
-							<double key="pointSize">16</double>
-						</object>
-						<object class="NSFont" key="IBUIFont">
-							<string key="NSName">AvenirNext-UltraLightItalic</string>
-							<double key="NSSize">16</double>
-							<int key="NSfFlags">16</int>
+						<bool key="IBUIUsesAttributedText">YES</bool>
+						<object class="NSAttributedString" key="IBUIAttributedText">
+							<string key="NSString">Arrives in 9 minutes</string>
+							<dictionary key="NSAttributes">
+								<reference key="NSColor" ref="68883690"/>
+								<object class="NSFont" key="NSFont" id="601240317">
+									<string key="NSName">AvenirNext-MediumItalic</string>
+									<double key="NSSize">16</double>
+									<int key="NSfFlags">16</int>
+								</object>
+								<reference key="NSOriginalFont" ref="601240317"/>
+								<object class="NSMutableParagraphStyle" key="NSParagraphStyle">
+									<int key="NSAlignment">1</int>
+									<nil key="NSTabStops"/>
+								</object>
+							</dictionary>
 						</object>
 						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 						<int key="IBUIAutoshrinkMode">0</int>
