@@ -33,6 +33,8 @@ typedef enum {
 
 @property (nonatomic) BOOL isViewingStepByStep;
 
+@property (strong, nonatomic) NSDateFormatter *dateFormatter;
+
 @end
 
 
@@ -56,6 +58,8 @@ typedef enum {
 @synthesize currentStepAnnotation = _currentStepAnnotation;
 
 @synthesize isViewingStepByStep = _isViewingStepByStep;
+
+@synthesize dateFormatter = _dateFormatter;
 
 - (id)initWithObjectManager:(OTPObjectManager *)objectManager locationManager:(TALocationManager *)locationManager tripPlanNavigator:(TATripPlanNavigator *)tripPlanNavigator
 {
@@ -397,11 +401,29 @@ typedef enum {
     
     TAStepView *stepView = nil;
     
+    
     if ([step isKindOfClass:[TAWalkStep class]]) {
         TAWalkStepView *walkStepView = (TAWalkStepView *)[scrollView dequeueReusableStepWithIdentifier:@"walkStepViewID"];
         if (walkStepView == nil) {
             walkStepView = [[TAWalkStepView alloc] initWithReuseIdentifier:@"walkStepViewID"];
         }
+        
+        TAWalkStep *walkStep = (TAWalkStep *)step;
+        
+        NSString *detailsText;
+        NSString *distanceText;
+        NSDictionary *detailsAttributes = [walkStepView.detailsLabel.attributedText attributesAtIndex:0 effectiveRange:NULL];
+        if (walkStep.isDestination) {
+            detailsText = [NSString stringWithFormat:@"ARRIVE AT %@", [walkStep.place.name uppercaseString]];
+            distanceText = nil;
+        } else {
+            detailsText = [NSString stringWithFormat:@"WALK TO %@", [walkStep.to.name uppercaseString]];
+            distanceText = [NSString stringWithFormat:@"%.01f miles", [walkStep.distance floatValue] * 0.000621371f];
+        }
+        
+        walkStepView.detailsLabel.attributedText = [[NSAttributedString alloc] initWithString:detailsText attributes:detailsAttributes];
+        walkStepView.distanceLabel.text = distanceText;
+        [walkStepView setNeedsLayout];
         
         stepView = walkStepView;
 
@@ -411,10 +433,40 @@ typedef enum {
             transitStepView = [[TATransitStepView alloc] initWithReuseIdentifier:@"transitStepViewID"];
         }
         
+        TATransitStep *transitStep = (TATransitStep *)step;
+        
+        NSString *routeText;
+        NSString *detailsText;
+        NSString *dateText;
+        NSDictionary *detailsAttributes = [transitStepView.detailsLabel.attributedText attributesAtIndex:0 effectiveRange:NULL];
+        self.dateFormatter.dateStyle = NSDateFormatterNoStyle;
+        self.dateFormatter.timeStyle = NSDateFormatterShortStyle;
+        if (transitStep.isArrival) {
+            routeText = [NSString stringWithFormat:@"Get off %@", transitStep.route];
+            detailsText = [NSString stringWithFormat:@"AT %@", [transitStep.place.name uppercaseString]];
+            dateText = [NSString stringWithFormat:@"Arrives at %@", [self.dateFormatter stringFromDate:transitStep.scheduledDate]];
+        } else {
+            routeText = [NSString stringWithFormat:@"Take %@", transitStep.route];
+            detailsText = [NSString stringWithFormat:@"TOWARDS %@", [transitStep.headSign uppercaseString]];
+            dateText = [NSString stringWithFormat:@"Departs at %@", [self.dateFormatter stringFromDate:transitStep.scheduledDate]];
+        }
+        transitStepView.routeLabel.text = routeText;
+        transitStepView.detailsLabel.attributedText = [[NSAttributedString alloc] initWithString:detailsText attributes:detailsAttributes];
+        transitStepView.dateLabel.text = dateText;
+        [transitStepView setNeedsLayout];
+        
         stepView = transitStepView;
     }
 
     return stepView;
+}
+
+- (NSDateFormatter *)dateFormatter
+{
+    if (_dateFormatter == nil) {
+        _dateFormatter = [[NSDateFormatter alloc] init];
+    }
+    return _dateFormatter;
 }
 
 - (void)stepScrollView:(TAStepScrollView *)scrollView didScrollToStep:(TAStepView *)step atIndex:(NSInteger)index

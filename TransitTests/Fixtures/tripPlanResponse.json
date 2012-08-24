@@ -244,7 +244,7 @@
                                  "geometry": "{\"type\": \"Point\", \"coordinates\": [-122.310921,47.6551018]}"
                                  },
                                  "to": {
-                                 "name": "N 40TH ST & CORLISS AVE N",
+                                 "name": "N 40TH ST & CORLISS",
                                  "stopId": {
                                  "agencyId": "EOS",
                                  "id": "26380"
@@ -427,7 +427,7 @@
                                  "geometry": "{\"type\": \"Point\", \"coordinates\": [-122.30645786019625,47.53024804596229]}"
                                  },
                                  "to": {
-                                 "name": "East Marginal Way South",
+                                 "name": "East Marginal Way South And A Little",
                                  "stopId": null,
                                  "stopCode": null,
                                  "lon": -122.3043585887,

@@ -11,6 +11,8 @@
 		1F06D20A15DB447F00F91575 /* libPlacesClient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F06D20215DB443100F91575 /* libPlacesClient.a */; };
 		1F08CB0A15E480D200E3063E /* TAWalkStep.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08CB0915E480D100E3063E /* TAWalkStep.m */; };
 		1F08CB0D15E480F100E3063E /* TATransitStep.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08CB0C15E480F100E3063E /* TATransitStep.m */; };
+		1F08CB2615E4E36600E3063E /* LocationInputBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F08CB2515E4E36600E3063E /* LocationInputBackground.png */; };
+		1F08CB2815E5B57400E3063E /* BusStepIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F08CB2715E5B57400E3063E /* BusStepIcon@2x.png */; };
 		1F17EAFD15E459E500A0A17B /* BusStepIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F17EAFC15E459E500A0A17B /* BusStepIcon.png */; };
 		1F17EAFF15E4744600A0A17B /* WalkStepIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F17EAFE15E4744600A0A17B /* WalkStepIcon.png */; };
 		1F342CBD15AE236300E2A6E8 /* TADirectionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F342CBC15AE236300E2A6E8 /* TADirectionsTableViewController.m */; };
@@ -189,6 +191,8 @@
 		1F08CB0915E480D100E3063E /* TAWalkStep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TAWalkStep.m; path = Models/Steps/TAWalkStep.m; sourceTree = "<group>"; };
 		1F08CB0B15E480F100E3063E /* TATransitStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TATransitStep.h; path = Models/Steps/TATransitStep.h; sourceTree = "<group>"; };
 		1F08CB0C15E480F100E3063E /* TATransitStep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TATransitStep.m; path = Models/Steps/TATransitStep.m; sourceTree = "<group>"; };
+		1F08CB2515E4E36600E3063E /* LocationInputBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LocationInputBackground.png; path = Transit/Resources/Images/LocationInputBackground.png; sourceTree = "<group>"; };
+		1F08CB2715E5B57400E3063E /* BusStepIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BusStepIcon@2x.png"; path = "Transit/Resources/Images/StepIcons/BusStepIcon@2x.png"; sourceTree = "<group>"; };
 		1F12167A15C207AE007B75A5 /* MACLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MACLog.h; path = SupportingFiles/MACLog.h; sourceTree = "<group>"; };
 		1F17EAFC15E459E500A0A17B /* BusStepIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BusStepIcon.png; path = Transit/Resources/Images/StepIcons/BusStepIcon.png; sourceTree = "<group>"; };
 		1F17EAFE15E4744600A0A17B /* WalkStepIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = WalkStepIcon.png; path = Transit/Resources/Images/StepIcons/WalkStepIcon.png; sourceTree = "<group>"; };
@@ -359,6 +363,7 @@
 		1F17EAFB15E459D400A0A17B /* StepIcons */ = {
 			isa = PBXGroup;
 			children = (
+				1F08CB2715E5B57400E3063E /* BusStepIcon@2x.png */,
 				1F17EAFE15E4744600A0A17B /* WalkStepIcon.png */,
 				1F17EAFC15E459E500A0A17B /* BusStepIcon.png */,
 			);
@@ -518,6 +523,7 @@
 		1F90386D15D71F8A00B00877 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				1F08CB2515E4E36600E3063E /* LocationInputBackground.png */,
 				1F17EAFB15E459D400A0A17B /* StepIcons */,
 				1F4347A515E320AE0047F828 /* CompletionIcons */,
 				1F9EA46115E0B1A600EAC57D /* CurrentLocationTag.png */,
@@ -851,6 +857,8 @@
 				1FA9E93D15E37B44005E681E /* TATransitStepView.xib in Resources */,
 				1F17EAFD15E459E500A0A17B /* BusStepIcon.png in Resources */,
 				1F17EAFF15E4744600A0A17B /* WalkStepIcon.png in Resources */,
+				1F08CB2615E4E36600E3063E /* LocationInputBackground.png in Resources */,
+				1F08CB2815E5B57400E3063E /* BusStepIcon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

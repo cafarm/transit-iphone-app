@@ -2,7 +2,7 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1536</int>
-		<string key="IBDocument.SystemVersion">12A269</string>
+		<string key="IBDocument.SystemVersion">12B19</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2829</string>
 		<string key="IBDocument.AppKitVersion">1187</string>
 		<string key="IBDocument.HIToolboxVersion">624.00</string>
@@ -34,12 +34,12 @@
 			</object>
 			<object class="IBUIView" id="842583451">
 				<reference key="NSNextResponder"/>
-				<int key="NSvFlags">292</int>
+				<int key="NSvFlags">274</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUILabel" id="381355154">
 						<reference key="NSNextResponder" ref="842583451"/>
 						<int key="NSvFlags">290</int>
-						<string key="NSFrame">{{80, 17}, {175, 40}}</string>
+						<string key="NSFrame">{{80, 18}, {175, 30}}</string>
 						<reference key="NSSuperview" ref="842583451"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="449361315"/>
@@ -52,7 +52,9 @@
 						<nil key="IBUIHighlightedColor"/>
 						<string key="IBUIShadowOffset">{0, 0}</string>
 						<int key="IBUIBaselineAdjustment">0</int>
-						<string key="IBUIText">Take 44</string>
+						<float key="IBUIMinimumFontSize">16</float>
+						<int key="IBUILineBreakMode">3</int>
+						<string key="IBUIText">Get off 156</string>
 						<object class="NSColor" key="IBUITextColor">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MQA</bytes>
@@ -64,20 +66,19 @@
 							<string key="name">Avenir-Heavy</string>
 							<string key="family">Avenir</string>
 							<int key="traits">2</int>
-							<double key="pointSize">40</double>
+							<double key="pointSize">32</double>
 						</object>
 						<object class="NSFont" key="IBUIFont">
 							<string key="NSName">Avenir-Heavy</string>
-							<double key="NSSize">40</double>
+							<double key="NSSize">32</double>
 							<int key="NSfFlags">16</int>
 						</object>
-						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
-						<int key="IBUIAutoshrinkMode">0</int>
+						<int key="IBUIAutoshrinkMode">2</int>
 					</object>
 					<object class="IBUILabel" id="1051797962">
 						<reference key="NSNextResponder" ref="842583451"/>
 						<int key="NSvFlags">290</int>
-						<string key="NSFrame">{{80, 55}, {175, 44}}</string>
+						<string key="NSFrame">{{80, 49}, {175, 44}}</string>
 						<reference key="NSSuperview" ref="842583451"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -103,8 +104,7 @@
 									<int key="NSfFlags">16</int>
 								</object>
 								<object class="NSMutableParagraphStyle" key="NSParagraphStyle">
-									<double key="NSMinLineHeight">22</double>
-									<double key="NSMaxLineHeight">22</double>
+									<double key="NSLineHeightMultiple">0.87</double>
 									<nil key="NSTabStops"/>
 								</object>
 							</dictionary>
@@ -115,8 +115,8 @@
 					</object>
 					<object class="IBUILabel" id="449361315">
 						<reference key="NSNextResponder" ref="842583451"/>
-						<int key="NSvFlags">290</int>
-						<string key="NSFrame">{{13, 98}, {242, 22}}</string>
+						<int key="NSvFlags">266</int>
+						<string key="NSFrame">{{13, 92}, {242, 22}}</string>
 						<reference key="NSSuperview" ref="842583451"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1051797962"/>
@@ -130,24 +130,19 @@
 						<int key="IBUIBaselineAdjustment">0</int>
 						<int key="IBUINumberOfLines">0</int>
 						<int key="IBUILineBreakMode">3</int>
-						<bool key="IBUIUsesAttributedText">YES</bool>
-						<object class="NSAttributedString" key="IBUIAttributedText">
-							<string key="NSString">Departs in 9 minutes</string>
-							<dictionary key="NSAttributes">
-								<reference key="NSColor" ref="68883690"/>
-								<object class="NSFont" key="NSFont" id="554290501">
-									<string key="NSName">AvenirNext-MediumItalic</string>
-									<double key="NSSize">16</double>
-									<int key="NSfFlags">16</int>
-								</object>
-								<reference key="NSOriginalFont" ref="554290501"/>
-								<object class="NSMutableParagraphStyle" key="NSParagraphStyle">
-									<int key="NSAlignment">1</int>
-									<double key="NSMinLineHeight">22</double>
-									<double key="NSMaxLineHeight">22</double>
-									<nil key="NSTabStops"/>
-								</object>
-							</dictionary>
+						<string key="IBUIText">Arrives in 9 minutes</string>
+						<reference key="IBUITextColor" ref="68883690"/>
+						<int key="IBUITextAlignment">2</int>
+						<object class="IBUIFontDescription" key="IBUIFontDescription">
+							<string key="name">AvenirNext-MediumItalic</string>
+							<string key="family">Avenir Next</string>
+							<int key="traits">1</int>
+							<double key="pointSize">16</double>
+						</object>
+						<object class="NSFont" key="IBUIFont">
+							<string key="NSName">AvenirNext-UltraLightItalic</string>
+							<double key="NSSize">16</double>
+							<int key="NSfFlags">16</int>
 						</object>
 						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 						<int key="IBUIAutoshrinkMode">0</int>
@@ -156,7 +151,7 @@
 					<object class="IBUIImageView" id="774203670">
 						<reference key="NSNextResponder" ref="842583451"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{13, 25}, {58, 58}}</string>
+						<string key="NSFrame">{{13, 24}, {58, 58}}</string>
 						<reference key="NSSuperview" ref="842583451"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="381355154"/>
@@ -170,7 +165,7 @@
 						</object>
 					</object>
 				</array>
-				<string key="NSFrameSize">{268, 129}</string>
+				<string key="NSFrameSize">{268, 123}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="774203670"/>
@@ -194,6 +189,38 @@
 						<reference key="destination" ref="842583451"/>
 					</object>
 					<int key="connectionID">7</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">routeLabel</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="381355154"/>
+					</object>
+					<int key="connectionID">75</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">detailsLabel</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="1051797962"/>
+					</object>
+					<int key="connectionID">77</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">dateLabel</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="449361315"/>
+					</object>
+					<int key="connectionID">79</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">imageView</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="774203670"/>
+					</object>
+					<int key="connectionID">80</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -265,7 +292,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">74</int>
+			<int key="maxID">80</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -280,17 +307,35 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">TATransitStepView</string>
 					<string key="superclassName">TAStepView</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">view</string>
-						<string key="NS.object.0">UIView</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">view</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="dateLabel">UILabel</string>
+						<string key="detailsLabel">UILabel</string>
+						<string key="imageView">UIImageView</string>
+						<string key="routeLabel">UILabel</string>
+						<string key="view">UIView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="dateLabel">
+							<string key="name">dateLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="detailsLabel">
+							<string key="name">detailsLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="imageView">
+							<string key="name">imageView</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="routeLabel">
+							<string key="name">routeLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="view">
 							<string key="name">view</string>
 							<string key="candidateClassName">UIView</string>
 						</object>
-					</object>
+					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/TATransitStepView.h</string>

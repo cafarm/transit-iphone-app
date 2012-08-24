@@ -34,6 +34,7 @@
 @property (weak, nonatomic) IBOutlet TALocationField *startField;
 @property (weak, nonatomic) IBOutlet TALocationField *endField;
 @property (weak, nonatomic) IBOutlet UIButton *swapFieldsButton;
+@property (weak, nonatomic) IBOutlet UIView *fieldContainerView;
 @property (weak, nonatomic) IBOutlet UITableView *completionsTable;
 
 @property (readonly, nonatomic) TALocationField *firstResponderField;

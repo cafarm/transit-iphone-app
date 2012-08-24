@@ -53,7 +53,8 @@ NSString *const TALocationFieldCurrentLocationText = @"Current Location";
         _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         _textField.enablesReturnKeyAutomatically = YES;
-        _textField.backgroundColor = [UIColor whiteColor];
+//        _textField.borderStyle = UITextBorderStyleRoundedRect;
+        _textField.backgroundColor = [UIColor lightBackgroundColor];
         _textField.delegate = self;
         [self addSubview:_textField];
                 
@@ -61,6 +62,7 @@ NSString *const TALocationFieldCurrentLocationText = @"Current Location";
         _currentLocationField = [[UITextField alloc] initWithFrame:self.bounds];
         _currentLocationField.font = _textField.font;
         _currentLocationField.contentVerticalAlignment = _textField.contentVerticalAlignment;
+        _currentLocationField.borderStyle = _textField.borderStyle;
         _currentLocationField.backgroundColor = _textField.backgroundColor;
         _currentLocationField.text = TALocationFieldCurrentLocationText;
         _currentLocationField.textColor = [UIColor currentLocationColor];

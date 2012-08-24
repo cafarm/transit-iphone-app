@@ -63,9 +63,9 @@
 - (NSDate *)scheduledDate
 {
     if (self.isArrival) {
-        return self.to.arrival;
+        return self.toLeg.endTime;
     } else {
-        return self.from.departure;
+        return self.fromLeg.startTime;
     }
 }
 

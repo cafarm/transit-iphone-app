@@ -198,7 +198,7 @@
     // Add shadow (use shadowPath to improve rendering performance)
     step.layer.shadowColor = [[UIColor blackColor] CGColor];
     step.layer.shadowOffset = CGSizeMake(3.0f, 8.0f);
-    step.layer.shadowOpacity = 0.3f;
+    step.layer.shadowOpacity = 1.0f;
     step.layer.shadowRadius = 7.0;
     step.layer.masksToBounds = NO;
     UIBezierPath *path = [UIBezierPath bezierPathWithRect:step.bounds];

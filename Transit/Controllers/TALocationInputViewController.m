@@ -48,6 +48,7 @@ static NSString *const kNavigationTitle = @"Transit";
 @synthesize startField = _startField;
 @synthesize endField = _endField;
 @synthesize swapFieldsButton = _swapFieldsButton;
+@synthesize fieldContainerView = _fieldContainerView;
 @synthesize completionsTable = _completionsTable;
 
 @synthesize firstResponderField = _firstResponderField;
@@ -83,6 +84,8 @@ static NSString *const kNavigationTitle = @"Transit";
     
     self.navigationItem.title = kNavigationTitle;
     
+    self.fieldContainerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"LocationInputBackground"]];
+    
     UIBarButtonItem *clearButton = [[UIBarButtonItem alloc] initWithTitle:@"Clear"
                                                                     style:UIBarButtonItemStylePlain
                                                                    target:self
@@ -114,6 +117,7 @@ static NSString *const kNavigationTitle = @"Transit";
         [self.startField becomeFirstResponder];
     }
     
+    self.completionsTable.backgroundColor = [UIColor lightBackgroundColor];
     self.completionsTable.delegate = self;
     self.completionsTable.dataSource = self;
     
@@ -599,6 +603,7 @@ static NSString *const kNavigationTitle = @"Transit";
         // No extra setup necessary
     }
     
+    //cell.contentView.backgroundColor = [UIColor lightBackgroundColor];
 	return cell;
 }
 
