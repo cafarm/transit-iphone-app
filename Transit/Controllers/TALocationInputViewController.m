@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Seven O' Eight. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "TALocationInputViewController.h"
 #import "TALocationField.h"
 #import "TACompletionsController.h"
@@ -82,6 +84,9 @@ static NSString *const kNavigationTitle = @"Transit";
 {
     [super viewDidLoad];
     
+    // Hide nav bar shadow
+    self.navigationController.navigationBar.clipsToBounds = YES;
+    
     self.navigationItem.title = kNavigationTitle;
     
     self.fieldContainerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"LocationInputBackground"]];
@@ -97,15 +102,21 @@ static NSString *const kNavigationTitle = @"Transit";
                                                                     style:UIBarButtonItemStyleDone
                                                                    target:self
                                                                    action:@selector(routeTrip)];
-    
     self.navigationItem.rightBarButtonItem = routeButton;
     self.routeButton = routeButton;
     
-    self.startField.leftViewText = @"Start:  ";
+    self.startField.leftViewLabel.text = @"Start:  ";
     self.startField.delegate = self;
     
-    self.endField.leftViewText = @"End:  ";
+    self.endField.leftViewLabel.text = @"End:  ";
     self.endField.delegate = self;
+    
+    UIEdgeInsets insets = UIEdgeInsetsMake(15, 5, 15, 5);
+    [self.swapFieldsButton setBackgroundImage:[[UIImage imageNamed:@"BlueButton"] resizableImageWithCapInsets:insets] forState:UIControlStateNormal];
+    [self.swapFieldsButton setBackgroundImage:[[UIImage imageNamed:@"BlueButton"] resizableImageWithCapInsets:insets] forState:UIControlStateDisabled];
+    [self.swapFieldsButton setBackgroundImage:[[UIImage imageNamed:@"BlueButtonPressed"] resizableImageWithCapInsets:insets] forState:UIControlStateHighlighted];
+    [self.swapFieldsButton setImage:[UIImage imageNamed:@"Swap"] forState:UIControlStateNormal];
+    self.swapFieldsButton.imageEdgeInsets = UIEdgeInsetsMake(0, 1, 0, 0);
     
     // If we have authorization to current location, set the start field to current location
     if ([TALocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized
@@ -117,7 +128,6 @@ static NSString *const kNavigationTitle = @"Transit";
         [self.startField becomeFirstResponder];
     }
     
-    self.completionsTable.backgroundColor = [UIColor lightBackgroundColor];
     self.completionsTable.delegate = self;
     self.completionsTable.dataSource = self;
     
@@ -557,7 +567,7 @@ static NSString *const kNavigationTitle = @"Transit";
         UILabel *label = (UILabel *)[cell viewWithTag:1];
         label.text = TALocationFieldCurrentLocationText;
         label.textColor = [UIColor currentLocationColor];
-        
+
     } else if ([completion isKindOfClass:[TATripPlanCompletion class]]) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"tripPlanCompletionCellID"];
         if (cell == nil) {
@@ -644,7 +654,7 @@ static NSString *const kNavigationTitle = @"Transit";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    //[tableView deselectRowAtIndexPath:indexPath animated:NO];
     
     TACompletion *completion = [self.completionsController completionAtIndexPath:indexPath.row];
     

@@ -11,6 +11,5 @@
 @interface UIColor (Transit)
 
 + (UIColor *)currentLocationColor;
-+ (UIColor *)lightBackgroundColor;
 
 @end

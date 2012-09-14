@@ -14,8 +14,6 @@ NSString *const TALocationFieldCurrentLocationText = @"Current Location";
 @interface TALocationField ()
 
 @property (strong, nonatomic) UITextField *textField;
-
-@property (strong, nonatomic) UITextField *currentLocationField;
 @property (strong, nonatomic) UIImageView *currentLocationTag;
 
 @end
@@ -24,9 +22,7 @@ NSString *const TALocationFieldCurrentLocationText = @"Current Location";
 @implementation TALocationField
 
 @synthesize text = _text;
-
-@synthesize leftViewText = _leftViewText;
-
+@synthesize leftViewLabel = _leftViewLabel;
 @synthesize isComplete = _isComplete;
 
 @synthesize contentType = _contentType;
@@ -35,8 +31,6 @@ NSString *const TALocationFieldCurrentLocationText = @"Current Location";
 @synthesize delegate = _delegate;
 
 @synthesize textField = _textField;
-
-@synthesize currentLocationField = _currentLocationField;
 @synthesize currentLocationTag = _currentLocationTag;
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -53,29 +47,35 @@ NSString *const TALocationFieldCurrentLocationText = @"Current Location";
         _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         _textField.enablesReturnKeyAutomatically = YES;
-//        _textField.borderStyle = UITextBorderStyleRoundedRect;
-        _textField.backgroundColor = [UIColor lightBackgroundColor];
+        //_textField.borderStyle = UITextBorderStyleRoundedRect;
+        _textField.background = [[UIImage imageNamed:@"LocationField"] resizableImageWithCapInsets:UIEdgeInsetsMake(6, 6, 6, 6)];
         _textField.delegate = self;
+        _textField.leftViewMode = UITextFieldViewModeAlways;
         [self addSubview:_textField];
-                
-        // A convenient way to hide the input cursor and show the current location text when needed
-        _currentLocationField = [[UITextField alloc] initWithFrame:self.bounds];
-        _currentLocationField.font = _textField.font;
-        _currentLocationField.contentVerticalAlignment = _textField.contentVerticalAlignment;
-        _currentLocationField.borderStyle = _textField.borderStyle;
-        _currentLocationField.backgroundColor = _textField.backgroundColor;
-        _currentLocationField.text = TALocationFieldCurrentLocationText;
-        _currentLocationField.textColor = [UIColor currentLocationColor];
-        _currentLocationField.hidden = YES;
-        _currentLocationField.delegate = self;
-        [self addSubview:_currentLocationField];
+        
+        _leftViewLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, -1, 51, 31)];
+        _leftViewLabel.font = self.textField.font;
+        _leftViewLabel.textAlignment = UITextAlignmentRight;
+        _leftViewLabel.textColor = [UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
+        _leftViewLabel.backgroundColor = [UIColor clearColor];
+        _textField.leftView = _leftViewLabel;
         
         // The current location tag displayed when a user selects the current location field
-        _currentLocationTag = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"CurrentLocationTag"]];
-        CGRect tagFrame = _currentLocationTag.frame;
-        _currentLocationTag.frame = CGRectMake(tagFrame.origin.x + 37, tagFrame.origin.y + 4, tagFrame.size.width, tagFrame.size.height);
-        _currentLocationTag.hidden = YES;
+        UILabel *currentLocationLabel = [[UILabel alloc] init];
+        currentLocationLabel.text = TALocationFieldCurrentLocationText;
+        currentLocationLabel.textColor = [UIColor whiteColor];
+        currentLocationLabel.font = _textField.font;
+        currentLocationLabel.backgroundColor = [UIColor clearColor];
+        [currentLocationLabel sizeToFit];
+        UIEdgeInsets tagInsets = UIEdgeInsetsMake(12, 12, 12, 12);
+        UIImage *tagImage = [[UIImage imageNamed:@"TagSelected"] resizableImageWithCapInsets:tagInsets];
+        _currentLocationTag = [[UIImageView alloc] initWithImage:tagImage];
+        _currentLocationTag.frame = CGRectMake(_leftViewLabel.frame.size.width - 8, 4, currentLocationLabel.frame.size.width + 16, currentLocationLabel.frame.size.height + 6);
+        _currentLocationTag.userInteractionEnabled = YES;
+        currentLocationLabel.center = CGPointMake(_currentLocationTag.frame.size.width / 2, _currentLocationTag.frame.size.height / 2 - 1);
+        [_currentLocationTag addSubview:currentLocationLabel];
         [self addSubview:_currentLocationTag];
+        _currentLocationTag.hidden = YES;
         
         _contentType = TALocationFieldContentTypeDefault;
     }
@@ -92,33 +92,26 @@ NSString *const TALocationFieldCurrentLocationText = @"Current Location";
     return self.textField.text;
 }
 
-- (void)setLeftViewText:(NSString *)leftViewText
-{
-    self.textField.leftViewMode = UITextFieldViewModeAlways;
-    self.currentLocationField.leftViewMode = UITextFieldViewModeAlways;
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, -1, 45, 31)];
-    label.font = self.textField.font;
-    label.textAlignment = UITextAlignmentRight;
-    label.textColor = [UIColor grayColor];
-    label.backgroundColor = [UIColor clearColor];
-    label.text = leftViewText;
-    
-    // A view to shift the label up to align with text field input
-    UIView *view = [[UIView alloc] init];
-    view.frame = label.frame;
-    view.backgroundColor = [UIColor clearColor];
-    view.userInteractionEnabled = NO;
-    [view addSubview:label];
-    
-    self.textField.leftView = view;
-    
-    NSData *temp = [NSKeyedArchiver archivedDataWithRootObject:view];
-    UIView *viewCopy = [NSKeyedUnarchiver unarchiveObjectWithData:temp];
-    self.currentLocationField.leftView = viewCopy;
-    
-    _leftViewText = leftViewText;
-}
+//- (void)setLeftViewText:(NSString *)leftViewText
+//{
+////    self.textField.leftViewMode = UITextFieldViewModeAlways;
+////    self.currentLocationField.leftViewMode = UITextFieldViewModeAlways;
+//    
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, -1, 45, 31)];
+//    label.font = self.textField.font;
+//    label.textAlignment = UITextAlignmentRight;
+//    label.textColor = [UIColor grayColor];
+//    label.backgroundColor = [UIColor clearColor];
+//    label.text = leftViewText;
+//    
+//    self.textField.leftView = label;
+//    
+////    NSData *temp = [NSKeyedArchiver archivedDataWithRootObject:label];
+////    UIView *viewCopy = [NSKeyedUnarchiver unarchiveObjectWithData:temp];
+////    self.currentLocationField.leftView = viewCopy;
+//    
+//    _leftViewText = leftViewText;
+//}
 
 - (BOOL)isComplete
 {
@@ -132,17 +125,19 @@ NSString *const TALocationFieldCurrentLocationText = @"Current Location";
     
     if (contentType != TALocationFieldContentTypeCurrentLocation) {
         self.currentLocationTag.hidden = YES;
-        self.currentLocationField.hidden = YES;
+        self.textField.textColor = [UIColor blackColor];
+//        self.currentLocationField.hidden = YES;
     } else {
         if (self.isFirstResponder) {
             self.currentLocationTag.hidden = NO;
-            self.currentLocationField.clearButtonMode = UITextFieldViewModeAlways;
+//            self.currentLocationField.clearButtonMode = UITextFieldViewModeAlways;
         } else {
             self.currentLocationTag.hidden = YES;
-            self.currentLocationField.clearButtonMode = UITextFieldViewModeNever;
+//            self.currentLocationField.clearButtonMode = UITextFieldViewModeNever;
         }
-        self.currentLocationField.hidden = NO;
+//        self.currentLocationField.hidden = NO;
         self.textField.text = TALocationFieldCurrentLocationText;
+        self.textField.textColor = [UIColor currentLocationColor];
     }
     _contentType = contentType;
 }
@@ -172,8 +167,8 @@ NSString *const TALocationFieldCurrentLocationText = @"Current Location";
 {
     if (self.contentType == TALocationFieldContentTypeCurrentLocation) {
         self.currentLocationTag.hidden = NO;
-        self.currentLocationField.clearButtonMode = UITextFieldViewModeAlways;
-        [self.textField becomeFirstResponder];
+//        self.currentLocationField.clearButtonMode = UITextFieldViewModeAlways;
+//        [self.textField becomeFirstResponder];
     }
     
     if ([self.delegate respondsToSelector:@selector(locationFieldDidBeginEditing:)]) {
@@ -196,7 +191,7 @@ NSString *const TALocationFieldCurrentLocationText = @"Current Location";
 {
     if (self.contentType == TALocationFieldContentTypeCurrentLocation) {
         self.currentLocationTag.hidden = YES;
-        self.currentLocationField.clearButtonMode = UITextFieldViewModeNever;
+//        self.currentLocationField.clearButtonMode = UITextFieldViewModeNever;
     }
     
     if ([self.delegate respondsToSelector:@selector(locationFieldDidEndEditing:)]) {
@@ -221,8 +216,9 @@ NSString *const TALocationFieldCurrentLocationText = @"Current Location";
     if (shouldChange) {        
         if (self.contentType == TALocationFieldContentTypeCurrentLocation) {
             self.textField.text = nil;
+            self.textField.textColor = [UIColor blackColor];
             self.currentLocationTag.hidden = YES;
-            self.currentLocationField.hidden = YES;
+//            self.currentLocationField.hidden = YES;
         }
         self.contentType = TALocationFieldContentTypeDefault;
     }
@@ -241,14 +237,15 @@ NSString *const TALocationFieldCurrentLocationText = @"Current Location";
     if (shouldClear) {
         if (self.contentType == TALocationFieldContentTypeCurrentLocation) {
             self.textField.text = nil;
+            self.textField.textColor = [UIColor blackColor];
             self.currentLocationTag.hidden = YES;
-            self.currentLocationField.hidden = YES;
+//            self.currentLocationField.hidden = YES;
         }
         self.contentType = TALocationFieldContentTypeDefault;
         
-        if (textField == self.currentLocationField) {
-            return NO;
-        }
+//        if (textField == self.currentLocationField) {
+//            return NO;
+//        }
     }
     
     return shouldClear;

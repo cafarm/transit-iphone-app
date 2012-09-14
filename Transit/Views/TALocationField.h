@@ -21,9 +21,7 @@ typedef enum {
 @interface TALocationField : UIControl <UITextFieldDelegate, UITextInputTraits>
 
 @property (copy, nonatomic) NSString *text;
-
-@property (copy, nonatomic) NSString *leftViewText;
-
+@property (strong, nonatomic) UILabel *leftViewLabel;
 @property (readonly, nonatomic) BOOL isComplete;
 
 @property (nonatomic) TALocationFieldContentType contentType;

@@ -25,7 +25,7 @@
 @property (readonly, nonatomic) TALocationManager *locationManager;
 @property (strong, nonatomic) TATripPlanNavigator *tripPlanNavigator;
 
-@property (strong, nonatomic) UIBarButtonItem *startButton;
+@property (strong, nonatomic) UIBarButtonItem *listButton;
 @property (strong, nonatomic) UIBarButtonItem *overviewButton;
 @property (strong, nonatomic) UIBarButtonItem *resumeButton;
 

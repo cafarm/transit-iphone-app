@@ -2,17 +2,16 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1536</int>
-		<string key="IBDocument.SystemVersion">12A269</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2829</string>
+		<string key="IBDocument.SystemVersion">12B19</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2840</string>
 		<string key="IBDocument.AppKitVersion">1187</string>
 		<string key="IBDocument.HIToolboxVersion">624.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1914</string>
+			<string key="NS.object.0">1926</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
-			<string>IBUIImageView</string>
 			<string>IBUILabel</string>
 			<string>IBUITableViewCell</string>
 		</array>
@@ -43,8 +42,9 @@
 							<object class="IBUILabel" id="265187486">
 								<reference key="NSNextResponder" ref="255408136"/>
 								<int key="NSvFlags">298</int>
-								<string key="NSFrame">{{50, 3}, {250, 21}}</string>
+								<string key="NSFrame">{{10, 3}, {300, 21}}</string>
 								<reference key="NSSuperview" ref="255408136"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="109304625"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -53,17 +53,17 @@
 								<int key="IBUITag">1</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<object class="NSColor" key="IBUIHighlightedColor" id="1010575935">
-									<int key="NSColorSpace">3</int>
-									<bytes key="NSWhite">MQA</bytes>
-								</object>
-								<int key="IBUIBaselineAdjustment">0</int>
 								<string key="IBUIText">Name</string>
 								<object class="NSColor" key="IBUITextColor">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MCAwIDAAA</bytes>
 									<string key="IBUIColorCocoaTouchKeyPath">darkTextColor</string>
 								</object>
+								<object class="NSColor" key="IBUIHighlightedColor" id="1010575935">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MQA</bytes>
+								</object>
+								<int key="IBUIBaselineAdjustment">0</int>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
 									<int key="type">2</int>
 									<double key="pointSize">17</double>
@@ -74,13 +74,13 @@
 									<int key="NSfFlags">16</int>
 								</object>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
-								<int key="IBUIAutoshrinkMode">0</int>
 							</object>
 							<object class="IBUILabel" id="109304625">
 								<reference key="NSNextResponder" ref="255408136"/>
 								<int key="NSvFlags">298</int>
-								<string key="NSFrame">{{50, 23}, {250, 18}}</string>
+								<string key="NSFrame">{{10, 23}, {300, 18}}</string>
 								<reference key="NSSuperview" ref="255408136"/>
+								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -88,13 +88,13 @@
 								<int key="IBUITag">2</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<reference key="IBUIHighlightedColor" ref="1010575935"/>
-								<int key="IBUIBaselineAdjustment">0</int>
 								<string key="IBUIText">Details</string>
 								<object class="NSColor" key="IBUITextColor">
 									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC40OTAxOTYwNzg0IDAuNDkwMTk2MDc4NCAwLjQ5MDE5NjA3ODQAA</bytes>
+									<bytes key="NSRGB">MC40IDAuNCAwLjQAA</bytes>
 								</object>
+								<reference key="IBUIHighlightedColor" ref="1010575935"/>
+								<int key="IBUIBaselineAdjustment">0</int>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
 									<int key="type">1</int>
 									<double key="pointSize">14</double>
@@ -105,27 +105,12 @@
 									<int key="NSfFlags">16</int>
 								</object>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
-								<int key="IBUIAutoshrinkMode">0</int>
-							</object>
-							<object class="IBUIImageView" id="544313373">
-								<reference key="NSNextResponder" ref="255408136"/>
-								<int key="NSvFlags">300</int>
-								<string key="NSFrame">{{18, 11}, {15, 25}}</string>
-								<reference key="NSSuperview" ref="255408136"/>
-								<reference key="NSNextKeyView" ref="265187486"/>
-								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<int key="IBUITag">99</int>
-								<bool key="IBUIUserInteractionEnabled">NO</bool>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<object class="NSCustomResource" key="IBUIImage">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">PlaceCompletionIcon.png</string>
-								</object>
 							</object>
 						</array>
 						<string key="NSFrameSize">{320, 43}</string>
 						<reference key="NSSuperview" ref="848204019"/>
-						<reference key="NSNextKeyView" ref="544313373"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="265187486"/>
 						<string key="NSReuseIdentifierKey">_NS:11</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -140,6 +125,7 @@
 				</array>
 				<string key="NSFrameSize">{320, 44}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="255408136"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<bool key="IBUIClipsSubviews">YES</bool>
@@ -182,17 +168,10 @@
 						<int key="objectID">9</int>
 						<reference key="object" ref="848204019"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="544313373"/>
 							<reference ref="109304625"/>
 							<reference ref="265187486"/>
 						</array>
 						<reference key="parent" ref="0"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">10</int>
-						<reference key="object" ref="544313373"/>
-						<array class="NSMutableArray" key="children"/>
-						<reference key="parent" ref="848204019"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">29</int>
@@ -212,7 +191,6 @@
 				<string key="-1.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="-2.CustomClassName">UIResponder</string>
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="10.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="29.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="30.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -223,15 +201,90 @@
 			<nil key="sourceID"/>
 			<int key="maxID">54</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">TALocationField</string>
+					<string key="superclassName">UIControl</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/TALocationField.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">TALocationInputViewController</string>
+					<string key="superclassName">UIViewController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">swapFields</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">swapFields</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">swapFields</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="attributionCompletionCell">UITableViewCell</string>
+						<string key="completionsTable">UITableView</string>
+						<string key="currentLocationCompletionCell">UITableViewCell</string>
+						<string key="endField">TALocationField</string>
+						<string key="fieldContainerView">UIView</string>
+						<string key="placeCompletionCell">UITableViewCell</string>
+						<string key="startField">TALocationField</string>
+						<string key="swapFieldsButton">UIButton</string>
+						<string key="tripPlanCompletionCell">UITableViewCell</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="attributionCompletionCell">
+							<string key="name">attributionCompletionCell</string>
+							<string key="candidateClassName">UITableViewCell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="completionsTable">
+							<string key="name">completionsTable</string>
+							<string key="candidateClassName">UITableView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="currentLocationCompletionCell">
+							<string key="name">currentLocationCompletionCell</string>
+							<string key="candidateClassName">UITableViewCell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="endField">
+							<string key="name">endField</string>
+							<string key="candidateClassName">TALocationField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="fieldContainerView">
+							<string key="name">fieldContainerView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="placeCompletionCell">
+							<string key="name">placeCompletionCell</string>
+							<string key="candidateClassName">UITableViewCell</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="startField">
+							<string key="name">startField</string>
+							<string key="candidateClassName">TALocationField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="swapFieldsButton">
+							<string key="name">swapFieldsButton</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="tripPlanCompletionCell">
+							<string key="name">tripPlanCompletionCell</string>
+							<string key="candidateClassName">UITableViewCell</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/TALocationInputViewController.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">PlaceCompletionIcon.png</string>
-			<string key="NS.object.0">{15, 25}</string>
-		</object>
-		<string key="IBCocoaTouchPluginVersion">1914</string>
+		<string key="IBCocoaTouchPluginVersion">1926</string>
 	</data>
 </archive>

@@ -44,7 +44,7 @@ typedef enum {
 @synthesize locationManager = _locationManager;
 @synthesize tripPlanNavigator = _tripPlanNavigator;
 
-@synthesize startButton = _startButton;
+@synthesize listButton = _listButton;
 @synthesize overviewButton = _overviewButton;
 @synthesize resumeButton = _resumeButton;
 
@@ -74,11 +74,11 @@ typedef enum {
 
 - (void)loadView
 {    
-    _startButton = [[UIBarButtonItem alloc] initWithTitle:@"Start"
+    _listButton = [[UIBarButtonItem alloc] initWithTitle:@"Start"
                                                     style:UIBarButtonItemStyleDone target:self
                                                    action:@selector(startCurrentItinerary)];
     
-    self.navigationItem.rightBarButtonItem = self.startButton;
+    self.navigationItem.rightBarButtonItem = self.listButton;
     
     // We need a container view because using the MKMapView as the root view freezes all the controls on animation
     UIView *containerView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -194,7 +194,7 @@ typedef enum {
         if (self.tripPlanNavigator.isCurrentItineraryStarted) {
             [self.navigationItem setRightBarButtonItem:self.resumeButton animated:animate];
         } else {
-            [self.navigationItem setRightBarButtonItem:self.startButton animated:animate];
+            [self.navigationItem setRightBarButtonItem:self.listButton animated:animate];
         }
     }];
 }

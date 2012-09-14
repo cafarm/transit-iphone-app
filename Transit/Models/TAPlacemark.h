@@ -26,4 +26,6 @@
 @property (readonly, nonatomic) CLLocation *location;
 @property (readonly, nonatomic) BOOL isCurrentLocation;
 
+- (BOOL)isEqualToPlacemark:(TAPlacemark *)placemark;
+
 @end

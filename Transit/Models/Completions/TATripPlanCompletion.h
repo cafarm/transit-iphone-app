@@ -17,4 +17,6 @@
 @property (readonly, nonatomic) TAPlacemark *from;
 @property (readonly, nonatomic) TAPlacemark *to;
 
+- (BOOL)isEqualToCompletion:(TATripPlanCompletion *)completion;
+
 @end

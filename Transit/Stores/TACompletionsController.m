@@ -172,6 +172,15 @@
         [self.tripPlanCompletions removeLastObject];
     }
 
+    // Remove any existing duplicate completion
+    for (int i = 0; i < [self.tripPlanCompletions count]; i++) {
+        TATripPlanCompletion *storedCompletion = [self.tripPlanCompletions objectAtIndex:i];
+        if ([storedCompletion isEqualToCompletion:completion]) {
+            [self.tripPlanCompletions removeObject:storedCompletion];
+            break;
+        }
+    }
+    
     [self.tripPlanCompletions insertObject:completion atIndex:0];
     
     NSString *path = [self tripPlanCompletionArchivePath];

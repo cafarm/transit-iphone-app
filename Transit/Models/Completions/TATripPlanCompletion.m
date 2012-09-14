@@ -35,4 +35,9 @@
     [aCoder encodeObject:self.to forKey:@"to"];
 }
 
+- (BOOL)isEqualToCompletion:(TATripPlanCompletion *)completion
+{
+    return [self.from isEqualToPlacemark:completion.from] && [self.to isEqualToPlacemark:completion.to];
+}
+
 @end

@@ -86,4 +86,10 @@
     [aCoder encodeBool:self.isCurrentLocation forKey:@"isCurrentLocation"];
 }
 
+- (BOOL)isEqualToPlacemark:(TAPlacemark *)placemark
+{
+    return (self.isCurrentLocation && placemark.isCurrentLocation)
+            || (!self.isCurrentLocation && !placemark.isCurrentLocation && [self.location distanceFromLocation:placemark.location] < 1);
+}
+
 @end

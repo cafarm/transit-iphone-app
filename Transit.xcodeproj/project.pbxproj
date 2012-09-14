@@ -12,9 +12,15 @@
 		1F08CB0A15E480D200E3063E /* TAWalkStep.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08CB0915E480D100E3063E /* TAWalkStep.m */; };
 		1F08CB0D15E480F100E3063E /* TATransitStep.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F08CB0C15E480F100E3063E /* TATransitStep.m */; };
 		1F08CB2615E4E36600E3063E /* LocationInputBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F08CB2515E4E36600E3063E /* LocationInputBackground.png */; };
-		1F08CB2815E5B57400E3063E /* BusStepIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F08CB2715E5B57400E3063E /* BusStepIcon@2x.png */; };
-		1F17EAFD15E459E500A0A17B /* BusStepIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F17EAFC15E459E500A0A17B /* BusStepIcon.png */; };
-		1F17EAFF15E4744600A0A17B /* WalkStepIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F17EAFE15E4744600A0A17B /* WalkStepIcon.png */; };
+		1F0A4D2E15E9CAA30040B2CB /* Swap.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0A4D2A15E9CAA30040B2CB /* Swap.png */; };
+		1F0A4D2F15E9CAA30040B2CB /* Swap@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0A4D2B15E9CAA30040B2CB /* Swap@2x.png */; };
+		1F1A9EBE1603157A00D74BF2 /* List.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F1A9EBC1603157A00D74BF2 /* List.png */; };
+		1F1A9EBF1603157A00D74BF2 /* List@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F1A9EBD1603157A00D74BF2 /* List@2x.png */; };
+		1F313E1215E8CCFA00EEF344 /* LocationInputBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F313E1115E8CCFA00EEF344 /* LocationInputBackground@2x.png */; };
+		1F313E2915E98EED00EEF344 /* LocationField.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F313E2715E98EED00EEF344 /* LocationField.png */; };
+		1F313E2A15E98EED00EEF344 /* LocationField@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F313E2815E98EED00EEF344 /* LocationField@2x.png */; };
+		1F313E3715E9A98600EEF344 /* TagSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F313E3515E9A98600EEF344 /* TagSelected.png */; };
+		1F313E3815E9A98600EEF344 /* TagSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F313E3615E9A98600EEF344 /* TagSelected@2x.png */; };
 		1F342CBD15AE236300E2A6E8 /* TADirectionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F342CBC15AE236300E2A6E8 /* TADirectionsTableViewController.m */; };
 		1F342CC615AE4DE800E2A6E8 /* TATransitOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F342CC515AE4DE800E2A6E8 /* TATransitOptionsViewController.m */; };
 		1F34CAB715D70DAE00322C04 /* TACurrentStepAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F34CAB615D70DAE00322C04 /* TACurrentStepAnnotation.m */; };
@@ -22,15 +28,15 @@
 		1F36465115DB671400E2B156 /* TACompletionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F36465015DB671400E2B156 /* TACompletionsController.m */; };
 		1F36465415DB6B3B00E2B156 /* TACompletion.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F36465315DB6B3B00E2B156 /* TACompletion.m */; };
 		1F39061A15E1A6BA00D05A59 /* CLGeocoder+Transit.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F39061915E1A6BA00D05A59 /* CLGeocoder+Transit.m */; };
+		1F3935521602FEBD000443AF /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F3935511602FEBD000443AF /* Default.png */; };
 		1F43478B15E31AB70047F828 /* TACurrentLocationCompletionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F43478A15E31AB70047F828 /* TACurrentLocationCompletionTableViewCell.xib */; };
-		1F4347A115E31C1A0047F828 /* CurrentLocationCompletionIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F43479F15E31C1A0047F828 /* CurrentLocationCompletionIcon.png */; };
-		1F4347A215E31C1A0047F828 /* TripPlanCompletionIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4347A015E31C1A0047F828 /* TripPlanCompletionIcon.png */; };
 		1F4347A415E31F280047F828 /* TAPlaceCompletionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F4347A315E31F280047F828 /* TAPlaceCompletionTableViewCell.xib */; };
-		1F4347A715E320D70047F828 /* PlaceCompletionIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F4347A615E320D70047F828 /* PlaceCompletionIcon.png */; };
 		1F4347A915E322640047F828 /* TAAttributionCompletionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F4347A815E322640047F828 /* TAAttributionCompletionTableViewCell.xib */; };
 		1F50B1F715CB51F7003AC67D /* TALocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F50B1F615CB51F7003AC67D /* TALocationManager.m */; };
 		1F56EB7F15DF2DCD009D25C9 /* TACurrentLocationCompletion.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F56EB7E15DF2DCD009D25C9 /* TACurrentLocationCompletion.m */; };
 		1F56EB8215DF55DB009D25C9 /* TAPlacemark.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F56EB8115DF55DB009D25C9 /* TAPlacemark.m */; };
+		1F592E111602F27C005A43B9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F592E101602F27C005A43B9 /* Default-568h@2x.png */; };
+		1F592E131602F38E005A43B9 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F592E121602F38E005A43B9 /* Default@2x.png */; };
 		1F59515D15AC0D98007A4554 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F59515C15AC0D98007A4554 /* UIKit.framework */; };
 		1F59515F15AC0D98007A4554 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F59515E15AC0D98007A4554 /* Foundation.framework */; };
 		1F59516115AC0D98007A4554 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F59516015AC0D98007A4554 /* CoreGraphics.framework */; };
@@ -44,13 +50,10 @@
 		1F5F66AA15D0CF91002B84DE /* TATripPlanNavigator.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5F66A915D0CF91002B84DE /* TATripPlanNavigator.m */; };
 		1F634AA315C1F6C600192802 /* libOTPClient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F634A9E15C1F4CC00192802 /* libOTPClient.a */; };
 		1F77405715C6253100F3D527 /* MKMapView+Transit.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F77405615C6253100F3D527 /* MKMapView+Transit.m */; };
-		1F90386F15D71F9F00B00877 /* CurrentStepAnnotation.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F90386E15D71F9F00B00877 /* CurrentStepAnnotation.png */; };
 		1F905EF015DDBCE60061BCE0 /* autocompleteResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 1F905EED15DDBCE60061BCE0 /* autocompleteResponse.json */; };
 		1F905EF115DDBCE60061BCE0 /* detailsResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 1F905EEE15DDBCE60061BCE0 /* detailsResponse.json */; };
 		1F905EF215DDBCE60061BCE0 /* tripPlanResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 1F905EEF15DDBCE60061BCE0 /* tripPlanResponse.json */; };
 		1F9357C015C20F3F0045D6DF /* TALocationInputViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F9357BF15C20F3F0045D6DF /* TALocationInputViewController.xib */; };
-		1F9EA46315E0B1A600EAC57D /* CurrentLocationTag.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F9EA46115E0B1A600EAC57D /* CurrentLocationTag.png */; };
-		1F9EA46415E0B1A600EAC57D /* CurrentLocationTag@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F9EA46215E0B1A600EAC57D /* CurrentLocationTag@2x.png */; };
 		1F9EA46715E0BFF300EAC57D /* UIColor+Transit.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F9EA46615E0BFF300EAC57D /* UIColor+Transit.m */; };
 		1FA09DDA15AFBFD100A767AA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA09DD915AFBFD100A767AA /* CoreLocation.framework */; };
 		1FA819FA15E0791900189843 /* TALocationField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA819F915E0791900189843 /* TALocationField.m */; };
@@ -59,6 +62,12 @@
 		1FA9E93B15E37B0E005E681E /* TAWalkStepView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FA9E93A15E37B0E005E681E /* TAWalkStepView.xib */; };
 		1FA9E93D15E37B44005E681E /* TATransitStepView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FA9E93C15E37B44005E681E /* TATransitStepView.xib */; };
 		1FB0969A15E2F54F001F23BC /* TATripPlanCompletionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FB0969915E2F54F001F23BC /* TATripPlanCompletionTableViewCell.xib */; };
+		1FC5DA1215FEC78F00258B0F /* BlueButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FC5DA0E15FEC78F00258B0F /* BlueButton.png */; };
+		1FC5DA1315FEC78F00258B0F /* BlueButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FC5DA0F15FEC78F00258B0F /* BlueButton@2x.png */; };
+		1FC5DA1415FEC78F00258B0F /* BlueButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FC5DA1015FEC78F00258B0F /* BlueButtonPressed.png */; };
+		1FC5DA1515FEC78F00258B0F /* BlueButtonPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FC5DA1115FEC78F00258B0F /* BlueButtonPressed@2x.png */; };
+		1FC5DA1C15FEDD5400258B0F /* BarShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FC5DA1A15FEDD5400258B0F /* BarShadow.png */; };
+		1FC5DA1D15FEDD5400258B0F /* BarShadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FC5DA1B15FEDD5400258B0F /* BarShadow@2x.png */; };
 		1FCCF78515D1FF6A00AD2A4C /* TATripPlanNavigatorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCCF78415D1FF6A00AD2A4C /* TATripPlanNavigatorTest.m */; };
 		1FCCF78815D2023A00AD2A4C /* libOTPClient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F634A9E15C1F4CC00192802 /* libOTPClient.a */; };
 		1FCCF78915D2024100AD2A4C /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD199CA15BBB14900BA8D48 /* libxml2.2.dylib */; };
@@ -192,10 +201,16 @@
 		1F08CB0B15E480F100E3063E /* TATransitStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TATransitStep.h; path = Models/Steps/TATransitStep.h; sourceTree = "<group>"; };
 		1F08CB0C15E480F100E3063E /* TATransitStep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TATransitStep.m; path = Models/Steps/TATransitStep.m; sourceTree = "<group>"; };
 		1F08CB2515E4E36600E3063E /* LocationInputBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LocationInputBackground.png; path = Transit/Resources/Images/LocationInputBackground.png; sourceTree = "<group>"; };
-		1F08CB2715E5B57400E3063E /* BusStepIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BusStepIcon@2x.png"; path = "Transit/Resources/Images/StepIcons/BusStepIcon@2x.png"; sourceTree = "<group>"; };
+		1F0A4D2A15E9CAA30040B2CB /* Swap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Swap.png; path = Transit/Resources/Images/Buttons/Swap.png; sourceTree = "<group>"; };
+		1F0A4D2B15E9CAA30040B2CB /* Swap@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Swap@2x.png"; path = "Transit/Resources/Images/Buttons/Swap@2x.png"; sourceTree = "<group>"; };
 		1F12167A15C207AE007B75A5 /* MACLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MACLog.h; path = SupportingFiles/MACLog.h; sourceTree = "<group>"; };
-		1F17EAFC15E459E500A0A17B /* BusStepIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BusStepIcon.png; path = Transit/Resources/Images/StepIcons/BusStepIcon.png; sourceTree = "<group>"; };
-		1F17EAFE15E4744600A0A17B /* WalkStepIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = WalkStepIcon.png; path = Transit/Resources/Images/StepIcons/WalkStepIcon.png; sourceTree = "<group>"; };
+		1F1A9EBC1603157A00D74BF2 /* List.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = List.png; path = Transit/Resources/Images/Buttons/List.png; sourceTree = "<group>"; };
+		1F1A9EBD1603157A00D74BF2 /* List@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "List@2x.png"; path = "Transit/Resources/Images/Buttons/List@2x.png"; sourceTree = "<group>"; };
+		1F313E1115E8CCFA00EEF344 /* LocationInputBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "LocationInputBackground@2x.png"; path = "Transit/Resources/Images/LocationInputBackground@2x.png"; sourceTree = "<group>"; };
+		1F313E2715E98EED00EEF344 /* LocationField.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LocationField.png; path = Transit/Resources/Images/Fields/LocationField.png; sourceTree = "<group>"; };
+		1F313E2815E98EED00EEF344 /* LocationField@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "LocationField@2x.png"; path = "Transit/Resources/Images/Fields/LocationField@2x.png"; sourceTree = "<group>"; };
+		1F313E3515E9A98600EEF344 /* TagSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TagSelected.png; path = Transit/Resources/Images/Fields/TagSelected.png; sourceTree = "<group>"; };
+		1F313E3615E9A98600EEF344 /* TagSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TagSelected@2x.png"; path = "Transit/Resources/Images/Fields/TagSelected@2x.png"; sourceTree = "<group>"; };
 		1F342CBB15AE236300E2A6E8 /* TADirectionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TADirectionsTableViewController.h; path = Controllers/TADirectionsTableViewController.h; sourceTree = "<group>"; };
 		1F342CBC15AE236300E2A6E8 /* TADirectionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TADirectionsTableViewController.m; path = Controllers/TADirectionsTableViewController.m; sourceTree = "<group>"; };
 		1F342CC415AE4DE800E2A6E8 /* TATransitOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TATransitOptionsViewController.h; path = Controllers/TATransitOptionsViewController.h; sourceTree = "<group>"; };
@@ -209,11 +224,9 @@
 		1F36465315DB6B3B00E2B156 /* TACompletion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TACompletion.m; path = Models/Completions/TACompletion.m; sourceTree = "<group>"; };
 		1F39061815E1A6BA00D05A59 /* CLGeocoder+Transit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CLGeocoder+Transit.h"; path = "Stores/CLGeocoder+Transit.h"; sourceTree = "<group>"; };
 		1F39061915E1A6BA00D05A59 /* CLGeocoder+Transit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CLGeocoder+Transit.m"; path = "Stores/CLGeocoder+Transit.m"; sourceTree = "<group>"; };
+		1F3935511602FEBD000443AF /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Transit/Resources/Images/Launch/Default.png; sourceTree = "<group>"; };
 		1F43478A15E31AB70047F828 /* TACurrentLocationCompletionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TACurrentLocationCompletionTableViewCell.xib; path = Transit/Resources/Views/CompletionViewCells/TACurrentLocationCompletionTableViewCell.xib; sourceTree = "<group>"; };
-		1F43479F15E31C1A0047F828 /* CurrentLocationCompletionIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CurrentLocationCompletionIcon.png; path = Transit/Resources/Images/CompletionIcons/CurrentLocationCompletionIcon.png; sourceTree = "<group>"; };
-		1F4347A015E31C1A0047F828 /* TripPlanCompletionIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TripPlanCompletionIcon.png; path = Transit/Resources/Images/CompletionIcons/TripPlanCompletionIcon.png; sourceTree = "<group>"; };
 		1F4347A315E31F280047F828 /* TAPlaceCompletionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TAPlaceCompletionTableViewCell.xib; path = Transit/Resources/Views/CompletionViewCells/TAPlaceCompletionTableViewCell.xib; sourceTree = "<group>"; };
-		1F4347A615E320D70047F828 /* PlaceCompletionIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PlaceCompletionIcon.png; path = Transit/Resources/Images/CompletionIcons/PlaceCompletionIcon.png; sourceTree = "<group>"; };
 		1F4347A815E322640047F828 /* TAAttributionCompletionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TAAttributionCompletionTableViewCell.xib; path = Transit/Resources/Views/CompletionViewCells/TAAttributionCompletionTableViewCell.xib; sourceTree = "<group>"; };
 		1F50B1F515CB51F7003AC67D /* TALocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TALocationManager.h; path = Stores/TALocationManager.h; sourceTree = "<group>"; };
 		1F50B1F615CB51F7003AC67D /* TALocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TALocationManager.m; path = Stores/TALocationManager.m; sourceTree = "<group>"; };
@@ -221,6 +234,8 @@
 		1F56EB7E15DF2DCD009D25C9 /* TACurrentLocationCompletion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TACurrentLocationCompletion.m; path = Models/Completions/TACurrentLocationCompletion.m; sourceTree = "<group>"; };
 		1F56EB8015DF55DA009D25C9 /* TAPlacemark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TAPlacemark.h; path = Models/TAPlacemark.h; sourceTree = "<group>"; };
 		1F56EB8115DF55DB009D25C9 /* TAPlacemark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TAPlacemark.m; path = Models/TAPlacemark.m; sourceTree = "<group>"; };
+		1F592E101602F27C005A43B9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Transit/Resources/Images/Launch/Default-568h@2x.png"; sourceTree = "<group>"; };
+		1F592E121602F38E005A43B9 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Transit/Resources/Images/Launch/Default@2x.png"; sourceTree = "<group>"; };
 		1F59515815AC0D98007A4554 /* Transit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Transit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F59515C15AC0D98007A4554 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1F59515E15AC0D98007A4554 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -241,13 +256,10 @@
 		1F634A9415C1F4CC00192802 /* OTPClient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OTPClient.xcodeproj; path = "Libraries/opentripplanner-api-client/OTPClient.xcodeproj"; sourceTree = "<group>"; };
 		1F77405515C6253100F3D527 /* MKMapView+Transit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MKMapView+Transit.h"; path = "Views/MKMapView+Transit.h"; sourceTree = "<group>"; };
 		1F77405615C6253100F3D527 /* MKMapView+Transit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MKMapView+Transit.m"; path = "Views/MKMapView+Transit.m"; sourceTree = "<group>"; };
-		1F90386E15D71F9F00B00877 /* CurrentStepAnnotation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CurrentStepAnnotation.png; path = Transit/Resources/Images/CurrentStepAnnotation.png; sourceTree = "<group>"; };
 		1F905EED15DDBCE60061BCE0 /* autocompleteResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = autocompleteResponse.json; path = Fixtures/autocompleteResponse.json; sourceTree = "<group>"; };
 		1F905EEE15DDBCE60061BCE0 /* detailsResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = detailsResponse.json; path = Fixtures/detailsResponse.json; sourceTree = "<group>"; };
 		1F905EEF15DDBCE60061BCE0 /* tripPlanResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = tripPlanResponse.json; path = Fixtures/tripPlanResponse.json; sourceTree = "<group>"; };
 		1F9357BF15C20F3F0045D6DF /* TALocationInputViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TALocationInputViewController.xib; path = Transit/Resources/Views/TALocationInputViewController.xib; sourceTree = "<group>"; };
-		1F9EA46115E0B1A600EAC57D /* CurrentLocationTag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CurrentLocationTag.png; path = Transit/Resources/Images/CurrentLocationTag.png; sourceTree = "<group>"; };
-		1F9EA46215E0B1A600EAC57D /* CurrentLocationTag@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "CurrentLocationTag@2x.png"; path = "Transit/Resources/Images/CurrentLocationTag@2x.png"; sourceTree = "<group>"; };
 		1F9EA46515E0BFF300EAC57D /* UIColor+Transit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+Transit.h"; path = "Models/UIColor+Transit.h"; sourceTree = "<group>"; };
 		1F9EA46615E0BFF300EAC57D /* UIColor+Transit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+Transit.m"; path = "Models/UIColor+Transit.m"; sourceTree = "<group>"; };
 		1FA09DD915AFBFD100A767AA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -260,6 +272,12 @@
 		1FA9E93A15E37B0E005E681E /* TAWalkStepView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TAWalkStepView.xib; path = Transit/Resources/Views/StepViews/TAWalkStepView.xib; sourceTree = "<group>"; };
 		1FA9E93C15E37B44005E681E /* TATransitStepView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TATransitStepView.xib; path = Transit/Resources/Views/StepViews/TATransitStepView.xib; sourceTree = "<group>"; };
 		1FB0969915E2F54F001F23BC /* TATripPlanCompletionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TATripPlanCompletionTableViewCell.xib; path = Transit/Resources/Views/CompletionViewCells/TATripPlanCompletionTableViewCell.xib; sourceTree = "<group>"; };
+		1FC5DA0E15FEC78F00258B0F /* BlueButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BlueButton.png; path = Transit/Resources/Images/Buttons/BlueButton.png; sourceTree = "<group>"; };
+		1FC5DA0F15FEC78F00258B0F /* BlueButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BlueButton@2x.png"; path = "Transit/Resources/Images/Buttons/BlueButton@2x.png"; sourceTree = "<group>"; };
+		1FC5DA1015FEC78F00258B0F /* BlueButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BlueButtonPressed.png; path = Transit/Resources/Images/Buttons/BlueButtonPressed.png; sourceTree = "<group>"; };
+		1FC5DA1115FEC78F00258B0F /* BlueButtonPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BlueButtonPressed@2x.png"; path = "Transit/Resources/Images/Buttons/BlueButtonPressed@2x.png"; sourceTree = "<group>"; };
+		1FC5DA1A15FEDD5400258B0F /* BarShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BarShadow.png; path = Transit/Resources/Images/BarShadow.png; sourceTree = "<group>"; };
+		1FC5DA1B15FEDD5400258B0F /* BarShadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BarShadow@2x.png"; path = "Transit/Resources/Images/BarShadow@2x.png"; sourceTree = "<group>"; };
 		1FCCF78415D1FF6A00AD2A4C /* TATripPlanNavigatorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TATripPlanNavigatorTest.m; path = Models/TATripPlanNavigatorTest.m; sourceTree = "<group>"; };
 		1FCCF79315D20CFA00AD2A4C /* TAStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TAStep.h; path = Models/Steps/TAStep.h; sourceTree = "<group>"; };
 		1FCCF79415D20CFA00AD2A4C /* TAStep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TAStep.m; path = Models/Steps/TAStep.m; sourceTree = "<group>"; };
@@ -360,14 +378,30 @@
 			name = Steps;
 			sourceTree = "<group>";
 		};
-		1F17EAFB15E459D400A0A17B /* StepIcons */ = {
+		1F313E3315E9A7F800EEF344 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
-				1F08CB2715E5B57400E3063E /* BusStepIcon@2x.png */,
-				1F17EAFE15E4744600A0A17B /* WalkStepIcon.png */,
-				1F17EAFC15E459E500A0A17B /* BusStepIcon.png */,
+				1FC5DA0E15FEC78F00258B0F /* BlueButton.png */,
+				1FC5DA0F15FEC78F00258B0F /* BlueButton@2x.png */,
+				1FC5DA1015FEC78F00258B0F /* BlueButtonPressed.png */,
+				1FC5DA1115FEC78F00258B0F /* BlueButtonPressed@2x.png */,
+				1F0A4D2A15E9CAA30040B2CB /* Swap.png */,
+				1F0A4D2B15E9CAA30040B2CB /* Swap@2x.png */,
+				1F1A9EBC1603157A00D74BF2 /* List.png */,
+				1F1A9EBD1603157A00D74BF2 /* List@2x.png */,
 			);
-			name = StepIcons;
+			name = Buttons;
+			sourceTree = "<group>";
+		};
+		1F313E3415E9A97600EEF344 /* Fields */ = {
+			isa = PBXGroup;
+			children = (
+				1F313E2715E98EED00EEF344 /* LocationField.png */,
+				1F313E2815E98EED00EEF344 /* LocationField@2x.png */,
+				1F313E3515E9A98600EEF344 /* TagSelected.png */,
+				1F313E3615E9A98600EEF344 /* TagSelected@2x.png */,
+			);
+			name = Fields;
 			sourceTree = "<group>";
 		};
 		1F36462815DB505900E2B156 /* Products */ = {
@@ -382,16 +416,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1F4347A515E320AE0047F828 /* CompletionIcons */ = {
-			isa = PBXGroup;
-			children = (
-				1F43479F15E31C1A0047F828 /* CurrentLocationCompletionIcon.png */,
-				1F4347A015E31C1A0047F828 /* TripPlanCompletionIcon.png */,
-				1F4347A615E320D70047F828 /* PlaceCompletionIcon.png */,
-			);
-			name = CompletionIcons;
-			sourceTree = "<group>";
-		};
 		1F50B1F415CB51C9003AC67D /* Stores */ = {
 			isa = PBXGroup;
 			children = (
@@ -403,6 +427,16 @@
 				1F39061915E1A6BA00D05A59 /* CLGeocoder+Transit.m */,
 			);
 			name = Stores;
+			sourceTree = "<group>";
+		};
+		1F592E0F1602F26B005A43B9 /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+				1F3935511602FEBD000443AF /* Default.png */,
+				1F592E121602F38E005A43B9 /* Default@2x.png */,
+				1F592E101602F27C005A43B9 /* Default-568h@2x.png */,
+			);
+			name = Launch;
 			sourceTree = "<group>";
 		};
 		1F59514D15AC0D98007A4554 = {
@@ -523,14 +557,15 @@
 		1F90386D15D71F8A00B00877 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				1F592E0F1602F26B005A43B9 /* Launch */,
+				1F313E3415E9A97600EEF344 /* Fields */,
+				1F313E3315E9A7F800EEF344 /* Buttons */,
 				1F08CB2515E4E36600E3063E /* LocationInputBackground.png */,
-				1F17EAFB15E459D400A0A17B /* StepIcons */,
-				1F4347A515E320AE0047F828 /* CompletionIcons */,
-				1F9EA46115E0B1A600EAC57D /* CurrentLocationTag.png */,
-				1F9EA46215E0B1A600EAC57D /* CurrentLocationTag@2x.png */,
+				1F313E1115E8CCFA00EEF344 /* LocationInputBackground@2x.png */,
+				1FC5DA1A15FEDD5400258B0F /* BarShadow.png */,
+				1FC5DA1B15FEDD5400258B0F /* BarShadow@2x.png */,
 				1FFD80D315DE1A2500CD5423 /* PoweredByGoogle.png */,
 				1FFD80D415DE1A2500CD5423 /* PoweredByGoogle@2x.png */,
-				1F90386E15D71F9F00B00877 /* CurrentStepAnnotation.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -841,24 +876,33 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F9357C015C20F3F0045D6DF /* TALocationInputViewController.xib in Resources */,
-				1F90386F15D71F9F00B00877 /* CurrentStepAnnotation.png in Resources */,
 				1FFD80D515DE1A2500CD5423 /* PoweredByGoogle.png in Resources */,
 				1FFD80D615DE1A2500CD5423 /* PoweredByGoogle@2x.png in Resources */,
-				1F9EA46315E0B1A600EAC57D /* CurrentLocationTag.png in Resources */,
-				1F9EA46415E0B1A600EAC57D /* CurrentLocationTag@2x.png in Resources */,
 				1FB0969A15E2F54F001F23BC /* TATripPlanCompletionTableViewCell.xib in Resources */,
 				1F43478B15E31AB70047F828 /* TACurrentLocationCompletionTableViewCell.xib in Resources */,
 				1F4347A415E31F280047F828 /* TAPlaceCompletionTableViewCell.xib in Resources */,
 				1F4347A915E322640047F828 /* TAAttributionCompletionTableViewCell.xib in Resources */,
-				1F4347A115E31C1A0047F828 /* CurrentLocationCompletionIcon.png in Resources */,
-				1F4347A215E31C1A0047F828 /* TripPlanCompletionIcon.png in Resources */,
-				1F4347A715E320D70047F828 /* PlaceCompletionIcon.png in Resources */,
 				1FA9E93B15E37B0E005E681E /* TAWalkStepView.xib in Resources */,
 				1FA9E93D15E37B44005E681E /* TATransitStepView.xib in Resources */,
-				1F17EAFD15E459E500A0A17B /* BusStepIcon.png in Resources */,
-				1F17EAFF15E4744600A0A17B /* WalkStepIcon.png in Resources */,
 				1F08CB2615E4E36600E3063E /* LocationInputBackground.png in Resources */,
-				1F08CB2815E5B57400E3063E /* BusStepIcon@2x.png in Resources */,
+				1F313E1215E8CCFA00EEF344 /* LocationInputBackground@2x.png in Resources */,
+				1F313E2915E98EED00EEF344 /* LocationField.png in Resources */,
+				1F313E2A15E98EED00EEF344 /* LocationField@2x.png in Resources */,
+				1F313E3715E9A98600EEF344 /* TagSelected.png in Resources */,
+				1F313E3815E9A98600EEF344 /* TagSelected@2x.png in Resources */,
+				1F0A4D2E15E9CAA30040B2CB /* Swap.png in Resources */,
+				1F0A4D2F15E9CAA30040B2CB /* Swap@2x.png in Resources */,
+				1FC5DA1215FEC78F00258B0F /* BlueButton.png in Resources */,
+				1FC5DA1315FEC78F00258B0F /* BlueButton@2x.png in Resources */,
+				1FC5DA1415FEC78F00258B0F /* BlueButtonPressed.png in Resources */,
+				1FC5DA1515FEC78F00258B0F /* BlueButtonPressed@2x.png in Resources */,
+				1FC5DA1C15FEDD5400258B0F /* BarShadow.png in Resources */,
+				1FC5DA1D15FEDD5400258B0F /* BarShadow@2x.png in Resources */,
+				1F592E111602F27C005A43B9 /* Default-568h@2x.png in Resources */,
+				1F592E131602F38E005A43B9 /* Default@2x.png in Resources */,
+				1F3935521602FEBD000443AF /* Default.png in Resources */,
+				1F1A9EBE1603157A00D74BF2 /* List.png in Resources */,
+				1F1A9EBF1603157A00D74BF2 /* List@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -41,7 +41,6 @@
 						<int key="NSvFlags">290</int>
 						<string key="NSFrame">{{80, 11}, {174, 44}}</string>
 						<reference key="NSSuperview" ref="842583451"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="449361315"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -82,7 +81,6 @@
 						<int key="NSvFlags">290</int>
 						<string key="NSFrame">{{80, 49}, {175, 44}}</string>
 						<reference key="NSSuperview" ref="842583451"/>
-						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -120,7 +118,6 @@
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{13, 92}, {242, 22}}</string>
 						<reference key="NSSuperview" ref="842583451"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1051797962"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -137,12 +134,12 @@
 							<string key="NSString">Arrives in 9 minutes</string>
 							<dictionary key="NSAttributes">
 								<reference key="NSColor" ref="68883690"/>
-								<object class="NSFont" key="NSFont" id="601240317">
+								<object class="NSFont" key="NSFont" id="367038380">
 									<string key="NSName">AvenirNext-MediumItalic</string>
 									<double key="NSSize">16</double>
 									<int key="NSfFlags">16</int>
 								</object>
-								<reference key="NSOriginalFont" ref="601240317"/>
+								<reference key="NSOriginalFont" ref="367038380"/>
 								<object class="NSMutableParagraphStyle" key="NSParagraphStyle">
 									<int key="NSAlignment">1</int>
 									<nil key="NSTabStops"/>
@@ -158,7 +155,6 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{13, 24}, {58, 58}}</string>
 						<reference key="NSSuperview" ref="842583451"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="381355154"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<int key="IBUIContentMode">4</int>
@@ -172,7 +168,6 @@
 				</array>
 				<string key="NSFrameSize">{268, 123}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="774203670"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
@@ -299,62 +294,14 @@
 			<nil key="sourceID"/>
 			<int key="maxID">80</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes">
-			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
-				<object class="IBPartialClassDescription">
-					<string key="className">TAStepView</string>
-					<string key="superclassName">UIView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/TAStepView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">TATransitStepView</string>
-					<string key="superclassName">TAStepView</string>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="dateLabel">UILabel</string>
-						<string key="detailsLabel">UILabel</string>
-						<string key="imageView">UIImageView</string>
-						<string key="routeLabel">UILabel</string>
-						<string key="view">UIView</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="dateLabel">
-							<string key="name">dateLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="detailsLabel">
-							<string key="name">detailsLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="imageView">
-							<string key="name">imageView</string>
-							<string key="candidateClassName">UIImageView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="routeLabel">
-							<string key="name">routeLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="view">
-							<string key="name">view</string>
-							<string key="candidateClassName">UIView</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/TATransitStepView.h</string>
-					</object>
-				</object>
-			</array>
-		</object>
+		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="NS.key.0">BusStepIcon.png</string>
-			<string key="NS.object.0">{50, 56}</string>
+			<string key="NS.object.0">{16, 16}</string>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">1914</string>
 	</data>
