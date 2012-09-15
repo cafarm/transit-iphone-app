@@ -12,13 +12,20 @@
 
 @class TAStep;
 
+typedef enum {
+    TAStepAnnotationDirectionLeft,
+    TAStepAnnotationDirectionRight
+} TAStepAnnotationDirection;
+
 @interface TAStepAnnotation : NSObject <MKAnnotation>
 
-- (id)initWithStep:(TAStep *)step;
+- (id)initWithStep:(TAStep *)step direction:(TAStepAnnotationDirection)direction;
 
 @property (readonly, nonatomic) TAStep *step;
 
 @property (readonly, nonatomic) CLLocationCoordinate2D coordinate;
 @property (readonly, copy, nonatomic) NSString *title;
+
+@property (readonly, nonatomic) TAStepAnnotationDirection direction;
 
 @end

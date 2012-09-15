@@ -70,9 +70,19 @@ static const double kZoomRectHeightMin = 1920;
 
 - (void)addAnnotationsForSteps:(NSArray *)steps
 {
+    TAStepAnnotationDirection direction = TAStepAnnotationDirectionLeft;
     for (TAStep *step in steps) {
-        TAStepAnnotation *stepAnnotation = [[TAStepAnnotation alloc] initWithStep:step];
-        [self addAnnotation:stepAnnotation];
+        if ([step isKindOfClass:[TAWalkStep class]] || !((TATransitStep *)step).isArrival) {
+            TAStepAnnotation *stepAnnotation = [[TAStepAnnotation alloc] initWithStep:step direction:direction];
+            [self addAnnotation:stepAnnotation];
+            
+            // FIXME: There is probably a better way to do this than just alternating directions
+            if (direction == TAStepAnnotationDirectionLeft) {
+                direction = TAStepAnnotationDirectionRight;
+            } else {
+                direction = TAStepAnnotationDirectionLeft;
+            }
+        }
     }
 }
 

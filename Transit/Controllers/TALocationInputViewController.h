@@ -14,7 +14,7 @@
 @class OTPObjectManager;
 @class GPObjectManager;
 @class TACompletionsController;
-@class TAMapViewController;
+@class TADirectionsViewController;
 
 @interface TALocationInputViewController : UIViewController <TACompletionsControllerDelegate, UITableViewDataSource,
                                                              UITableViewDelegate, TALocationFieldDelegate,
@@ -28,8 +28,8 @@
 @property (readonly, nonatomic) GPObjectManager *gpObjectManager;
 @property (readonly, nonatomic) TALocationManager *locationManager;
 
-@property (weak, nonatomic) UIBarButtonItem *clearButton;
-@property (weak, nonatomic) UIBarButtonItem *routeButton;
+@property (weak, nonatomic) UIBarButtonItem *clearButtonItem;
+@property (weak, nonatomic) UIBarButtonItem *routeButtonItem;
 
 @property (weak, nonatomic) IBOutlet TALocationField *startField;
 @property (weak, nonatomic) IBOutlet TALocationField *endField;

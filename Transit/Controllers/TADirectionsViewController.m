@@ -1,17 +1,16 @@
 //
-//  TAMapViewController.m
+//  TADirectionsViewController.m
 //  Transit
 //
 //  Created by Mark Cafaro on 7/10/12.
 //  Copyright (c) 2012 Seven O' Eight. All rights reserved.
 //
 
-#import "TAMapViewController.h"
+#import "TADirectionsViewController.h"
 #import "TALocationManager.h"
 #import "TATripPlanNavigator.h"
 #import "TAWalkStep.h"
 #import "TATransitStep.h"
-#import "TADirectionsTableViewController.h"
 #import "TATransitOptionsViewController.h"
 #import "TAStepView.h"
 #import "TAStepAnnotation.h"
@@ -22,42 +21,41 @@
 #import "MKMapView+Transit.h"
 
 typedef enum {
-    TACurrentLocation,
-    TADirectionsList,
-    TATransitOptions
-} TAMapViewControl;
+    kCurrentLocationSegment,
+    kOverviewSegment
+} kMapViewSegment;
 
-@interface TAMapViewController ()
+@interface TADirectionsViewController ()
+
+@property (nonatomic) BOOL isViewingMap;
 
 @property (strong, nonatomic) TACurrentStepAnnotation *currentStepAnnotation;
-
-@property (nonatomic) BOOL isViewingStepByStep;
 
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
 
 @end
 
 
-@implementation TAMapViewController
+@implementation TADirectionsViewController
 
 @synthesize objectManager = _objectManager;
 @synthesize locationManager = _locationManager;
 @synthesize tripPlanNavigator = _tripPlanNavigator;
 
-@synthesize listButton = _listButton;
-@synthesize overviewButton = _overviewButton;
-@synthesize resumeButton = _resumeButton;
+@synthesize optionsButton = _optionsButton;
+@synthesize flipViewButton = _flipViewButton;
 
 @synthesize stepScrollView = _stepScrollView;
 
+@synthesize mapContainerView = _mapContainerView;
 @synthesize mapView = _mapView;
+@synthesize segmentedControl = _segmentedControl;
 
-@synthesize overviewSegmentedControl = _overviewSegmentedControl;
-@synthesize stepByStepSegmentedControl = _stepByStepSegmentedControl;
+@synthesize listView = _listView;
+
+@synthesize isViewingMap = _isViewingMap;
 
 @synthesize currentStepAnnotation = _currentStepAnnotation;
-
-@synthesize isViewingStepByStep = _isViewingStepByStep;
 
 @synthesize dateFormatter = _dateFormatter;
 
@@ -73,99 +71,69 @@ typedef enum {
 }
 
 - (void)loadView
-{    
-    _listButton = [[UIBarButtonItem alloc] initWithTitle:@"Start"
-                                                    style:UIBarButtonItemStyleDone target:self
-                                                   action:@selector(startCurrentItinerary)];
+{
+    self.navigationItem.title = @"Directions";
     
-    self.navigationItem.rightBarButtonItem = self.listButton;
+    UIButton *flipViewButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 36, 30)];
+    UIEdgeInsets buttonInsets = UIEdgeInsetsMake(15, 5, 15, 5);
+    [flipViewButton setBackgroundImage:[[UIImage imageNamed:@"BlueButton"] resizableImageWithCapInsets:buttonInsets] forState:UIControlStateNormal];
+    [flipViewButton setBackgroundImage:[[UIImage imageNamed:@"BlueButtonPressed"] resizableImageWithCapInsets:buttonInsets] forState:UIControlStateSelected];
+    [flipViewButton setImage:[UIImage imageNamed:@"List"] forState:UIControlStateNormal];
+    [flipViewButton addTarget:self action:@selector(flipView) forControlEvents:UIControlEventTouchUpInside];
+    self.flipViewButton = flipViewButton;
     
-    // We need a container view because using the MKMapView as the root view freezes all the controls on animation
+    UIButton *optionsButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 36, 30)];
+    [optionsButton setBackgroundImage:[[UIImage imageNamed:@"BlueButton"] resizableImageWithCapInsets:buttonInsets] forState:UIControlStateNormal];
+    [optionsButton setBackgroundImage:[[UIImage imageNamed:@"BlueButtonPressed"] resizableImageWithCapInsets:buttonInsets] forState:UIControlStateSelected];
+    [optionsButton setImage:[UIImage imageNamed:@"Options"] forState:UIControlStateNormal];
+    [optionsButton addTarget:self action:@selector(presentTransitOptionsViewController) forControlEvents:UIControlEventTouchUpInside];
+    self.optionsButton = optionsButton;
+    
+    UIBarButtonItem *flipViewButtonItem = [[UIBarButtonItem alloc] initWithCustomView:flipViewButton];
+    UIBarButtonItem *optionsButtonItem = [[UIBarButtonItem alloc] initWithCustomView:optionsButton];
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:flipViewButtonItem, optionsButtonItem, nil];
+    
     UIView *containerView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.view = containerView;
     
-    MKMapView *mapView = [[MKMapView alloc] initWithFrame:containerView.bounds];
+    // We need a map container view because using the MKMapView as the root view freezes all subviews on animation
+    UIView *mapContainerView = [[UIView alloc] initWithFrame:self.view.bounds];
+    self.mapContainerView = mapContainerView;
+    
+    MKMapView *mapView = [[MKMapView alloc] initWithFrame:mapContainerView.bounds];
     mapView.showsUserLocation = YES;
     mapView.visibleMapRect = self.tripPlanNavigator.currentItinerary.boundingMapRect;
     mapView.delegate = self;
-    _mapView = mapView;
-    [containerView addSubview:mapView];
+    [mapContainerView addSubview:mapView];
+    [self.view addSubview:mapContainerView];
+    self.isViewingMap = YES;
+    self.mapView = mapView;
     
-    UISegmentedControl *overviewSegmentedControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(7, 380, 117, 30)];
-    overviewSegmentedControl.momentary = YES;
-    [overviewSegmentedControl insertSegmentWithTitle:@"fol" atIndex:TACurrentLocation animated:NO];
-    [overviewSegmentedControl insertSegmentWithTitle:@"lst" atIndex:TADirectionsList animated:NO];
-    [overviewSegmentedControl insertSegmentWithTitle:@"opt" atIndex:TATransitOptions animated:NO];
-    [overviewSegmentedControl addTarget:self action:@selector(changeView:) forControlEvents:UIControlEventValueChanged];
-    _overviewSegmentedControl = overviewSegmentedControl;
-    [containerView addSubview:overviewSegmentedControl];
+    TAStepScrollView *stepScrollView = [[TAStepScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 129)];
+    stepScrollView.delegate = self;
+    stepScrollView.dataSource = self;
+    [mapContainerView addSubview:stepScrollView];
+    self.stepScrollView = stepScrollView;
     
-    UISegmentedControl *stepByStepSegmentedControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(7, 380, 39, 30)];
-    stepByStepSegmentedControl.momentary = YES;
-    [stepByStepSegmentedControl insertSegmentWithTitle:@"fol" atIndex:TACurrentLocation animated:NO];
-    [stepByStepSegmentedControl addTarget:self action:@selector(changeView:) forControlEvents:UIControlEventValueChanged];
-    stepByStepSegmentedControl.hidden = YES;
-    _stepByStepSegmentedControl = stepByStepSegmentedControl;
-    [containerView addSubview:stepByStepSegmentedControl];
-    
-    self.view = containerView;
+    UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(3, 376, 85, 37)];
+    [segmentedControl setBackgroundImage:[UIImage imageNamed:@"SilverButton"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [segmentedControl setBackgroundImage:[UIImage imageNamed:@"SilverButtonPressed"] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+    [segmentedControl setDividerImage:[UIImage imageNamed:@"SilverBarDivider"] forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [segmentedControl insertSegmentWithImage:[UIImage imageNamed:@"TrackingOff"] atIndex:kCurrentLocationSegment animated:NO];
+    [segmentedControl setContentPositionAdjustment:UIOffsetMake(2, 0) forSegmentType:UISegmentedControlSegmentLeft barMetrics:UIBarMetricsDefault];
+    [segmentedControl insertSegmentWithImage:[UIImage imageNamed:@"Overview"] atIndex:kOverviewSegment animated:NO];
+    [segmentedControl setContentPositionAdjustment:UIOffsetMake(-3, 1) forSegmentType:UISegmentedControlSegmentRight barMetrics:UIBarMetricsDefault];
+    [segmentedControl addTarget:self action:@selector(changeView:) forControlEvents:UIControlEventValueChanged];
+    segmentedControl.momentary = YES;
+    [mapContainerView addSubview:segmentedControl];
+    self.segmentedControl = segmentedControl;
 }
 
 - (void)viewDidLoad
 {
+    [self.stepScrollView reloadData];
     [self overlayCurrentItinerary];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-
-    BOOL isMovingFromParentViewController = self.isMovingFromParentViewController;
-    [self hideStepScrollViewWithCompletion:^(BOOL finished) {
-        // Don't remove the stepScrollView if we're presenting a view controller
-        if (isMovingFromParentViewController) {
-            [self.stepScrollView removeFromSuperview];
-        }
-    }];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    
-    // TODO: find out how to properly release strong references
-}
-
-- (UIBarButtonItem *)overviewButton
-{
-    if (_overviewButton == nil) {
-        _overviewButton = [[UIBarButtonItem alloc] initWithTitle:@"Overview"
-                                                           style:UIBarButtonItemStylePlain
-                                                          target:self
-                                                          action:@selector(overviewCurrentItinerary)];
-    }
-    return _overviewButton;
-}
-
-- (UIBarButtonItem *)resumeButton
-{
-    if (_resumeButton == nil) {
-        _resumeButton = [[UIBarButtonItem alloc] initWithTitle:@"Resume"
-                                                         style:UIBarButtonItemStyleDone
-                                                        target:self
-                                                        action:@selector(resumeCurrentItinerary)];
-    }
-    return _resumeButton;
-}
-
-- (TAStepScrollView *)stepScrollView
-{
-    if (_stepScrollView == nil) {
-        _stepScrollView = [[TAStepScrollView alloc] initWithFrame:CGRectMake(0, -129, 320, 129)];
-        _stepScrollView.delegate = self;
-        _stepScrollView.dataSource = self;
-        [_stepScrollView reloadData];
-    }
-    return _stepScrollView;
+    self.currentStepAnnotation = [self.mapView addAnnotationForCurrentStep:self.tripPlanNavigator.currentStep];
 }
 
 - (void)overlayCurrentItinerary
@@ -174,66 +142,9 @@ typedef enum {
     [self.mapView addAnnotationsForSteps:self.tripPlanNavigator.stepsInCurrentItinerary];
 }
 
-- (void)overviewCurrentItinerary
-{
-    [self overviewCurrentItineraryAnimated:YES];
-}
-
 - (void)overviewCurrentItineraryAnimated:(BOOL)animate
-{    
-    [self hideStepScrollViewWithCompletion:^(BOOL finished) {
-        [self.mapView viewForAnnotation:self.currentStepAnnotation].hidden = YES;
-        
-        // TODO: Animate this transition?
-        self.stepByStepSegmentedControl.hidden = YES;
-        self.overviewSegmentedControl.hidden = NO;
-
-        [self.mapView setVisibleMapRectToFitItinerary:self.tripPlanNavigator.currentItinerary animated:animate];
-        self.isViewingStepByStep = NO;
-        
-        if (self.tripPlanNavigator.isCurrentItineraryStarted) {
-            [self.navigationItem setRightBarButtonItem:self.resumeButton animated:animate];
-        } else {
-            [self.navigationItem setRightBarButtonItem:self.listButton animated:animate];
-        }
-    }];
-}
-
-- (void)startCurrentItinerary
 {
-    [self startCurrentItineraryAnimated:YES];
-}
-
-- (void)startCurrentItineraryAnimated:(BOOL)animate
-{
-    [self.tripPlanNavigator startCurrentItinerary];
-    
-    self.currentStepAnnotation = [self.mapView addAnnotationForCurrentStep:self.tripPlanNavigator.currentStep];
-    
-    [self.navigationController.view addSubview:self.stepScrollView];
-    [self showStepScrollViewWithCompletion:^(BOOL finished) {
-        [self resumeCurrentItineraryAnimated:animate];
-    }];
-}
-
-- (void)resumeCurrentItinerary
-{
-    [self resumeCurrentItineraryAnimated:YES];
-}
-
-- (void)resumeCurrentItineraryAnimated:(BOOL)animate
-{    
-    [self showStepScrollViewWithCompletion:^(BOOL finished) {
-        [self.mapView viewForAnnotation:self.currentStepAnnotation].hidden = NO;
-
-        self.overviewSegmentedControl.hidden = YES;
-        self.stepByStepSegmentedControl.hidden = NO;
-        
-        [self.mapView setVisibleMapRectToFitStep:self.tripPlanNavigator.currentStep animated:animate];
-        self.isViewingStepByStep = YES;
-        
-        [self.navigationItem setRightBarButtonItem:self.overviewButton animated:animate];
-    }];
+    [self.mapView setVisibleMapRectToFitItinerary:self.tripPlanNavigator.currentItinerary animated:animate];
 }
 
 - (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay
@@ -253,21 +164,27 @@ typedef enum {
         MKAnnotationView *currentStepView = [mapView dequeueReusableAnnotationViewWithIdentifier:@"currentStepID"];
         if (!currentStepView) {
             currentStepView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"currentStepID"];
-            currentStepView.image = [UIImage imageNamed:@"currentStepAnnotation.png"];
+            currentStepView.image = [UIImage imageNamed:@"CurrentStepAnnotation.png"];
             currentStepView.enabled = NO;
-            currentStepView.hidden = YES;
         } else {
             currentStepView.annotation = annotation;
         }
         return currentStepView;
     } else if ([annotation isKindOfClass:[TAStepAnnotation class]]) {
-        MKPinAnnotationView *stepView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"stepID"];
+        MKAnnotationView *stepView = (MKAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"stepID"];
         if (!stepView) {
-            stepView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"stepID"];
-            stepView.pinColor = MKPinAnnotationColorPurple;
+            stepView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"stepID"];
             stepView.canShowCallout = YES;
         } else {
             stepView.annotation = annotation;
+        }
+        TAStepAnnotation *stepAnnotation = (TAStepAnnotation *)annotation;
+        if (stepAnnotation.direction == TAStepAnnotationDirectionLeft) {
+            stepView.image = [UIImage imageNamed:@"CalloutLeft"];
+            stepView.centerOffset = CGPointMake(-17, -11);
+        } else {
+            stepView.image = [UIImage imageNamed:@"CalloutRight"];
+            stepView.centerOffset = CGPointMake(17, -11);
         }
         return stepView;
     }
@@ -286,43 +203,25 @@ typedef enum {
     }
 }
 
-- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
-{
-    if (self.isViewingStepByStep) {
-        NSSet *visibleAnnotations = [mapView annotationsInMapRect:mapView.visibleMapRect];
-        if (![visibleAnnotations containsObject:self.currentStepAnnotation]) {
-            for (id<MKAnnotation> annotation in visibleAnnotations) {
-                if ([annotation isKindOfClass:[TAStepAnnotation class]]) {
-                    TAStep *step = ((TAStepAnnotation *)annotation).step;
-                    [self.tripPlanNavigator moveToStep:step];
-                    [self.stepScrollView scrollToStepAtIndex:self.tripPlanNavigator.currentStepIndex animated:YES];
-                    [self.currentStepAnnotation setCoordinateToStep:step];
-                    break;
-                }
-            }
-        }
-    }
-}
-
 - (void)changeView:(id)sender
 {
-    TAMapViewControl selectedSegment = [(UISegmentedControl *)sender selectedSegmentIndex];
+    kMapViewSegment selectedSegment = [(UISegmentedControl *)sender selectedSegmentIndex];
     
     switch (selectedSegment) {
-        case TACurrentLocation:
+        case kCurrentLocationSegment:
             if (self.mapView.userTrackingMode == MKUserTrackingModeNone) {
+                [self.segmentedControl setImage:[UIImage imageNamed:@"TrackingLocation"] forSegmentAtIndex:kCurrentLocationSegment];
                 [self followCurrentLocation];
             } else if (self.mapView.userTrackingMode == MKUserTrackingModeFollow) {
+                [self.segmentedControl setImage:[UIImage imageNamed:@"TrackingHeading"] forSegmentAtIndex:kCurrentLocationSegment];
                 [self followCurrentLocationWithHeading];
             } else {
+                [self.segmentedControl setImage:[UIImage imageNamed:@"TrackingOff"] forSegmentAtIndex:kCurrentLocationSegment];
                 [self stopFollowingCurrentLocation];
             }
             break;
-        case TADirectionsList:
-            [self presentDirectionsTableViewController];
-            break;
-        case TATransitOptions:
-            [self presentTransitOptionsViewController];
+        case kOverviewSegment:
+            [self overviewCurrentItineraryAnimated:YES];
             break;
         default:
             break;
@@ -332,35 +231,74 @@ typedef enum {
 - (void)followCurrentLocation
 {
     [self.mapView setUserTrackingMode:MKUserTrackingModeFollow animated:YES];
-    [self.overviewSegmentedControl setTitle:@"hed" forSegmentAtIndex:TACurrentLocation];
 }
 
 - (void)followCurrentLocationWithHeading
 {
     [self.mapView setUserTrackingMode:MKUserTrackingModeFollowWithHeading animated:YES];
-    [self.overviewSegmentedControl setTitle:@"off" forSegmentAtIndex:TACurrentLocation];
 }
 
 - (void)stopFollowingCurrentLocation
 {
     [self.mapView setUserTrackingMode:MKUserTrackingModeNone animated:YES];
-    [self.overviewSegmentedControl setTitle:@"fol" forSegmentAtIndex:TACurrentLocation];
 }
 
 - (void)mapView:(MKMapView *)mapView didChangeUserTrackingMode:(MKUserTrackingMode)mode animated:(BOOL)animated
 {
     if (mode == MKUserTrackingModeNone) {
-        [self.overviewSegmentedControl setTitle:@"fol" forSegmentAtIndex:TACurrentLocation];
+        [self.segmentedControl setImage:[UIImage imageNamed:@"TrackingOff"] forSegmentAtIndex:kCurrentLocationSegment];
     }
 }
 
-- (void)presentDirectionsTableViewController
+- (void)flipView
 {
-    TADirectionsTableViewController *directionsController = [[TADirectionsTableViewController alloc] init];
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:directionsController];
+    // Flip main view
+	[UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.6];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(flipDidStop:finished:context:)];
+    
+    if (self.isViewingMap) {
+        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:self.view cache:YES];
+        if (self.listView == nil) {
+            UITableView *listView = [[UITableView alloc] initWithFrame:self.view.bounds];
+            [self.view addSubview:listView];
+            self.listView = listView;
+        }
+        self.listView.hidden = NO;
+        self.mapView.hidden = YES;
         
-    [self presentViewController:navigationController animated:YES completion:nil];
+    } else {
+        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.view cache:YES];
+        self.mapView.hidden = NO;
+        self.listView.hidden = YES;
+    }
+    
+    [UIView commitAnimations];
+    
+    // Flip button
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.6];
+    [UIView setAnimationDelegate:self];
+    
+    if (self.isViewingMap) {
+        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:self.flipViewButton cache:YES];
+        [self.flipViewButton setImage:[UIImage imageNamed:@"Map"] forState:UIControlStateNormal];
+    } else {
+        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.flipViewButton cache:YES];
+        [self.flipViewButton setImage:[UIImage imageNamed:@"List"] forState:UIControlStateNormal];
+    }
+    
+    [UIView commitAnimations];
+    
+    self.isViewingMap = !self.isViewingMap;
+}
+
+- (void)flipDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context
+{
+    [[UIApplication sharedApplication] endIgnoringInteractionEvents];
 }
 
 - (void)presentTransitOptionsViewController
@@ -370,24 +308,6 @@ typedef enum {
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:optionsController];
     
     [self presentViewController:navigationController animated:YES completion:nil];
-}
-
-- (void)showStepScrollViewWithCompletion:(void (^)(BOOL finished))completion
-{
-    [UIView animateWithDuration:0.24 animations:^{
-        self.stepScrollView.frame = CGRectMake(0, 72, 320, 129);
-    } completion:^(BOOL finished) {
-        completion(finished);
-    }];
-}
-
-- (void)hideStepScrollViewWithCompletion:(void (^)(BOOL finished))completion
-{
-    [UIView animateWithDuration:0.24 animations:^{
-        self.stepScrollView.frame = CGRectMake(0, -129, 320, 129);
-    } completion:^(BOOL finished) {
-        completion(finished);
-    }];
 }
 
 - (NSInteger)numberOfStepsInScrollView:(TAStepScrollView *)scrollView

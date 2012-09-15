@@ -12,12 +12,14 @@
 @implementation TAStepAnnotation
 
 @synthesize step = _step;
+@synthesize direction = _direction;
 
-- (id)initWithStep:(TAStep *)step
+- (id)initWithStep:(TAStep *)step direction:(TAStepAnnotationDirection)direction
 {
     self = [super init];
     if (self) {
         _step = step;
+        _direction = direction;
     }
     return self;
 }

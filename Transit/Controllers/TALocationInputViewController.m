@@ -6,15 +6,13 @@
 //  Copyright (c) 2012 Seven O' Eight. All rights reserved.
 //
 
-#import <QuartzCore/QuartzCore.h>
-
 #import "TALocationInputViewController.h"
 #import "TALocationField.h"
 #import "TACompletionsController.h"
 #import "TAAttributionCompletion.h"
 #import "TALocationManager.h"
 #import "TATripPlanNavigator.h"
-#import "TAMapViewController.h"
+#import "TADirectionsViewController.h"
 #import "TACurrentLocationCompletion.h"
 #import "TATripPlanCompletion.h"
 #import "TAPlaceCompletion.h"
@@ -32,9 +30,6 @@ static NSString *const kNavigationTitle = @"Transit";
 @property (strong, nonatomic) TAPlacemark *startPlacemark;
 @property (strong, nonatomic) TAPlacemark *endPlacemark;
 
-- (void)lockAllViews;
-- (void)unlockAllViews;
-
 @end
 
 
@@ -44,8 +39,8 @@ static NSString *const kNavigationTitle = @"Transit";
 @synthesize gpObjectManager = _gpObjectManager;
 @synthesize locationManager = _locationManager;
 
-@synthesize clearButton = _clearButton;
-@synthesize routeButton = _routeButton;
+@synthesize clearButtonItem = _clearButtonItem;
+@synthesize routeButtonItem = _routeButtonItem;
 
 @synthesize startField = _startField;
 @synthesize endField = _endField;
@@ -96,14 +91,14 @@ static NSString *const kNavigationTitle = @"Transit";
                                                                    target:self
                                                                    action:@selector(clearFields)];
     self.navigationItem.leftBarButtonItem = clearButton;
-    self.clearButton = clearButton;
+    self.clearButtonItem = clearButton;
     
     UIBarButtonItem *routeButton = [[UIBarButtonItem alloc] initWithTitle:@"Route"
                                                                     style:UIBarButtonItemStyleDone
                                                                    target:self
                                                                    action:@selector(routeTrip)];
     self.navigationItem.rightBarButtonItem = routeButton;
-    self.routeButton = routeButton;
+    self.routeButtonItem = routeButton;
     
     self.startField.leftViewLabel.text = @"Start:  ";
     self.startField.delegate = self;
@@ -316,11 +311,8 @@ static NSString *const kNavigationTitle = @"Transit";
 
 - (void)pushMapViewController
 {
-    CLLocationCoordinate2D startCoordinate = self.startPlacemark.isCurrentLocation ? self.locationManager.currentLocation.coordinate : self.startPlacemark.location.coordinate;
-    CLLocationCoordinate2D endCoordinate = self.endPlacemark.isCurrentLocation ? self.locationManager.currentLocation.coordinate : self.endPlacemark.location.coordinate;
-    
-    self.otpObjectManager.from = startCoordinate;
-    self.otpObjectManager.to = endCoordinate;
+    self.otpObjectManager.from = self.startPlacemark.isCurrentLocation ? self.locationManager.currentLocation.coordinate : self.startPlacemark.location.coordinate;
+    self.otpObjectManager.to = self.endPlacemark.isCurrentLocation ? self.locationManager.currentLocation.coordinate : self.endPlacemark.location.coordinate;
     
     [self.otpObjectManager fetchTripPlanWithCompletionHandler:^(OTPTripPlan *tripPlan, NSError *error)
     {
@@ -335,7 +327,7 @@ static NSString *const kNavigationTitle = @"Transit";
         
         TATripPlanNavigator *tripPlanNavigator = [[TATripPlanNavigator alloc] initWithTripPlan:tripPlan];
         
-        TAMapViewController *mapController = [[TAMapViewController alloc] initWithObjectManager:self.otpObjectManager
+        TADirectionsViewController *mapController = [[TADirectionsViewController alloc] initWithObjectManager:self.otpObjectManager
                                                                                 locationManager:self.locationManager
                                                                               tripPlanNavigator:tripPlanNavigator];
         
@@ -362,6 +354,8 @@ static NSString *const kNavigationTitle = @"Transit";
                                               cancelButtonTitle:nil
                                               otherButtonTitles:@"OK", nil];
     [alertView show];
+    
+    [self.completionsTable deselectRowAtIndexPath:[self.completionsTable indexPathForSelectedRow] animated:NO];
 }
 
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -371,8 +365,8 @@ static NSString *const kNavigationTitle = @"Transit";
 
 - (void)lockAllViews
 {
-    self.routeButton.enabled = NO;
-    self.clearButton.enabled = NO;
+    self.routeButtonItem.enabled = NO;
+    self.clearButtonItem.enabled = NO;
     self.startField.enabled = NO;
     self.endField.enabled = NO;
     self.swapFieldsButton.enabled = NO;
@@ -395,17 +389,17 @@ static NSString *const kNavigationTitle = @"Transit";
 - (void)toggleButtons
 {
     if (self.startField.isComplete && self.endField.isComplete)  {
-        self.routeButton.enabled = YES;
+        self.routeButtonItem.enabled = YES;
     } else {
-        self.routeButton.enabled = NO;
+        self.routeButtonItem.enabled = NO;
     }
     
     if (self.startField.isComplete || self.endField.isComplete) {
         self.swapFieldsButton.enabled = YES;
-        self.clearButton.enabled = YES;
+        self.clearButtonItem.enabled = YES;
     } else {
         self.swapFieldsButton.enabled = NO;
-        self.clearButton.enabled = NO;
+        self.clearButtonItem.enabled = NO;
     }
 }
 
@@ -452,16 +446,16 @@ static NSString *const kNavigationTitle = @"Transit";
     
     if (newLength == 0) {
         if ([self locationFieldsWillBeEmpty]) {
-            self.clearButton.enabled = NO;
+            self.clearButtonItem.enabled = NO;
             self.swapFieldsButton.enabled = NO;
         }
-        self.routeButton.enabled = NO;
+        self.routeButtonItem.enabled = NO;
         
     } else if (currentLength == 0) {
         if ([self locationFieldsWillBeComplete]) {
-            self.routeButton.enabled = YES;
+            self.routeButtonItem.enabled = YES;
         }
-        self.clearButton.enabled = YES;
+        self.clearButtonItem.enabled = YES;
         self.swapFieldsButton.enabled = YES;
     }
     
@@ -475,10 +469,10 @@ static NSString *const kNavigationTitle = @"Transit";
 {
     // Again, a bunch of work because we don't know when the field "did" clear!
     if ([self locationFieldsWillBeEmpty]) {
-        self.clearButton.enabled = NO;
+        self.clearButtonItem.enabled = NO;
         self.swapFieldsButton.enabled = NO;
     }
-    self.routeButton.enabled = NO;
+    self.routeButtonItem.enabled = NO;
         
     // If the current location field is being cleared we have to force the fetch because we haven't cleared it yet
     if (locationField.contentType == TALocationFieldContentTypeCurrentLocation) {
@@ -613,7 +607,6 @@ static NSString *const kNavigationTitle = @"Transit";
         // No extra setup necessary
     }
     
-    //cell.contentView.backgroundColor = [UIColor lightBackgroundColor];
 	return cell;
 }
 
@@ -653,15 +646,14 @@ static NSString *const kNavigationTitle = @"Transit";
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    //[tableView deselectRowAtIndexPath:indexPath animated:NO];
-    
+{    
     TACompletion *completion = [self.completionsController completionAtIndexPath:indexPath.row];
     
     // We don't have to do any geocoding with stored trip completions, just load the from and to and push the map
     if ([completion isKindOfClass:[TATripPlanCompletion class]]) {
         self.startPlacemark = ((TATripPlanCompletion *)completion).from;
         self.endPlacemark = ((TATripPlanCompletion *)completion).to;
+        [self lockAllViews];
         [self pushMapViewController];
         return;
     }

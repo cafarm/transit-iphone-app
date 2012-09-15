@@ -16,12 +16,35 @@
 		1F0A4D2F15E9CAA30040B2CB /* Swap@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0A4D2B15E9CAA30040B2CB /* Swap@2x.png */; };
 		1F1A9EBE1603157A00D74BF2 /* List.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F1A9EBC1603157A00D74BF2 /* List.png */; };
 		1F1A9EBF1603157A00D74BF2 /* List@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F1A9EBD1603157A00D74BF2 /* List@2x.png */; };
+		1F20F3031604462600DC00D7 /* CurrentStepAnnotation.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F3011604462600DC00D7 /* CurrentStepAnnotation.png */; };
+		1F20F3041604462600DC00D7 /* CurrentStepAnnotation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F3021604462600DC00D7 /* CurrentStepAnnotation@2x.png */; };
+		1F20F30A16044D4A00DC00D7 /* CalloutLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F30616044D4A00DC00D7 /* CalloutLeft.png */; };
+		1F20F30B16044D4A00DC00D7 /* CalloutLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F30716044D4A00DC00D7 /* CalloutLeft@2x.png */; };
+		1F20F30C16044D4A00DC00D7 /* CalloutRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F30816044D4A00DC00D7 /* CalloutRight.png */; };
+		1F20F30D16044D4A00DC00D7 /* CalloutRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F30916044D4A00DC00D7 /* CalloutRight@2x.png */; };
+		1F20F30F160458FF00DC00D7 /* Map@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F30E160458FF00DC00D7 /* Map@2x.png */; };
+		1F20F3111604617D00DC00D7 /* Options@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F3101604617D00DC00D7 /* Options@2x.png */; };
+		1F20F313160471EB00DC00D7 /* Options.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F312160471EB00DC00D7 /* Options.png */; };
+		1F20F31716051F2300DC00D7 /* Map.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F31416051F2300DC00D7 /* Map.png */; };
+		1F20F31816051F2300DC00D7 /* SilverButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F31516051F2300DC00D7 /* SilverButton.png */; };
+		1F20F31916051F2300DC00D7 /* SilverButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F31616051F2300DC00D7 /* SilverButton@2x.png */; };
+		1F20F31C160521C700DC00D7 /* SilverBarDivider.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F31A160521C700DC00D7 /* SilverBarDivider.png */; };
+		1F20F31D160521C700DC00D7 /* SilverBarDivider@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F31B160521C700DC00D7 /* SilverBarDivider@2x.png */; };
+		1F20F3201605235400DC00D7 /* TrackingOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F31E1605235300DC00D7 /* TrackingOff.png */; };
+		1F20F3211605235400DC00D7 /* TrackingOff@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F31F1605235400DC00D7 /* TrackingOff@2x.png */; };
+		1F20F324160526B100DC00D7 /* Overview.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F322160526B100DC00D7 /* Overview.png */; };
+		1F20F325160526B100DC00D7 /* Overview@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F323160526B100DC00D7 /* Overview@2x.png */; };
+		1F20F32A1605279400DC00D7 /* TrackingHeading.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F3261605279300DC00D7 /* TrackingHeading.png */; };
+		1F20F32B1605279400DC00D7 /* TrackingHeading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F3271605279300DC00D7 /* TrackingHeading@2x.png */; };
+		1F20F32C1605279400DC00D7 /* TrackingLocation.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F3281605279400DC00D7 /* TrackingLocation.png */; };
+		1F20F32D1605279400DC00D7 /* TrackingLocation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F3291605279400DC00D7 /* TrackingLocation@2x.png */; };
+		1F20F330160528A200DC00D7 /* SilverButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F32E160528A200DC00D7 /* SilverButtonPressed.png */; };
+		1F20F331160528A200DC00D7 /* SilverButtonPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F32F160528A200DC00D7 /* SilverButtonPressed@2x.png */; };
 		1F313E1215E8CCFA00EEF344 /* LocationInputBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F313E1115E8CCFA00EEF344 /* LocationInputBackground@2x.png */; };
 		1F313E2915E98EED00EEF344 /* LocationField.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F313E2715E98EED00EEF344 /* LocationField.png */; };
 		1F313E2A15E98EED00EEF344 /* LocationField@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F313E2815E98EED00EEF344 /* LocationField@2x.png */; };
 		1F313E3715E9A98600EEF344 /* TagSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F313E3515E9A98600EEF344 /* TagSelected.png */; };
 		1F313E3815E9A98600EEF344 /* TagSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F313E3615E9A98600EEF344 /* TagSelected@2x.png */; };
-		1F342CBD15AE236300E2A6E8 /* TADirectionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F342CBC15AE236300E2A6E8 /* TADirectionsTableViewController.m */; };
 		1F342CC615AE4DE800E2A6E8 /* TATransitOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F342CC515AE4DE800E2A6E8 /* TATransitOptionsViewController.m */; };
 		1F34CAB715D70DAE00322C04 /* TACurrentStepAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F34CAB615D70DAE00322C04 /* TACurrentStepAnnotation.m */; };
 		1F36463E15DB50A000E2B156 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F36463315DB505A00E2B156 /* libRestKit.a */; };
@@ -91,7 +114,7 @@
 		1FD199CB15BBB14900BA8D48 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD199CA15BBB14900BA8D48 /* libxml2.2.dylib */; };
 		1FF9F63015CCBA9C00AEBA28 /* TAStepScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9F62F15CCBA9C00AEBA28 /* TAStepScrollView.m */; };
 		1FF9F63315CCE0C500AEBA28 /* TAStepView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9F63215CCE0C500AEBA28 /* TAStepView.m */; };
-		1FFD6C0C15AD1D6200A4C388 /* TAMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD6C0A15AD1D6200A4C388 /* TAMapViewController.m */; };
+		1FFD6C0C15AD1D6200A4C388 /* TADirectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD6C0A15AD1D6200A4C388 /* TADirectionsViewController.m */; };
 		1FFD6C0F15AD1DA500A4C388 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FFD6C0E15AD1DA500A4C388 /* MapKit.framework */; };
 		1FFD80D515DE1A2500CD5423 /* PoweredByGoogle.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FFD80D315DE1A2500CD5423 /* PoweredByGoogle.png */; };
 		1FFD80D615DE1A2500CD5423 /* PoweredByGoogle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FFD80D415DE1A2500CD5423 /* PoweredByGoogle@2x.png */; };
@@ -206,13 +229,35 @@
 		1F12167A15C207AE007B75A5 /* MACLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MACLog.h; path = SupportingFiles/MACLog.h; sourceTree = "<group>"; };
 		1F1A9EBC1603157A00D74BF2 /* List.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = List.png; path = Transit/Resources/Images/Buttons/List.png; sourceTree = "<group>"; };
 		1F1A9EBD1603157A00D74BF2 /* List@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "List@2x.png"; path = "Transit/Resources/Images/Buttons/List@2x.png"; sourceTree = "<group>"; };
+		1F20F3011604462600DC00D7 /* CurrentStepAnnotation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CurrentStepAnnotation.png; path = Transit/Resources/Images/CurrentStepAnnotation.png; sourceTree = "<group>"; };
+		1F20F3021604462600DC00D7 /* CurrentStepAnnotation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "CurrentStepAnnotation@2x.png"; path = "Transit/Resources/Images/CurrentStepAnnotation@2x.png"; sourceTree = "<group>"; };
+		1F20F30616044D4A00DC00D7 /* CalloutLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CalloutLeft.png; path = Transit/Resources/Images/Callouts/CalloutLeft.png; sourceTree = "<group>"; };
+		1F20F30716044D4A00DC00D7 /* CalloutLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "CalloutLeft@2x.png"; path = "Transit/Resources/Images/Callouts/CalloutLeft@2x.png"; sourceTree = "<group>"; };
+		1F20F30816044D4A00DC00D7 /* CalloutRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CalloutRight.png; path = Transit/Resources/Images/Callouts/CalloutRight.png; sourceTree = "<group>"; };
+		1F20F30916044D4A00DC00D7 /* CalloutRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "CalloutRight@2x.png"; path = "Transit/Resources/Images/Callouts/CalloutRight@2x.png"; sourceTree = "<group>"; };
+		1F20F30E160458FF00DC00D7 /* Map@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Map@2x.png"; path = "Transit/Resources/Images/Buttons/Map@2x.png"; sourceTree = "<group>"; };
+		1F20F3101604617D00DC00D7 /* Options@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Options@2x.png"; path = "Transit/Resources/Images/Buttons/Options@2x.png"; sourceTree = "<group>"; };
+		1F20F312160471EB00DC00D7 /* Options.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Options.png; path = Transit/Resources/Images/Buttons/Options.png; sourceTree = "<group>"; };
+		1F20F31416051F2300DC00D7 /* Map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Map.png; path = Transit/Resources/Images/Buttons/Map.png; sourceTree = "<group>"; };
+		1F20F31516051F2300DC00D7 /* SilverButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SilverButton.png; path = Transit/Resources/Images/Buttons/SilverButton.png; sourceTree = "<group>"; };
+		1F20F31616051F2300DC00D7 /* SilverButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SilverButton@2x.png"; path = "Transit/Resources/Images/Buttons/SilverButton@2x.png"; sourceTree = "<group>"; };
+		1F20F31A160521C700DC00D7 /* SilverBarDivider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SilverBarDivider.png; path = Transit/Resources/Images/Buttons/SilverBarDivider.png; sourceTree = "<group>"; };
+		1F20F31B160521C700DC00D7 /* SilverBarDivider@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SilverBarDivider@2x.png"; path = "Transit/Resources/Images/Buttons/SilverBarDivider@2x.png"; sourceTree = "<group>"; };
+		1F20F31E1605235300DC00D7 /* TrackingOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TrackingOff.png; path = Transit/Resources/Images/Buttons/TrackingOff.png; sourceTree = "<group>"; };
+		1F20F31F1605235400DC00D7 /* TrackingOff@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TrackingOff@2x.png"; path = "Transit/Resources/Images/Buttons/TrackingOff@2x.png"; sourceTree = "<group>"; };
+		1F20F322160526B100DC00D7 /* Overview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Overview.png; path = Transit/Resources/Images/Buttons/Overview.png; sourceTree = "<group>"; };
+		1F20F323160526B100DC00D7 /* Overview@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Overview@2x.png"; path = "Transit/Resources/Images/Buttons/Overview@2x.png"; sourceTree = "<group>"; };
+		1F20F3261605279300DC00D7 /* TrackingHeading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TrackingHeading.png; path = Transit/Resources/Images/Buttons/TrackingHeading.png; sourceTree = "<group>"; };
+		1F20F3271605279300DC00D7 /* TrackingHeading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TrackingHeading@2x.png"; path = "Transit/Resources/Images/Buttons/TrackingHeading@2x.png"; sourceTree = "<group>"; };
+		1F20F3281605279400DC00D7 /* TrackingLocation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TrackingLocation.png; path = Transit/Resources/Images/Buttons/TrackingLocation.png; sourceTree = "<group>"; };
+		1F20F3291605279400DC00D7 /* TrackingLocation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TrackingLocation@2x.png"; path = "Transit/Resources/Images/Buttons/TrackingLocation@2x.png"; sourceTree = "<group>"; };
+		1F20F32E160528A200DC00D7 /* SilverButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SilverButtonPressed.png; path = Transit/Resources/Images/Buttons/SilverButtonPressed.png; sourceTree = "<group>"; };
+		1F20F32F160528A200DC00D7 /* SilverButtonPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SilverButtonPressed@2x.png"; path = "Transit/Resources/Images/Buttons/SilverButtonPressed@2x.png"; sourceTree = "<group>"; };
 		1F313E1115E8CCFA00EEF344 /* LocationInputBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "LocationInputBackground@2x.png"; path = "Transit/Resources/Images/LocationInputBackground@2x.png"; sourceTree = "<group>"; };
 		1F313E2715E98EED00EEF344 /* LocationField.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LocationField.png; path = Transit/Resources/Images/Fields/LocationField.png; sourceTree = "<group>"; };
 		1F313E2815E98EED00EEF344 /* LocationField@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "LocationField@2x.png"; path = "Transit/Resources/Images/Fields/LocationField@2x.png"; sourceTree = "<group>"; };
 		1F313E3515E9A98600EEF344 /* TagSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TagSelected.png; path = Transit/Resources/Images/Fields/TagSelected.png; sourceTree = "<group>"; };
 		1F313E3615E9A98600EEF344 /* TagSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TagSelected@2x.png"; path = "Transit/Resources/Images/Fields/TagSelected@2x.png"; sourceTree = "<group>"; };
-		1F342CBB15AE236300E2A6E8 /* TADirectionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TADirectionsTableViewController.h; path = Controllers/TADirectionsTableViewController.h; sourceTree = "<group>"; };
-		1F342CBC15AE236300E2A6E8 /* TADirectionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TADirectionsTableViewController.m; path = Controllers/TADirectionsTableViewController.m; sourceTree = "<group>"; };
 		1F342CC415AE4DE800E2A6E8 /* TATransitOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TATransitOptionsViewController.h; path = Controllers/TATransitOptionsViewController.h; sourceTree = "<group>"; };
 		1F342CC515AE4DE800E2A6E8 /* TATransitOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TATransitOptionsViewController.m; path = Controllers/TATransitOptionsViewController.m; sourceTree = "<group>"; };
 		1F34CAB515D70DAE00322C04 /* TACurrentStepAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TACurrentStepAnnotation.h; path = Models/Annotations/TACurrentStepAnnotation.h; sourceTree = "<group>"; };
@@ -295,8 +340,8 @@
 		1FF9F63115CCE0C500AEBA28 /* TAStepView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TAStepView.h; path = Views/StepViews/TAStepView.h; sourceTree = "<group>"; };
 		1FF9F63215CCE0C500AEBA28 /* TAStepView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TAStepView.m; path = Views/StepViews/TAStepView.m; sourceTree = "<group>"; };
 		1FFC60FE15D9D99900830612 /* Seattle, WA, USA.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "Seattle, WA, USA.gpx"; path = "TransitTests/Resources/Seattle, WA, USA.gpx"; sourceTree = SOURCE_ROOT; };
-		1FFD6C0915AD1D6100A4C388 /* TAMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TAMapViewController.h; path = Controllers/TAMapViewController.h; sourceTree = "<group>"; };
-		1FFD6C0A15AD1D6200A4C388 /* TAMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TAMapViewController.m; path = Controllers/TAMapViewController.m; sourceTree = "<group>"; };
+		1FFD6C0915AD1D6100A4C388 /* TADirectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TADirectionsViewController.h; path = Controllers/TADirectionsViewController.h; sourceTree = "<group>"; };
+		1FFD6C0A15AD1D6200A4C388 /* TADirectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TADirectionsViewController.m; path = Controllers/TADirectionsViewController.m; sourceTree = "<group>"; };
 		1FFD6C0E15AD1DA500A4C388 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		1FFD80D315DE1A2500CD5423 /* PoweredByGoogle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PoweredByGoogle.png; path = Transit/Resources/Images/PoweredByGoogle.png; sourceTree = "<group>"; };
 		1FFD80D415DE1A2500CD5423 /* PoweredByGoogle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "PoweredByGoogle@2x.png"; path = "Transit/Resources/Images/PoweredByGoogle@2x.png"; sourceTree = "<group>"; };
@@ -378,9 +423,38 @@
 			name = Steps;
 			sourceTree = "<group>";
 		};
+		1F20F30516044D3800DC00D7 /* Callouts */ = {
+			isa = PBXGroup;
+			children = (
+				1F20F30616044D4A00DC00D7 /* CalloutLeft.png */,
+				1F20F30716044D4A00DC00D7 /* CalloutLeft@2x.png */,
+				1F20F30816044D4A00DC00D7 /* CalloutRight.png */,
+				1F20F30916044D4A00DC00D7 /* CalloutRight@2x.png */,
+			);
+			name = Callouts;
+			sourceTree = "<group>";
+		};
 		1F313E3315E9A7F800EEF344 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				1F20F3261605279300DC00D7 /* TrackingHeading.png */,
+				1F20F3271605279300DC00D7 /* TrackingHeading@2x.png */,
+				1F20F3281605279400DC00D7 /* TrackingLocation.png */,
+				1F20F3291605279400DC00D7 /* TrackingLocation@2x.png */,
+				1F20F322160526B100DC00D7 /* Overview.png */,
+				1F20F323160526B100DC00D7 /* Overview@2x.png */,
+				1F20F31E1605235300DC00D7 /* TrackingOff.png */,
+				1F20F31F1605235400DC00D7 /* TrackingOff@2x.png */,
+				1F20F31A160521C700DC00D7 /* SilverBarDivider.png */,
+				1F20F31B160521C700DC00D7 /* SilverBarDivider@2x.png */,
+				1F20F31516051F2300DC00D7 /* SilverButton.png */,
+				1F20F31616051F2300DC00D7 /* SilverButton@2x.png */,
+				1F20F32E160528A200DC00D7 /* SilverButtonPressed.png */,
+				1F20F32F160528A200DC00D7 /* SilverButtonPressed@2x.png */,
+				1F20F312160471EB00DC00D7 /* Options.png */,
+				1F20F3101604617D00DC00D7 /* Options@2x.png */,
+				1F20F31416051F2300DC00D7 /* Map.png */,
+				1F20F30E160458FF00DC00D7 /* Map@2x.png */,
 				1FC5DA0E15FEC78F00258B0F /* BlueButton.png */,
 				1FC5DA0F15FEC78F00258B0F /* BlueButton@2x.png */,
 				1FC5DA1015FEC78F00258B0F /* BlueButtonPressed.png */,
@@ -557,6 +631,9 @@
 		1F90386D15D71F8A00B00877 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				1F20F30516044D3800DC00D7 /* Callouts */,
+				1F20F3011604462600DC00D7 /* CurrentStepAnnotation.png */,
+				1F20F3021604462600DC00D7 /* CurrentStepAnnotation@2x.png */,
 				1F592E0F1602F26B005A43B9 /* Launch */,
 				1F313E3415E9A97600EEF344 /* Fields */,
 				1F313E3315E9A7F800EEF344 /* Buttons */,
@@ -693,10 +770,8 @@
 			children = (
 				1F59516E15AC0D98007A4554 /* TALocationInputViewController.h */,
 				1F59516F15AC0D98007A4554 /* TALocationInputViewController.m */,
-				1FFD6C0915AD1D6100A4C388 /* TAMapViewController.h */,
-				1FFD6C0A15AD1D6200A4C388 /* TAMapViewController.m */,
-				1F342CBB15AE236300E2A6E8 /* TADirectionsTableViewController.h */,
-				1F342CBC15AE236300E2A6E8 /* TADirectionsTableViewController.m */,
+				1FFD6C0915AD1D6100A4C388 /* TADirectionsViewController.h */,
+				1FFD6C0A15AD1D6200A4C388 /* TADirectionsViewController.m */,
 				1F342CC415AE4DE800E2A6E8 /* TATransitOptionsViewController.h */,
 				1F342CC515AE4DE800E2A6E8 /* TATransitOptionsViewController.m */,
 			);
@@ -903,6 +978,30 @@
 				1F3935521602FEBD000443AF /* Default.png in Resources */,
 				1F1A9EBE1603157A00D74BF2 /* List.png in Resources */,
 				1F1A9EBF1603157A00D74BF2 /* List@2x.png in Resources */,
+				1F20F3031604462600DC00D7 /* CurrentStepAnnotation.png in Resources */,
+				1F20F3041604462600DC00D7 /* CurrentStepAnnotation@2x.png in Resources */,
+				1F20F30A16044D4A00DC00D7 /* CalloutLeft.png in Resources */,
+				1F20F30B16044D4A00DC00D7 /* CalloutLeft@2x.png in Resources */,
+				1F20F30C16044D4A00DC00D7 /* CalloutRight.png in Resources */,
+				1F20F30D16044D4A00DC00D7 /* CalloutRight@2x.png in Resources */,
+				1F20F30F160458FF00DC00D7 /* Map@2x.png in Resources */,
+				1F20F3111604617D00DC00D7 /* Options@2x.png in Resources */,
+				1F20F313160471EB00DC00D7 /* Options.png in Resources */,
+				1F20F31716051F2300DC00D7 /* Map.png in Resources */,
+				1F20F31816051F2300DC00D7 /* SilverButton.png in Resources */,
+				1F20F31916051F2300DC00D7 /* SilverButton@2x.png in Resources */,
+				1F20F31C160521C700DC00D7 /* SilverBarDivider.png in Resources */,
+				1F20F31D160521C700DC00D7 /* SilverBarDivider@2x.png in Resources */,
+				1F20F3201605235400DC00D7 /* TrackingOff.png in Resources */,
+				1F20F3211605235400DC00D7 /* TrackingOff@2x.png in Resources */,
+				1F20F324160526B100DC00D7 /* Overview.png in Resources */,
+				1F20F325160526B100DC00D7 /* Overview@2x.png in Resources */,
+				1F20F32A1605279400DC00D7 /* TrackingHeading.png in Resources */,
+				1F20F32B1605279400DC00D7 /* TrackingHeading@2x.png in Resources */,
+				1F20F32C1605279400DC00D7 /* TrackingLocation.png in Resources */,
+				1F20F32D1605279400DC00D7 /* TrackingLocation@2x.png in Resources */,
+				1F20F330160528A200DC00D7 /* SilverButtonPressed.png in Resources */,
+				1F20F331160528A200DC00D7 /* SilverButtonPressed@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -943,8 +1042,7 @@
 				1F59516915AC0D98007A4554 /* main.m in Sources */,
 				1F59516D15AC0D98007A4554 /* TAAppDelegate.m in Sources */,
 				1F59517015AC0D98007A4554 /* TALocationInputViewController.m in Sources */,
-				1FFD6C0C15AD1D6200A4C388 /* TAMapViewController.m in Sources */,
-				1F342CBD15AE236300E2A6E8 /* TADirectionsTableViewController.m in Sources */,
+				1FFD6C0C15AD1D6200A4C388 /* TADirectionsViewController.m in Sources */,
 				1F342CC615AE4DE800E2A6E8 /* TATransitOptionsViewController.m in Sources */,
 				1F77405715C6253100F3D527 /* MKMapView+Transit.m in Sources */,
 				1F50B1F715CB51F7003AC67D /* TALocationManager.m in Sources */,

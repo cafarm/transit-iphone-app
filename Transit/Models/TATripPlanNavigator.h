@@ -22,8 +22,6 @@
 
 // Itinerary
 @property (readonly, strong, nonatomic) OTPItinerary *currentItinerary;
-- (void)startCurrentItinerary;
-@property (readonly, nonatomic) BOOL isCurrentItineraryStarted;
 
 // Sets current leg and place to first leg and place in new itinerary
 - (OTPItinerary *)moveToItineraryWithIndex:(NSUInteger)index;

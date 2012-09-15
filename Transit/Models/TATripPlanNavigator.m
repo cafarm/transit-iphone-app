@@ -12,8 +12,6 @@
 
 @interface TATripPlanNavigator ()
 
-@property (readwrite, nonatomic) BOOL isCurrentItineraryStarted;
-
 @property (readwrite, strong, nonatomic) TAStep *currentStep;
 @property (readwrite, strong, nonatomic) NSArray *stepsInCurrentItinerary;
 
@@ -25,7 +23,6 @@
 @synthesize tripPlan = _tripPlan;
 
 @synthesize currentItinerary = _currentItinerary;
-@synthesize isCurrentItineraryStarted = _isCurrentItineraryStarted;
 
 @synthesize currentStep = _currentStep;
 @synthesize stepsInCurrentItinerary = _stepsInCurrentItinerary;
@@ -38,8 +35,6 @@
         
         _stepsInCurrentItinerary = [TAStep stepsWithItinerary:[tripPlan.itineraries objectAtIndex:0]];
         _currentStep = [_stepsInCurrentItinerary objectAtIndex:0];
-        
-        _isCurrentItineraryStarted = NO;
     }
     return self;
 }
@@ -47,11 +42,6 @@
 - (OTPItinerary *)currentItinerary
 {
     return self.currentStep.place.leg.itinerary;
-}
-
-- (void)startCurrentItinerary
-{
-    self.isCurrentItineraryStarted = YES;
 }
 
 - (OTPItinerary *)moveToItineraryWithIndex:(NSUInteger)index
@@ -63,8 +53,6 @@
     
     // Set current step to first step in new itinerary 
     self.currentStep = [self.stepsInCurrentItinerary objectAtIndex:0];
-
-    self.isCurrentItineraryStarted = NO;
     
     return itinerary;
 }

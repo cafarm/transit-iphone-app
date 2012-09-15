@@ -1,5 +1,5 @@
 //
-//  TAMapViewController.h
+//  TADirectionsViewController.h
 //  Transit
 //
 //  Created by Mark Cafaro on 7/10/12.
@@ -17,36 +17,35 @@
 @class TATripPlanNavigator;
 @class OTPItinerary;
 
-@interface TAMapViewController : UIViewController <MKMapViewDelegate, TAStepScrollViewDelegate, TAStepScrollViewDataSource, UIGestureRecognizerDelegate>
+@interface TADirectionsViewController : UIViewController <MKMapViewDelegate, TAStepScrollViewDelegate, TAStepScrollViewDataSource, UIGestureRecognizerDelegate>
 
 - (id)initWithObjectManager:(OTPObjectManager *)objectManager locationManager:(TALocationManager *)locationManager tripPlanNavigator:(TATripPlanNavigator *)tripPlanNavigator;
 
 @property (readonly, nonatomic) OTPObjectManager *objectManager;
 @property (readonly, nonatomic) TALocationManager *locationManager;
-@property (strong, nonatomic) TATripPlanNavigator *tripPlanNavigator;
+@property (readonly, nonatomic) TATripPlanNavigator *tripPlanNavigator;
 
-@property (strong, nonatomic) UIBarButtonItem *listButton;
-@property (strong, nonatomic) UIBarButtonItem *overviewButton;
-@property (strong, nonatomic) UIBarButtonItem *resumeButton;
+@property (weak, nonatomic) UIButton *optionsButton;
+@property (weak, nonatomic) UIButton *flipViewButton;
 
-@property (strong, nonatomic) TAStepScrollView *stepScrollView;
+@property (weak, nonatomic) TAStepScrollView *stepScrollView;
 
+@property (weak, nonatomic) UIView *mapContainerView;
 @property (weak, nonatomic) MKMapView *mapView;
+@property (weak, nonatomic) UISegmentedControl *segmentedControl;
 
-@property (weak, nonatomic) UISegmentedControl *overviewSegmentedControl;
-@property (weak, nonatomic) UISegmentedControl *stepByStepSegmentedControl;
+@property (weak, nonatomic) UITableView *listView;
 
 - (void)overlayCurrentItinerary;
 
 - (void)overviewCurrentItineraryAnimated:(BOOL)animated;
-- (void)startCurrentItineraryAnimated:(BOOL)animated;
-- (void)resumeCurrentItineraryAnimated:(BOOL)animated;
 
 - (void)followCurrentLocation;
 - (void)followCurrentLocationWithHeading;
 - (void)stopFollowingCurrentLocation;
 
-- (void)presentDirectionsTableViewController;
+- (void)flipView;
+
 - (void)presentTransitOptionsViewController;
 
 @end
