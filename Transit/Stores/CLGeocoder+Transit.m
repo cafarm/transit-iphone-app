@@ -32,6 +32,9 @@
             completionHandler(placemark, error);
         }];
         
+    } else if (field.contentType == TALocationFieldContentTypePlacemark) {
+        completionHandler(field.contentReference, nil);
+        
     } else {
         [self geocodeAddressString:field.text
                           inRegion:region

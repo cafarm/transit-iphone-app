@@ -10,14 +10,18 @@
 
 CLLocationDistance TARadiusOfInterest = 25000;
 
+// Seattle
+static CLLocationDegrees const kDefaultLatitude = 47.6097;
+static CLLocationDegrees const kDefaultLongitude = -122.3331;
+
 @interface TALocationManager ()
 
 @property (readwrite, strong, nonatomic) CLLocation *currentLocation;
-@property (readwrite, strong, nonatomic) CLRegion *currentRegion;
 
 @property (strong, nonatomic) CLLocationManager *clLocationManager;
 
 @end
+
 
 @implementation TALocationManager
 
@@ -25,6 +29,8 @@ CLLocationDistance TARadiusOfInterest = 25000;
 
 @synthesize currentLocation = _currentLocation;
 @synthesize currentRegion = _currentRegion;
+
+@synthesize defaultLocation = _defaultLocation;
 
 @synthesize clLocationManager = _clLocationManager;
 
@@ -45,6 +51,9 @@ CLLocationDistance TARadiusOfInterest = 25000;
 
 - (void)startUpdatingLocation
 {
+    // Clear out any cached current location
+    self.currentLocation = nil;
+    
     [self.clLocationManager startUpdatingLocation];
 }
 
@@ -68,6 +77,14 @@ CLLocationDistance TARadiusOfInterest = 25000;
     return [[CLRegion alloc] initCircularRegionWithCenter:self.currentLocation.coordinate
                                                    radius:TARadiusOfInterest
                                                identifier:@"currentRegion"];
+}
+
+- (CLLocation *)defaultLocation
+{
+    if (_defaultLocation == nil) {
+        _defaultLocation = [[CLLocation alloc] initWithLatitude:kDefaultLatitude longitude:kDefaultLongitude];
+    }
+    return _defaultLocation;
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations

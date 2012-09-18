@@ -76,9 +76,7 @@ static NSString *const kNavigationTitle = @"Transit";
 }
 
 - (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
+{    
     // Hide nav bar shadow
     self.navigationController.navigationBar.clipsToBounds = YES;
     
@@ -134,6 +132,14 @@ static NSString *const kNavigationTitle = @"Transit";
     [self toggleButtons];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.navigationItem.title = kNavigationTitle;
+    [self enableAllViews];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -143,13 +149,6 @@ static NSString *const kNavigationTitle = @"Transit";
     [self.locationManager startUpdatingLocation];
     
     [self fetchCompletionsWithField:self.firstResponderField];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    
-    [self unlockAllViews];
 }
 
 - (void)didReceiveMemoryWarning
@@ -279,9 +278,23 @@ static NSString *const kNavigationTitle = @"Transit";
         }
     }
     
-    [self lockAllViews];
+    self.navigationItem.title = @"Loading...";
+    [self disableAllViews];
     
-    // TODO: Verify the current location has been found
+    // Verify the current location has been found if it is needed
+    // TODO: This should wait a little while and try to determine the current location before giving up
+    if ((self.startField.contentType == TALocationFieldContentTypeCurrentLocation
+        || self.endField.contentType == TALocationFieldContentTypeCurrentLocation)
+        && self.locationManager.currentLocation == nil) {
+        
+        NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+        [userInfo setValue:@"Cannot determine your current location." forKey:NSLocalizedDescriptionKey];
+        NSError *error = [NSError errorWithDomain:@"com.sevenoeight.TALocationInputViewController"
+                                             code:0
+                                         userInfo:userInfo];
+        [self showAlertViewWithError:error];
+        return;
+    }
     
     [self.geocoder geocodeField:self.startField
                        inRegion:self.locationManager.currentRegion
@@ -327,7 +340,7 @@ static NSString *const kNavigationTitle = @"Transit";
         
         TATripPlanNavigator *tripPlanNavigator = [[TATripPlanNavigator alloc] initWithTripPlan:tripPlan];
         
-        TADirectionsViewController *mapController = [[TADirectionsViewController alloc] initWithObjectManager:self.otpObjectManager
+        TADirectionsViewController *mapController = [[TADirectionsViewController alloc] initWithOTPObjectManager:self.otpObjectManager
                                                                                 locationManager:self.locationManager
                                                                               tripPlanNavigator:tripPlanNavigator];
         
@@ -354,16 +367,16 @@ static NSString *const kNavigationTitle = @"Transit";
                                               cancelButtonTitle:nil
                                               otherButtonTitles:@"OK", nil];
     [alertView show];
-    
-    [self.completionsTable deselectRowAtIndexPath:[self.completionsTable indexPathForSelectedRow] animated:NO];
 }
 
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    [self unlockAllViews];
+    [self.completionsTable deselectRowAtIndexPath:[self.completionsTable indexPathForSelectedRow] animated:NO];
+    self.navigationItem.title = kNavigationTitle;
+    [self enableAllViews];
 }
 
-- (void)lockAllViews
+- (void)disableAllViews
 {
     self.routeButtonItem.enabled = NO;
     self.clearButtonItem.enabled = NO;
@@ -371,18 +384,16 @@ static NSString *const kNavigationTitle = @"Transit";
     self.endField.enabled = NO;
     self.swapFieldsButton.enabled = NO;
     self.completionsTable.allowsSelection = NO;
-    self.navigationItem.title = @"Loading...";
     [self.view endEditing:YES];
 }
 
-- (void)unlockAllViews
+- (void)enableAllViews
 {
     [self toggleButtons];
     self.startField.enabled = YES;
     self.endField.enabled = YES;
     self.swapFieldsButton.enabled = YES;
     self.completionsTable.allowsSelection = YES;
-    self.navigationItem.title = kNavigationTitle;
     [self.endField becomeFirstResponder];
 }
 
@@ -610,6 +621,7 @@ static NSString *const kNavigationTitle = @"Transit";
 	return cell;
 }
 
+// TODO: We might want to move these formatting methods to the view class
 - (void)formatTripPlanNameLabel:(UILabel *)label withPlacemark:(TAPlacemark *)placemark
 {
     // Size the label to fit the text
@@ -644,21 +656,23 @@ static NSString *const kNavigationTitle = @"Transit";
     }
 }
 
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {    
     TACompletion *completion = [self.completionsController completionAtIndexPath:indexPath.row];
     
     // We don't have to do any geocoding with stored trip completions, just load the from and to and push the map
     if ([completion isKindOfClass:[TATripPlanCompletion class]]) {
-        self.startPlacemark = ((TATripPlanCompletion *)completion).from;
-        self.endPlacemark = ((TATripPlanCompletion *)completion).to;
-        [self lockAllViews];
-        [self pushMapViewController];
+        
+        TATripPlanCompletion *planCompletion = (TATripPlanCompletion *)completion;
+        
+        // Fill in fields so we have them if the user decides to come back and edit later
+        [self.startField fillWithPlacemark:planCompletion.from];
+        [self.endField fillWithPlacemark:planCompletion.to];
+        
+        [self routeTrip];
         return;
-    }
-
-    if ([completion isKindOfClass:[TACurrentLocationCompletion class]]) {
+    
+    } else if ([completion isKindOfClass:[TACurrentLocationCompletion class]]) {
         [self firstResponderField].contentType = TALocationFieldContentTypeCurrentLocation;
         
     } else if ([completion isKindOfClass:[TAPlaceCompletion class]]) {

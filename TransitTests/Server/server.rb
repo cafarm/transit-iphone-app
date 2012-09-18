@@ -18,6 +18,7 @@ def render_fixture(filename)
 end
 
 get '/ws/plan' do
+  sleep 2
   content_type 'application/json'
   render_fixture('tripPlanResponse.json')
 end

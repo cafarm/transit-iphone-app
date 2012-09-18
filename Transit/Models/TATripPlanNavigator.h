@@ -18,10 +18,12 @@
 // Inits at the first itinerary, first leg, first place
 - (id)initWithTripPlan:(OTPTripPlan *)tripPlan;
 
-@property (readonly, strong, nonatomic) OTPTripPlan *tripPlan;
+@property (strong, nonatomic) OTPTripPlan *tripPlan;
 
 // Itinerary
 @property (readonly, strong, nonatomic) OTPItinerary *currentItinerary;
+@property (readonly, nonatomic) NSUInteger currentItineraryIndex;
+@property (readonly, strong, nonatomic) NSArray *itineraries;
 
 // Sets current leg and place to first leg and place in new itinerary
 - (OTPItinerary *)moveToItineraryWithIndex:(NSUInteger)index;

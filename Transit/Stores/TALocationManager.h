@@ -25,6 +25,7 @@ extern CLLocationDistance TARadiusOfInterest;
 @property (assign, nonatomic) CLLocationAccuracy desiredAccuracy;
 
 @property (readonly, strong, nonatomic) CLLocation *currentLocation;
+@property (readonly, strong, nonatomic) CLLocation *defaultLocation;
 @property (readonly, strong, nonatomic) CLRegion *currentRegion;
 
 @end

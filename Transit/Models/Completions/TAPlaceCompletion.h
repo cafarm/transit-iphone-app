@@ -1,5 +1,5 @@
 //
-//  TAPredictionCompletion.h
+//  TAPlaceCompletion.h
 //  Transit
 //
 //  Created by Mark Cafaro on 8/17/12.

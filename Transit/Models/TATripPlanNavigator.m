@@ -23,8 +23,11 @@
 @synthesize tripPlan = _tripPlan;
 
 @synthesize currentItinerary = _currentItinerary;
+@synthesize currentItineraryIndex = _currentItineraryIndex;
+@synthesize itineraries = _itineraries;
 
 @synthesize currentStep = _currentStep;
+@synthesize currentStepIndex = _currentStepIndex;
 @synthesize stepsInCurrentItinerary = _stepsInCurrentItinerary;
 
 - (id)initWithTripPlan:(OTPTripPlan *)tripPlan
@@ -39,9 +42,25 @@
     return self;
 }
 
+- (void)setTripPlan:(OTPTripPlan *)tripPlan
+{
+    _tripPlan = tripPlan;
+    [self moveToItineraryWithIndex:0];
+}
+
 - (OTPItinerary *)currentItinerary
 {
     return self.currentStep.place.leg.itinerary;
+}
+
+- (NSUInteger)currentItineraryIndex
+{
+    return [self.itineraries indexOfObject:self.currentItinerary];
+}
+
+- (NSArray *)itineraries
+{
+    return self.tripPlan.itineraries;
 }
 
 - (OTPItinerary *)moveToItineraryWithIndex:(NSUInteger)index

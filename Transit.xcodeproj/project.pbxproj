@@ -40,6 +40,7 @@
 		1F20F32D1605279400DC00D7 /* TrackingLocation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F3291605279400DC00D7 /* TrackingLocation@2x.png */; };
 		1F20F330160528A200DC00D7 /* SilverButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F32E160528A200DC00D7 /* SilverButtonPressed.png */; };
 		1F20F331160528A200DC00D7 /* SilverButtonPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F20F32F160528A200DC00D7 /* SilverButtonPressed@2x.png */; };
+		1F20F34916056B9800DC00D7 /* TADatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F20F34716056B9700DC00D7 /* TADatePickerViewController.m */; };
 		1F313E1215E8CCFA00EEF344 /* LocationInputBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F313E1115E8CCFA00EEF344 /* LocationInputBackground@2x.png */; };
 		1F313E2915E98EED00EEF344 /* LocationField.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F313E2715E98EED00EEF344 /* LocationField.png */; };
 		1F313E2A15E98EED00EEF344 /* LocationField@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F313E2815E98EED00EEF344 /* LocationField@2x.png */; };
@@ -71,6 +72,9 @@
 		1F59517D15AC0D98007A4554 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F59515E15AC0D98007A4554 /* Foundation.framework */; };
 		1F59518515AC0D98007A4554 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1F59518315AC0D98007A4554 /* InfoPlist.strings */; };
 		1F5F66AA15D0CF91002B84DE /* TATripPlanNavigator.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F5F66A915D0CF91002B84DE /* TATripPlanNavigator.m */; };
+		1F62C90A16067B90007F5394 /* LargeBlueButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F62C90816067B90007F5394 /* LargeBlueButton.png */; };
+		1F62C90B16067B90007F5394 /* LargeBlueButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F62C90916067B90007F5394 /* LargeBlueButton@2x.png */; };
+		1F62C90E1606D99A007F5394 /* NSDateFormatter+Transit.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F62C90D1606D99A007F5394 /* NSDateFormatter+Transit.m */; };
 		1F634AA315C1F6C600192802 /* libOTPClient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F634A9E15C1F4CC00192802 /* libOTPClient.a */; };
 		1F77405715C6253100F3D527 /* MKMapView+Transit.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F77405615C6253100F3D527 /* MKMapView+Transit.m */; };
 		1F905EF015DDBCE60061BCE0 /* autocompleteResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 1F905EED15DDBCE60061BCE0 /* autocompleteResponse.json */; };
@@ -253,6 +257,8 @@
 		1F20F3291605279400DC00D7 /* TrackingLocation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TrackingLocation@2x.png"; path = "Transit/Resources/Images/Buttons/TrackingLocation@2x.png"; sourceTree = "<group>"; };
 		1F20F32E160528A200DC00D7 /* SilverButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SilverButtonPressed.png; path = Transit/Resources/Images/Buttons/SilverButtonPressed.png; sourceTree = "<group>"; };
 		1F20F32F160528A200DC00D7 /* SilverButtonPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SilverButtonPressed@2x.png"; path = "Transit/Resources/Images/Buttons/SilverButtonPressed@2x.png"; sourceTree = "<group>"; };
+		1F20F34616056B9700DC00D7 /* TADatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TADatePickerViewController.h; path = Controllers/TADatePickerViewController.h; sourceTree = "<group>"; };
+		1F20F34716056B9700DC00D7 /* TADatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TADatePickerViewController.m; path = Controllers/TADatePickerViewController.m; sourceTree = "<group>"; };
 		1F313E1115E8CCFA00EEF344 /* LocationInputBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "LocationInputBackground@2x.png"; path = "Transit/Resources/Images/LocationInputBackground@2x.png"; sourceTree = "<group>"; };
 		1F313E2715E98EED00EEF344 /* LocationField.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LocationField.png; path = Transit/Resources/Images/Fields/LocationField.png; sourceTree = "<group>"; };
 		1F313E2815E98EED00EEF344 /* LocationField@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "LocationField@2x.png"; path = "Transit/Resources/Images/Fields/LocationField@2x.png"; sourceTree = "<group>"; };
@@ -298,6 +304,10 @@
 		1F59518415AC0D98007A4554 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1F5F66A815D0CF91002B84DE /* TATripPlanNavigator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TATripPlanNavigator.h; path = Models/TATripPlanNavigator.h; sourceTree = "<group>"; };
 		1F5F66A915D0CF91002B84DE /* TATripPlanNavigator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TATripPlanNavigator.m; path = Models/TATripPlanNavigator.m; sourceTree = "<group>"; };
+		1F62C90816067B90007F5394 /* LargeBlueButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LargeBlueButton.png; path = Transit/Resources/Images/Buttons/LargeBlueButton.png; sourceTree = "<group>"; };
+		1F62C90916067B90007F5394 /* LargeBlueButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "LargeBlueButton@2x.png"; path = "Transit/Resources/Images/Buttons/LargeBlueButton@2x.png"; sourceTree = "<group>"; };
+		1F62C90C1606D99A007F5394 /* NSDateFormatter+Transit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDateFormatter+Transit.h"; path = "Models/NSDateFormatter+Transit.h"; sourceTree = "<group>"; };
+		1F62C90D1606D99A007F5394 /* NSDateFormatter+Transit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDateFormatter+Transit.m"; path = "Models/NSDateFormatter+Transit.m"; sourceTree = "<group>"; };
 		1F634A9415C1F4CC00192802 /* OTPClient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OTPClient.xcodeproj; path = "Libraries/opentripplanner-api-client/OTPClient.xcodeproj"; sourceTree = "<group>"; };
 		1F77405515C6253100F3D527 /* MKMapView+Transit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MKMapView+Transit.h"; path = "Views/MKMapView+Transit.h"; sourceTree = "<group>"; };
 		1F77405615C6253100F3D527 /* MKMapView+Transit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MKMapView+Transit.m"; path = "Views/MKMapView+Transit.m"; sourceTree = "<group>"; };
@@ -437,6 +447,8 @@
 		1F313E3315E9A7F800EEF344 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				1F62C90816067B90007F5394 /* LargeBlueButton.png */,
+				1F62C90916067B90007F5394 /* LargeBlueButton@2x.png */,
 				1F20F3261605279300DC00D7 /* TrackingHeading.png */,
 				1F20F3271605279300DC00D7 /* TrackingHeading@2x.png */,
 				1F20F3281605279400DC00D7 /* TrackingLocation.png */,
@@ -746,6 +758,8 @@
 				1F56EB8115DF55DB009D25C9 /* TAPlacemark.m */,
 				1F9EA46515E0BFF300EAC57D /* UIColor+Transit.h */,
 				1F9EA46615E0BFF300EAC57D /* UIColor+Transit.m */,
+				1F62C90C1606D99A007F5394 /* NSDateFormatter+Transit.h */,
+				1F62C90D1606D99A007F5394 /* NSDateFormatter+Transit.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -774,6 +788,8 @@
 				1FFD6C0A15AD1D6200A4C388 /* TADirectionsViewController.m */,
 				1F342CC415AE4DE800E2A6E8 /* TATransitOptionsViewController.h */,
 				1F342CC515AE4DE800E2A6E8 /* TATransitOptionsViewController.m */,
+				1F20F34616056B9700DC00D7 /* TADatePickerViewController.h */,
+				1F20F34716056B9700DC00D7 /* TADatePickerViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1002,6 +1018,8 @@
 				1F20F32D1605279400DC00D7 /* TrackingLocation@2x.png in Resources */,
 				1F20F330160528A200DC00D7 /* SilverButtonPressed.png in Resources */,
 				1F20F331160528A200DC00D7 /* SilverButtonPressed@2x.png in Resources */,
+				1F62C90A16067B90007F5394 /* LargeBlueButton.png in Resources */,
+				1F62C90B16067B90007F5394 /* LargeBlueButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1066,6 +1084,8 @@
 				1FA9E93915E37AA8005E681E /* TATransitStepView.m in Sources */,
 				1F08CB0A15E480D200E3063E /* TAWalkStep.m in Sources */,
 				1F08CB0D15E480F100E3063E /* TATransitStep.m in Sources */,
+				1F20F34916056B9800DC00D7 /* TADatePickerViewController.m in Sources */,
+				1F62C90E1606D99A007F5394 /* NSDateFormatter+Transit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -112,8 +112,17 @@
             }
         } else {
         
+            CLLocation *location;
+            if (self.locationManager.currentLocation == nil
+                || [TALocationManager authorizationStatus] != kCLAuthorizationStatusAuthorized) {
+                
+                location = self.locationManager.defaultLocation;
+            } else {
+                location = self.locationManager.currentLocation;
+            }
+            
             [self.gpObjectManager fetchAutocompletePredictionsWithInput:self.input
-                                                               location:self.locationManager.currentLocation.coordinate
+                                                               location:location.coordinate
                                                                  radius:TARadiusOfInterest
                                                       completionHandler:^(NSArray *predictions, NSError *error)
              {

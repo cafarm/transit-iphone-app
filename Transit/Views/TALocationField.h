@@ -13,10 +13,13 @@ FOUNDATION_EXPORT NSString *const TALocationFieldCurrentLocationText;
 typedef enum {
     TALocationFieldContentTypeDefault,
     TALocationFieldContentTypeCurrentLocation,
-    TALocationFieldContentTypeGooglePlace
+    TALocationFieldContentTypeGooglePlace,
+    TALocationFieldContentTypePlacemark
 } TALocationFieldContentType;
 
 @protocol TALocationFieldDelegate;
+
+@class TAPlacemark;
 
 @interface TALocationField : UIControl <UITextFieldDelegate, UITextInputTraits>
 
@@ -26,10 +29,12 @@ typedef enum {
 
 @property (nonatomic) TALocationFieldContentType contentType;
 
-// A hidden reference for displayed content, only used for Google Places at the moment
+// A hidden reference for the displayed content, i.e. a google place reference or a placemark depending
 @property (strong, nonatomic) id contentReference;
 
 @property (weak, nonatomic) id<TALocationFieldDelegate> delegate;
+
+- (void)fillWithPlacemark:(TAPlacemark *)placemark;
 
 @property (nonatomic) UITextAutocapitalizationType autocapitalizationType;
 @property (nonatomic) UITextAutocorrectionType autocorrectionType;

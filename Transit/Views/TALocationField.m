@@ -7,6 +7,7 @@
 //
 
 #import "TALocationField.h"
+#import "TAPlacemark.h"
 #import "UIColor+Transit.h"
 
 NSString *const TALocationFieldCurrentLocationText = @"Current Location";
@@ -47,7 +48,6 @@ NSString *const TALocationFieldCurrentLocationText = @"Current Location";
         _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         _textField.enablesReturnKeyAutomatically = YES;
-        //_textField.borderStyle = UITextBorderStyleRoundedRect;
         _textField.background = [[UIImage imageNamed:@"LocationField"] resizableImageWithCapInsets:UIEdgeInsetsMake(6, 6, 6, 6)];
         _textField.delegate = self;
         _textField.leftViewMode = UITextFieldViewModeAlways;
@@ -92,27 +92,6 @@ NSString *const TALocationFieldCurrentLocationText = @"Current Location";
     return self.textField.text;
 }
 
-//- (void)setLeftViewText:(NSString *)leftViewText
-//{
-////    self.textField.leftViewMode = UITextFieldViewModeAlways;
-////    self.currentLocationField.leftViewMode = UITextFieldViewModeAlways;
-//    
-//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, -1, 45, 31)];
-//    label.font = self.textField.font;
-//    label.textAlignment = UITextAlignmentRight;
-//    label.textColor = [UIColor grayColor];
-//    label.backgroundColor = [UIColor clearColor];
-//    label.text = leftViewText;
-//    
-//    self.textField.leftView = label;
-//    
-////    NSData *temp = [NSKeyedArchiver archivedDataWithRootObject:label];
-////    UIView *viewCopy = [NSKeyedUnarchiver unarchiveObjectWithData:temp];
-////    self.currentLocationField.leftView = viewCopy;
-//    
-//    _leftViewText = leftViewText;
-//}
-
 - (BOOL)isComplete
 {
     return [self.textField.text length] > 0;
@@ -126,16 +105,12 @@ NSString *const TALocationFieldCurrentLocationText = @"Current Location";
     if (contentType != TALocationFieldContentTypeCurrentLocation) {
         self.currentLocationTag.hidden = YES;
         self.textField.textColor = [UIColor blackColor];
-//        self.currentLocationField.hidden = YES;
     } else {
         if (self.isFirstResponder) {
             self.currentLocationTag.hidden = NO;
-//            self.currentLocationField.clearButtonMode = UITextFieldViewModeAlways;
         } else {
             self.currentLocationTag.hidden = YES;
-//            self.currentLocationField.clearButtonMode = UITextFieldViewModeNever;
         }
-//        self.currentLocationField.hidden = NO;
         self.textField.text = TALocationFieldCurrentLocationText;
         self.textField.textColor = [UIColor currentLocationColor];
     }
@@ -150,6 +125,20 @@ NSString *const TALocationFieldCurrentLocationText = @"Current Location";
 - (BOOL)becomeFirstResponder
 {
     return [self.textField becomeFirstResponder];
+}
+
+- (void)fillWithPlacemark:(TAPlacemark *)placemark
+{
+    if (placemark.isCurrentLocation) {
+        self.contentType = TALocationFieldContentTypeCurrentLocation;
+    } else {
+        self.contentType = TALocationFieldContentTypePlacemark;
+        self.contentReference = placemark;
+        self.text = placemark.name;
+        if (![placemark.locality isEqualToString:@""]) {
+            self.text = [self.text stringByAppendingFormat:@", %@", placemark.locality];
+        }
+    }
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
@@ -167,8 +156,6 @@ NSString *const TALocationFieldCurrentLocationText = @"Current Location";
 {
     if (self.contentType == TALocationFieldContentTypeCurrentLocation) {
         self.currentLocationTag.hidden = NO;
-//        self.currentLocationField.clearButtonMode = UITextFieldViewModeAlways;
-//        [self.textField becomeFirstResponder];
     }
     
     if ([self.delegate respondsToSelector:@selector(locationFieldDidBeginEditing:)]) {
@@ -191,7 +178,6 @@ NSString *const TALocationFieldCurrentLocationText = @"Current Location";
 {
     if (self.contentType == TALocationFieldContentTypeCurrentLocation) {
         self.currentLocationTag.hidden = YES;
-//        self.currentLocationField.clearButtonMode = UITextFieldViewModeNever;
     }
     
     if ([self.delegate respondsToSelector:@selector(locationFieldDidEndEditing:)]) {
@@ -218,7 +204,6 @@ NSString *const TALocationFieldCurrentLocationText = @"Current Location";
             self.textField.text = nil;
             self.textField.textColor = [UIColor blackColor];
             self.currentLocationTag.hidden = YES;
-//            self.currentLocationField.hidden = YES;
         }
         self.contentType = TALocationFieldContentTypeDefault;
     }
@@ -239,13 +224,8 @@ NSString *const TALocationFieldCurrentLocationText = @"Current Location";
             self.textField.text = nil;
             self.textField.textColor = [UIColor blackColor];
             self.currentLocationTag.hidden = YES;
-//            self.currentLocationField.hidden = YES;
         }
         self.contentType = TALocationFieldContentTypeDefault;
-        
-//        if (textField == self.currentLocationField) {
-//            return NO;
-//        }
     }
     
     return shouldClear;

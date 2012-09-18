@@ -19,9 +19,11 @@
 
 @interface TADirectionsViewController : UIViewController <MKMapViewDelegate, TAStepScrollViewDelegate, TAStepScrollViewDataSource, UIGestureRecognizerDelegate>
 
-- (id)initWithObjectManager:(OTPObjectManager *)objectManager locationManager:(TALocationManager *)locationManager tripPlanNavigator:(TATripPlanNavigator *)tripPlanNavigator;
+- (id)initWithOTPObjectManager:(OTPObjectManager *)otpObjectManager
+               locationManager:(TALocationManager *)locationManager
+             tripPlanNavigator:(TATripPlanNavigator *)tripPlanNavigator;
 
-@property (readonly, nonatomic) OTPObjectManager *objectManager;
+@property (readonly, nonatomic) OTPObjectManager *otpObjectManager;
 @property (readonly, nonatomic) TALocationManager *locationManager;
 @property (readonly, nonatomic) TATripPlanNavigator *tripPlanNavigator;
 

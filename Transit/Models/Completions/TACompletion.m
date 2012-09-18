@@ -1,5 +1,5 @@
 //
-//  TALocationCompletion.m
+//  TACompletion.m
 //  Transit
 //
 //  Created by Mark Cafaro on 8/14/12.

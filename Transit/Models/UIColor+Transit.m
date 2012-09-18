@@ -17,4 +17,9 @@
     return [UIColor colorWithRed:RGB(41) green:RGB(87) blue:RGB(255) alpha:1.0];
 }
 
++ (UIColor *)selectionColor
+{
+    return [UIColor colorWithRed:RGB(50) green:RGB(79) blue:RGB(133) alpha:1.0];
+}
+
 @end

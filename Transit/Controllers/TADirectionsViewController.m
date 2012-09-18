@@ -21,9 +21,9 @@
 #import "MKMapView+Transit.h"
 
 typedef enum {
-    kCurrentLocationSegment,
-    kOverviewSegment
-} kMapViewSegment;
+    TAMapViewSegmentTracking,
+    TAMapViewSegmentOverview
+} TAMapViewSegment;
 
 @interface TADirectionsViewController ()
 
@@ -38,7 +38,7 @@ typedef enum {
 
 @implementation TADirectionsViewController
 
-@synthesize objectManager = _objectManager;
+@synthesize otpObjectManager = _otpObjectManager;
 @synthesize locationManager = _locationManager;
 @synthesize tripPlanNavigator = _tripPlanNavigator;
 
@@ -59,11 +59,11 @@ typedef enum {
 
 @synthesize dateFormatter = _dateFormatter;
 
-- (id)initWithObjectManager:(OTPObjectManager *)objectManager locationManager:(TALocationManager *)locationManager tripPlanNavigator:(TATripPlanNavigator *)tripPlanNavigator
+- (id)initWithOTPObjectManager:(OTPObjectManager *)otpObjectManager locationManager:(TALocationManager *)locationManager tripPlanNavigator:(TATripPlanNavigator *)tripPlanNavigator
 {
     self = [super init];
     if (self) {
-        _objectManager = objectManager;
+        _otpObjectManager = otpObjectManager;
         _locationManager = locationManager;
         _tripPlanNavigator = tripPlanNavigator;
     }
@@ -74,7 +74,7 @@ typedef enum {
 {
     self.navigationItem.title = @"Directions";
     
-    UIButton *flipViewButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 36, 30)];
+    UIButton *flipViewButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 33, 30)];
     UIEdgeInsets buttonInsets = UIEdgeInsetsMake(15, 5, 15, 5);
     [flipViewButton setBackgroundImage:[[UIImage imageNamed:@"BlueButton"] resizableImageWithCapInsets:buttonInsets] forState:UIControlStateNormal];
     [flipViewButton setBackgroundImage:[[UIImage imageNamed:@"BlueButtonPressed"] resizableImageWithCapInsets:buttonInsets] forState:UIControlStateSelected];
@@ -82,7 +82,7 @@ typedef enum {
     [flipViewButton addTarget:self action:@selector(flipView) forControlEvents:UIControlEventTouchUpInside];
     self.flipViewButton = flipViewButton;
     
-    UIButton *optionsButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 36, 30)];
+    UIButton *optionsButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 33, 30)];
     [optionsButton setBackgroundImage:[[UIImage imageNamed:@"BlueButton"] resizableImageWithCapInsets:buttonInsets] forState:UIControlStateNormal];
     [optionsButton setBackgroundImage:[[UIImage imageNamed:@"BlueButtonPressed"] resizableImageWithCapInsets:buttonInsets] forState:UIControlStateSelected];
     [optionsButton setImage:[UIImage imageNamed:@"Options"] forState:UIControlStateNormal];
@@ -93,44 +93,46 @@ typedef enum {
     UIBarButtonItem *optionsButtonItem = [[UIBarButtonItem alloc] initWithCustomView:optionsButton];
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:flipViewButtonItem, optionsButtonItem, nil];
     
-    UIView *containerView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    UIView *containerView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame];
+    containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.view = containerView;
     
-    // We need a map container view because using the MKMapView as the root view freezes all subviews on animation
+    // We need a map container view because using the MKMapView as the container view freezes all subviews on animation
     UIView *mapContainerView = [[UIView alloc] initWithFrame:self.view.bounds];
+    mapContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [containerView addSubview:mapContainerView];
     self.mapContainerView = mapContainerView;
     
     MKMapView *mapView = [[MKMapView alloc] initWithFrame:mapContainerView.bounds];
+    mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     mapView.showsUserLocation = YES;
     mapView.visibleMapRect = self.tripPlanNavigator.currentItinerary.boundingMapRect;
     mapView.delegate = self;
-    [mapContainerView addSubview:mapView];
-    [self.view addSubview:mapContainerView];
     self.isViewingMap = YES;
+    [mapContainerView addSubview:mapView];
     self.mapView = mapView;
     
     TAStepScrollView *stepScrollView = [[TAStepScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 129)];
+    stepScrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
     stepScrollView.delegate = self;
     stepScrollView.dataSource = self;
     [mapContainerView addSubview:stepScrollView];
     self.stepScrollView = stepScrollView;
     
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(3, 376, 85, 37)];
+    segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin;
     [segmentedControl setBackgroundImage:[UIImage imageNamed:@"SilverButton"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [segmentedControl setBackgroundImage:[UIImage imageNamed:@"SilverButtonPressed"] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
     [segmentedControl setDividerImage:[UIImage imageNamed:@"SilverBarDivider"] forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [segmentedControl insertSegmentWithImage:[UIImage imageNamed:@"TrackingOff"] atIndex:kCurrentLocationSegment animated:NO];
+    [segmentedControl insertSegmentWithImage:[UIImage imageNamed:@"TrackingOff"] atIndex:TAMapViewSegmentTracking animated:NO];
     [segmentedControl setContentPositionAdjustment:UIOffsetMake(2, 0) forSegmentType:UISegmentedControlSegmentLeft barMetrics:UIBarMetricsDefault];
-    [segmentedControl insertSegmentWithImage:[UIImage imageNamed:@"Overview"] atIndex:kOverviewSegment animated:NO];
+    [segmentedControl insertSegmentWithImage:[UIImage imageNamed:@"Overview"] atIndex:TAMapViewSegmentOverview animated:NO];
     [segmentedControl setContentPositionAdjustment:UIOffsetMake(-3, 1) forSegmentType:UISegmentedControlSegmentRight barMetrics:UIBarMetricsDefault];
     [segmentedControl addTarget:self action:@selector(changeView:) forControlEvents:UIControlEventValueChanged];
     segmentedControl.momentary = YES;
     [mapContainerView addSubview:segmentedControl];
     self.segmentedControl = segmentedControl;
-}
-
-- (void)viewDidLoad
-{
+    
     [self.stepScrollView reloadData];
     [self overlayCurrentItinerary];
     self.currentStepAnnotation = [self.mapView addAnnotationForCurrentStep:self.tripPlanNavigator.currentStep];
@@ -205,22 +207,22 @@ typedef enum {
 
 - (void)changeView:(id)sender
 {
-    kMapViewSegment selectedSegment = [(UISegmentedControl *)sender selectedSegmentIndex];
+    TAMapViewSegment selectedSegment = [(UISegmentedControl *)sender selectedSegmentIndex];
     
     switch (selectedSegment) {
-        case kCurrentLocationSegment:
+        case TAMapViewSegmentTracking:
             if (self.mapView.userTrackingMode == MKUserTrackingModeNone) {
-                [self.segmentedControl setImage:[UIImage imageNamed:@"TrackingLocation"] forSegmentAtIndex:kCurrentLocationSegment];
+                [self.segmentedControl setImage:[UIImage imageNamed:@"TrackingLocation"] forSegmentAtIndex:TAMapViewSegmentTracking];
                 [self followCurrentLocation];
             } else if (self.mapView.userTrackingMode == MKUserTrackingModeFollow) {
-                [self.segmentedControl setImage:[UIImage imageNamed:@"TrackingHeading"] forSegmentAtIndex:kCurrentLocationSegment];
+                [self.segmentedControl setImage:[UIImage imageNamed:@"TrackingHeading"] forSegmentAtIndex:TAMapViewSegmentTracking];
                 [self followCurrentLocationWithHeading];
             } else {
-                [self.segmentedControl setImage:[UIImage imageNamed:@"TrackingOff"] forSegmentAtIndex:kCurrentLocationSegment];
+                [self.segmentedControl setImage:[UIImage imageNamed:@"TrackingOff"] forSegmentAtIndex:TAMapViewSegmentTracking];
                 [self stopFollowingCurrentLocation];
             }
             break;
-        case kOverviewSegment:
+        case TAMapViewSegmentOverview:
             [self overviewCurrentItineraryAnimated:YES];
             break;
         default:
@@ -246,7 +248,7 @@ typedef enum {
 - (void)mapView:(MKMapView *)mapView didChangeUserTrackingMode:(MKUserTrackingMode)mode animated:(BOOL)animated
 {
     if (mode == MKUserTrackingModeNone) {
-        [self.segmentedControl setImage:[UIImage imageNamed:@"TrackingOff"] forSegmentAtIndex:kCurrentLocationSegment];
+        [self.segmentedControl setImage:[UIImage imageNamed:@"TrackingOff"] forSegmentAtIndex:TAMapViewSegmentTracking];
     }
 }
 
@@ -303,7 +305,7 @@ typedef enum {
 
 - (void)presentTransitOptionsViewController
 {
-    TATransitOptionsViewController *optionsController = [[TATransitOptionsViewController alloc] init];
+    TATransitOptionsViewController *optionsController = [[TATransitOptionsViewController alloc] initWithOTPObjectManager:self.otpObjectManager tripPlanNavigator:self.tripPlanNavigator];
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:optionsController];
     

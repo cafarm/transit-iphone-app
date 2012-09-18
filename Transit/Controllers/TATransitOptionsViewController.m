@@ -7,169 +7,366 @@
 //
 
 #import "TATransitOptionsViewController.h"
+#import "TATripPlanNavigator.h"
+#import "TADatePickerViewController.h"
+#import "NSDateFormatter+Transit.h"
+#import "OTPClient.h"
+#import "UIColor+Transit.h"
 
 typedef enum {
-    TARoutingSection,
-    TATimeSection,
-    TAItinerariesSection
-} TATransitOptionSection;
+    TATransitOptionsSectionOptimize,
+    TATransitOptionsSectionDate,
+    TATransitOptionsSectionItineraries
+} TATransitOptionsSection;
 
 @interface TATransitOptionsViewController ()
-{
-    UIBarButtonItem *_doneButton;
-    NSArray *_sectionKeys;
-    NSDictionary *_tableContent;
-}
+
+@property (nonatomic) BOOL isFetchingNewTripPlan;
+@property (nonatomic) BOOL didSetNewOptions;
+
+@property (nonatomic) NSUInteger selectedItineraryIndex;
+
+@property (strong, nonatomic) NSDateFormatter *dateFormatter;
 
 @end
 
+
 @implementation TATransitOptionsViewController
 
-- (id)init
+@synthesize otpObjectManager = _otpObjectManager;
+@synthesize tripPlanNavigator = _tripPlanNavigator;
+
+@synthesize delegate = _delegate;
+
+@synthesize doneButtonItem = _doneButtonItem;
+
+@synthesize isFetchingNewTripPlan = _isFetchingNewTripPlan;
+@synthesize didSetNewOptions = _didSetNewOptions;
+
+@synthesize selectedItineraryIndex = _selectedItineraryIndex;
+
+@synthesize dateFormatter = _dateFormatter;
+
+- (id)initWithOTPObjectManager:(OTPObjectManager *)otpObjectManager tripPlanNavigator:(TATripPlanNavigator *)tripPlanNavigator
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
-        [[self navigationItem] setTitle:@"Transit Options"];
-        
-        _doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(dismissViewController)];
-        self.navigationItem.rightBarButtonItem = _doneButton;
+        _otpObjectManager = otpObjectManager;
+        _tripPlanNavigator = tripPlanNavigator;        
     }
     return self;
 }
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (void)loadView
 {
-    return [self init];
+    [super loadView];
+    
+    self.navigationItem.title = @"Transit Options";
+    
+    UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneSettingOptions)];
+    self.navigationItem.rightBarButtonItem = doneButtonItem;
+    self.doneButtonItem = doneButtonItem;
 }
 
-- (void)viewDidLoad
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidLoad];
+    [super viewWillAppear:animated];
     
-    NSString *routingKey = @"Routing";
-    NSString *timeKey = @"Time";
-    NSString *itinerariesKey = @"Itineraries";
-    
-    _sectionKeys = [NSArray arrayWithObjects:routingKey,timeKey, itinerariesKey, nil];
-    
-    NSArray *routing = [NSArray arrayWithObjects:@"Best Route", @"Fewer Transfers", @"Less Walking", nil];
-    NSArray *time = [NSArray arrayWithObject:[NSDate date]];
-    NSMutableArray *itineraries = [NSArray arrayWithObjects:@"", @"", @"", nil];
-    
-    _tableContent = [NSMutableDictionary dictionaryWithObjectsAndKeys:routing, routingKey, time, timeKey, itineraries, itinerariesKey, nil];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.isFetchingNewTripPlan = NO;
+    self.didSetNewOptions = NO;
 }
 
-- (void)dismissViewController
+- (void)doneSettingOptions
 {
+    if (self.selectedItineraryIndex != self.tripPlanNavigator.currentItineraryIndex) {
+        [self.tripPlanNavigator moveToItineraryWithIndex:self.selectedItineraryIndex];
+        self.didSetNewOptions = true;
+    }
+    
+    if (self.didSetNewOptions && [self.delegate respondsToSelector:@selector(transitOptionsViewControllerDidSetNewOptions:)]) {
+        [self.delegate transitOptionsViewControllerDidSelectNewOptions:self];
+    }
+    
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)pushDatePickerViewController
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    TADatePickerViewController *dateController = [[TADatePickerViewController alloc] initWithOTPObjectManager:self.otpObjectManager];
+    dateController.delegate = self;
+    [self.navigationController pushViewController:dateController animated:YES];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+- (void)datePickerViewControllerDidPickNewDate:(TADatePickerViewController *)controller
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    [self.tableView reloadData];
+    [self fetchNewTripPlan];
 }
 
-#pragma mark - Table view data source
+- (void)selectCell:(UITableViewCell *)cell
+{
+    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    cell.accessoryView = nil;
+    cell.textLabel.textColor = [UIColor selectionColor];
+}
+
+- (void)deselectCell:(UITableViewCell *)cell
+{
+    cell.accessoryType = UITableViewCellAccessoryNone;
+    cell.accessoryView = nil;
+    cell.textLabel.textColor = [UIColor blackColor];
+}
+
+- (void)fetchNewTripPlan
+{
+    self.isFetchingNewTripPlan = YES;
+    
+    NSInteger numItineraries = [self.tripPlanNavigator.itineraries count];
+    NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:numItineraries];
+    for (int i = 0; i < [self.tripPlanNavigator.itineraries count]; i++) {
+        [indexPaths addObject:[NSIndexPath indexPathForItem:i inSection:TATransitOptionsSectionItineraries]];
+    }
+    [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    UITableViewCell *loadingCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:TATransitOptionsSectionItineraries]];
+    loadingCell.textLabel.text = @"Loading...";
+    [self deselectCell:loadingCell];
+    UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [indicatorView startAnimating];
+    loadingCell.accessoryView = indicatorView;
+    
+    [self disableAllViews];
+    
+    [self.otpObjectManager fetchTripPlanWithCompletionHandler:^(OTPTripPlan *tripPlan, NSError *error) {
+        self.isFetchingNewTripPlan = NO;
+        
+        if (error) {
+            [self showAlertViewWithError:error];
+            return;
+        }
+        
+        self.tripPlanNavigator.tripPlan = tripPlan;
+        self.didSetNewOptions = YES;
+        self.selectedItineraryIndex = self.tripPlanNavigator.currentItineraryIndex;
+        
+        loadingCell.textLabel.text = @"Load More Itineraries";
+        [self deselectCell:loadingCell];
+        
+        NSInteger numItineraries = [self.tripPlanNavigator.itineraries count];
+        NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:numItineraries];
+        for (int i = 0; i < [self.tripPlanNavigator.itineraries count]; i++) {
+            [indexPaths addObject:[NSIndexPath indexPathForItem:i inSection:TATransitOptionsSectionItineraries]];
+        }
+        [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+        [self enableAllViews];
+    }];
+}
+
+- (void)disableAllViews
+{
+    self.doneButtonItem.enabled = NO;
+    self.tableView.allowsSelection = NO;
+}
+
+- (void)enableAllViews
+{
+    self.doneButtonItem.enabled = YES;
+    self.tableView.allowsSelection = YES;
+}
+
+- (void)showAlertViewWithError:(NSError *)error
+{
+    NSString *message;
+    message = error.localizedDescription;
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Directions Not Available"
+                                                        message:message
+                                                       delegate:self
+                                              cancelButtonTitle:nil
+                                              otherButtonTitles:@"OK", nil];
+    [alertView show];    
+}
+
+- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    [self enableAllViews];
+}
+
+- (NSDateFormatter *)dateFormatter
+{
+    if (_dateFormatter == nil) {
+        _dateFormatter = [[NSDateFormatter alloc] init];
+    }
+    return _dateFormatter;
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [_tableContent count];
+    return 3;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString *title = nil;
+    switch (section) {
+        case TATransitOptionsSectionOptimize: {
+            title = @"Prefer";
+            break;
+        }
+        case TATransitOptionsSectionDate: {
+            title = @"Time";
+            break;
+        }
+        case TATransitOptionsSectionItineraries: {
+            title = @"Itineraries";
+            break;
+        }
+    }
+    return title;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSString *key = [_sectionKeys objectAtIndex:section];
-    return [[_tableContent objectForKey:key] count];
+    NSInteger numberOfRows;
+    switch (section) {
+        case TATransitOptionsSectionOptimize: {
+            numberOfRows = 3;
+            break;
+        }
+        case TATransitOptionsSectionDate: {
+            numberOfRows = 1;
+            break;
+        }
+        case TATransitOptionsSectionItineraries: {
+            if (self.isFetchingNewTripPlan) {
+                numberOfRows = 1;
+            } else {
+                numberOfRows = [self.tripPlanNavigator.itineraries count] + 1;
+            }
+            break;
+        }
+        default: {
+            numberOfRows = 0;
+            break;
+        }
+    }
+    return numberOfRows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *cellID = @"cellID";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellID];
+    } else {
+        // Reset cell
+        cell.textLabel.text = nil;
+        cell.detailTextLabel.text = nil;
+        [self deselectCell:cell];
     }
     
-    NSString *key = [_sectionKeys objectAtIndex:[indexPath section]];
-    NSArray *contents = [_tableContent objectForKey:key];
-    NSObject *contentForRow = [contents objectAtIndex:[indexPath row]];
-    
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", contentForRow];
+    switch (indexPath.section) {
+        case TATransitOptionsSectionOptimize: {
+            switch (indexPath.row) {
+                case OTPObjectManagerOptimizeBestRoute: {
+                    cell.textLabel.text = @"Best Route";
+                    break;
+                }
+                case OTPObjectManagerOptimizeFewerTransfers: {
+                    cell.textLabel.text = @"Fewer Transfers";
+                    break;
+                }
+                case OTPObjectManagerOptimizeLessWalking: {
+                    cell.textLabel.text = @"Less Walking";
+                    break;
+                }
+            }
+            
+            if (indexPath.row == self.otpObjectManager.optimize) {
+                [self selectCell:cell];
+            }
+            break;
+        }
+        case TATransitOptionsSectionDate: {
+            cell.textLabel.text = self.otpObjectManager.shouldArriveBy ? @"Arrive" : @"Depart";
+            cell.detailTextLabel.text = [self.dateFormatter stringFromTravelDate:self.otpObjectManager.date];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            break;
+        }
+        case TATransitOptionsSectionItineraries: {
+            if (indexPath.row >= [self.tripPlanNavigator.itineraries count]) {
+                cell.textLabel.text = @"Load More Itineraries";
+            } else {
+                OTPItinerary *itinerary = [self.tripPlanNavigator.itineraries objectAtIndex:indexPath.row];
+                
+                self.dateFormatter.dateStyle = NSDateFormatterNoStyle;
+                self.dateFormatter.timeStyle = NSDateFormatterShortStyle;
+                
+                NSInteger durationInMinutes = [itinerary.duration longValue] / 1000 / 60;
+                
+                cell.textLabel.text = [NSString stringWithFormat:@"%@ - %@ (%d mins)",
+                                       [self.dateFormatter stringFromDate:itinerary.startTime],
+                                       [self.dateFormatter stringFromDate:itinerary.endTime],
+                                       durationInMinutes];
+                
+                if (itinerary == self.tripPlanNavigator.currentItinerary) {
+                    [self selectCell:cell];
+                }
+            }
+            break;
+        }
+    }
     
     return cell;
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-#pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    TATransitOptionSection section = indexPath.section;
-    switch (section) {
-        case TARoutingSection:
-
+    switch (indexPath.section) {
+        case TATransitOptionsSectionOptimize: {
+            if (indexPath.row == self.otpObjectManager.optimize) {
+                return;
+            }
+            
+            NSIndexPath *oldCellIndex = [NSIndexPath indexPathForItem:self.otpObjectManager.optimize inSection:TATransitOptionsSectionOptimize];
+            UITableViewCell *oldCell = [self.tableView cellForRowAtIndexPath:oldCellIndex];
+            [self deselectCell:oldCell];
+            
+            UITableViewCell *newCell = [self.tableView cellForRowAtIndexPath:indexPath];
+            [self selectCell:newCell];
+            
+            self.otpObjectManager.optimize = indexPath.row;
+            [self fetchNewTripPlan];
             break;
-        case TATimeSection:
-
+        }
+        case TATransitOptionsSectionDate: {
+            [self pushDatePickerViewController];
             break;
-        case TAItinerariesSection:
-
+        }
+        case TATransitOptionsSectionItineraries: {
+            if (indexPath.row >= [self.tripPlanNavigator.itineraries count]) {
+                // TODO: Load more itineraries here
+            } else {
+                if (indexPath.row == self.selectedItineraryIndex) {
+                    return;
+                }
+                
+                NSIndexPath *oldCellIndex = [NSIndexPath indexPathForItem:self.selectedItineraryIndex inSection:TATransitOptionsSectionItineraries];
+                UITableViewCell *oldCell = [self.tableView cellForRowAtIndexPath:oldCellIndex];
+                [self deselectCell:oldCell];
+                
+                UITableViewCell *newCell = [self.tableView cellForRowAtIndexPath:indexPath];
+                [self selectCell:newCell];
+                
+                self.selectedItineraryIndex = indexPath.row;
+            }
             break;
-        default:
-            break;
+        }
     }
 }
 
