@@ -35,6 +35,6 @@
 
 @optional
 
-- (void)transitOptionsViewControllerDidSelectNewOptions:(TATransitOptionsViewController *)controller;
+- (void)transitOptionsViewControllerDidSetNewOptions:(TATransitOptionsViewController *)controller;
 
 @end

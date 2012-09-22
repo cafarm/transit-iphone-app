@@ -18,8 +18,6 @@
 @property (weak, nonatomic) id <TAStepScrollViewDataSource> dataSource;
 @property (weak, nonatomic) id <TAStepScrollViewDelegate> delegate;
 
-- (NSInteger)numberOfSteps;
-
 - (void)scrollToStepAtIndex:(NSInteger)index animated:(BOOL)animated;
 
 // Used by the delegate to acquire an already allocated step, instead of allocating a new one

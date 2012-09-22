@@ -71,21 +71,8 @@
                                                                                         action:@selector(handleTapGestureFrom:)];
         tapRecognizer.delegate = self;
         [scrollView addGestureRecognizer:tapRecognizer];
-        
-        // Default number of steps 
-        _numberOfSteps = 1;
-        
-        // Set initial visible indexes (step 0)
-        _visibleIndexes.location = 0;
-        _visibleIndexes.length = 1;
     }
     return self;
-}
-
-- (void)setNumberOfSteps:(NSInteger)numberOfSteps
-{
-    _numberOfSteps = numberOfSteps;
-    self.scrollView.contentSize = CGSizeMake(_numberOfSteps * self.scrollView.bounds.size.width, self.scrollView.bounds.size.height);
 }
 
 - (void)scrollToStepAtIndex:(NSInteger)index animated:(BOOL)animated
@@ -111,42 +98,43 @@
 }
 
 - (void)reloadData
-{
-    NSInteger numSteps = 1;
-    if ([self.dataSource respondsToSelector:@selector(numberOfStepsInScrollView:)]) {
-        numSteps = [self.dataSource numberOfStepsInScrollView:self];
-    }
-    
+{    
     // Reset visible steps array
     [self.visibleSteps removeAllObjects];
+    
+    // Reset indexes
+    _visibleIndexes.location = 0;
+    _visibleIndexes.length = 1;
     
     // Remove all subviews from scrollView
     [self.scrollView.subviews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [obj removeFromSuperview];
     }];
     
-    [self setNumberOfSteps:numSteps];
+    self.numberOfSteps = 1;
+    if ([self.dataSource respondsToSelector:@selector(numberOfStepsInScrollView:)]) {
+        self.numberOfSteps = [self.dataSource numberOfStepsInScrollView:self];
+    }
     
     if (self.numberOfSteps > 0) {
-        // Reload visible steps
         for (int index = 0; index < self.visibleIndexes.length; index++) {
             TAStepView *step = [self loadStepAtIndex:(self.visibleIndexes.location + index) insertIntoVisibleIndex:index];
             [self addStepToScrollView:step atIndex:(self.visibleIndexes.location + index)];
         }
-        
-        // This will load any additional views which become visible
-        [self updateVisibleSteps];
-        
-        // Set initial alpha values for all visible steps
-        [self.visibleSteps enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            [self setAlphaForStep:obj];
-        }];
-        
-        // If no step is selected, select the first step
-        if (self.selectedStep == nil) {
-            self.selectedStep = [self.visibleSteps objectAtIndex:0];
-        }
     }
+    
+    self.selectedStep = [self.visibleSteps objectAtIndex:0];
+    
+    self.scrollView.contentSize = CGSizeMake(_numberOfSteps * self.scrollView.bounds.size.width, self.scrollView.bounds.size.height);
+    [self scrollToStepAtIndex:0 animated:NO];
+    
+    // Load any additional views
+    [self updateVisibleSteps];
+    
+    // Set initial alpha values for all visible steps
+    [self.visibleSteps enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [self setAlphaForStep:obj];
+    }];
 }
 
 - (TAStepView *)loadStepAtIndex:(NSInteger)index insertIntoVisibleIndex:(NSInteger)visibleIndex
@@ -349,7 +337,7 @@
 
 - (void) updateScrolledStep:(TAStepView*)step index:(NSInteger)index
 {
-    if (!step) {
+    if (step == nil) {
         return;
     }
     

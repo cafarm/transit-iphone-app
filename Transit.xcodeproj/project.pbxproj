@@ -116,6 +116,8 @@
 		1FD199C715BBB12300BA8D48 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD199C615BBB12200BA8D48 /* SystemConfiguration.framework */; };
 		1FD199C915BBB12B00BA8D48 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD199C815BBB12B00BA8D48 /* QuartzCore.framework */; };
 		1FD199CB15BBB14900BA8D48 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD199CA15BBB14900BA8D48 /* libxml2.2.dylib */; };
+		1FE873FB160C11C600D260E6 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE873F9160C11C600D260E6 /* Icon.png */; };
+		1FE873FC160C11C600D260E6 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE873FA160C11C600D260E6 /* Icon@2x.png */; };
 		1FF9F63015CCBA9C00AEBA28 /* TAStepScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9F62F15CCBA9C00AEBA28 /* TAStepScrollView.m */; };
 		1FF9F63315CCE0C500AEBA28 /* TAStepView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9F63215CCE0C500AEBA28 /* TAStepView.m */; };
 		1FFD6C0C15AD1D6200A4C388 /* TADirectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD6C0A15AD1D6200A4C388 /* TADirectionsViewController.m */; };
@@ -345,6 +347,8 @@
 		1FD199C615BBB12200BA8D48 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1FD199C815BBB12B00BA8D48 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		1FD199CA15BBB14900BA8D48 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
+		1FE873F9160C11C600D260E6 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Transit/Resources/Images/Icon/Icon.png; sourceTree = "<group>"; };
+		1FE873FA160C11C600D260E6 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Transit/Resources/Images/Icon/Icon@2x.png"; sourceTree = "<group>"; };
 		1FF9F62E15CCBA9C00AEBA28 /* TAStepScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TAStepScrollView.h; path = Views/TAStepScrollView.h; sourceTree = "<group>"; };
 		1FF9F62F15CCBA9C00AEBA28 /* TAStepScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TAStepScrollView.m; path = Views/TAStepScrollView.m; sourceTree = "<group>"; };
 		1FF9F63115CCE0C500AEBA28 /* TAStepView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TAStepView.h; path = Views/StepViews/TAStepView.h; sourceTree = "<group>"; };
@@ -643,6 +647,7 @@
 		1F90386D15D71F8A00B00877 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				1FE873F8160C11AF00D260E6 /* Icon */,
 				1F20F30516044D3800DC00D7 /* Callouts */,
 				1F20F3011604462600DC00D7 /* CurrentStepAnnotation.png */,
 				1F20F3021604462600DC00D7 /* CurrentStepAnnotation@2x.png */,
@@ -736,6 +741,15 @@
 				1FCCF78415D1FF6A00AD2A4C /* TATripPlanNavigatorTest.m */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		1FE873F8160C11AF00D260E6 /* Icon */ = {
+			isa = PBXGroup;
+			children = (
+				1FE873F9160C11C600D260E6 /* Icon.png */,
+				1FE873FA160C11C600D260E6 /* Icon@2x.png */,
+			);
+			name = Icon;
 			sourceTree = "<group>";
 		};
 		1FFC60FF15D9D9FC00830612 /* Resources */ = {
@@ -1020,6 +1034,8 @@
 				1F20F331160528A200DC00D7 /* SilverButtonPressed@2x.png in Resources */,
 				1F62C90A16067B90007F5394 /* LargeBlueButton.png in Resources */,
 				1F62C90B16067B90007F5394 /* LargeBlueButton@2x.png in Resources */,
+				1FE873FB160C11C600D260E6 /* Icon.png in Resources */,
+				1FE873FC160C11C600D260E6 /* Icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

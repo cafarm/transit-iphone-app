@@ -88,12 +88,13 @@ static const double kZoomRectHeightMin = 1920;
 
 - (void)removeAllAnnotations
 {
-    NSMutableArray *annotationsToRemove = [[NSMutableArray alloc] init];
+    NSMutableArray *annotations = [[NSMutableArray alloc] init];
     for (id<MKAnnotation> annotation in self.annotations) {
         if (![annotation isKindOfClass:[MKUserLocation class]]) {
-            [annotationsToRemove addObject:annotation];
+            [annotations addObject:annotation];
         }
     }
+    [self removeAnnotations:annotations];
 }
 
 @end

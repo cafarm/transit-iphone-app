@@ -10,6 +10,7 @@
 #import <MapKit/MapKit.h>
 
 #import "TAStepScrollView.h"
+#import "TATransitOptionsViewController.h"
 
 @class OTPObjectManager;
 @class TALocationManager;
@@ -17,7 +18,7 @@
 @class TATripPlanNavigator;
 @class OTPItinerary;
 
-@interface TADirectionsViewController : UIViewController <MKMapViewDelegate, TAStepScrollViewDelegate, TAStepScrollViewDataSource, UIGestureRecognizerDelegate>
+@interface TADirectionsViewController : UIViewController <MKMapViewDelegate, TATransitOptionsViewControllerDelegate, TAStepScrollViewDelegate, TAStepScrollViewDataSource, UIGestureRecognizerDelegate>
 
 - (id)initWithOTPObjectManager:(OTPObjectManager *)otpObjectManager
                locationManager:(TALocationManager *)locationManager
@@ -37,8 +38,6 @@
 @property (weak, nonatomic) UISegmentedControl *segmentedControl;
 
 @property (weak, nonatomic) UITableView *listView;
-
-- (void)overlayCurrentItinerary;
 
 - (void)overviewCurrentItineraryAnimated:(BOOL)animated;
 

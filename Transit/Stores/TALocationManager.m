@@ -50,10 +50,7 @@ static CLLocationDegrees const kDefaultLongitude = -122.3331;
 }
 
 - (void)startUpdatingLocation
-{
-    // Clear out any cached current location
-    self.currentLocation = nil;
-    
+{    
     [self.clLocationManager startUpdatingLocation];
 }
 

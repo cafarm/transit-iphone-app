@@ -11,7 +11,6 @@
 #import "TATripPlanNavigator.h"
 #import "TAWalkStep.h"
 #import "TATransitStep.h"
-#import "TATransitOptionsViewController.h"
 #import "TAStepView.h"
 #import "TAStepAnnotation.h"
 #import "TACurrentStepAnnotation.h"
@@ -133,15 +132,17 @@ typedef enum {
     [mapContainerView addSubview:segmentedControl];
     self.segmentedControl = segmentedControl;
     
-    [self.stepScrollView reloadData];
-    [self overlayCurrentItinerary];
-    self.currentStepAnnotation = [self.mapView addAnnotationForCurrentStep:self.tripPlanNavigator.currentStep];
+    [self setupViewsWithCurrentItinerary];
 }
 
-- (void)overlayCurrentItinerary
+- (void)setupViewsWithCurrentItinerary
 {
     [self.mapView addOverlayForItinerary:self.tripPlanNavigator.currentItinerary];
     [self.mapView addAnnotationsForSteps:self.tripPlanNavigator.stepsInCurrentItinerary];
+    
+    [self.stepScrollView reloadData];
+
+    self.currentStepAnnotation = [self.mapView addAnnotationForCurrentStep:self.tripPlanNavigator.currentStep];
 }
 
 - (void)overviewCurrentItineraryAnimated:(BOOL)animate
@@ -306,10 +307,20 @@ typedef enum {
 - (void)presentTransitOptionsViewController
 {
     TATransitOptionsViewController *optionsController = [[TATransitOptionsViewController alloc] initWithOTPObjectManager:self.otpObjectManager tripPlanNavigator:self.tripPlanNavigator];
+    optionsController.delegate = self;
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:optionsController];
     
     [self presentViewController:navigationController animated:YES completion:nil];
+}
+
+- (void)transitOptionsViewControllerDidSetNewOptions:(TATransitOptionsViewController *)controller
+{
+    [self.mapView removeAllAnnotations];
+    [self.mapView removeAllOverlays];
+    
+    [self setupViewsWithCurrentItinerary];
+    [self overviewCurrentItineraryAnimated:NO];
 }
 
 - (NSInteger)numberOfStepsInScrollView:(TAStepScrollView *)scrollView

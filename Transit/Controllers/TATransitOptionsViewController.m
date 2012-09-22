@@ -72,6 +72,7 @@ typedef enum {
 {
     [super viewWillAppear:animated];
     
+    self.selectedItineraryIndex = self.tripPlanNavigator.currentItineraryIndex;
     self.isFetchingNewTripPlan = NO;
     self.didSetNewOptions = NO;
 }
@@ -84,7 +85,7 @@ typedef enum {
     }
     
     if (self.didSetNewOptions && [self.delegate respondsToSelector:@selector(transitOptionsViewControllerDidSetNewOptions:)]) {
-        [self.delegate transitOptionsViewControllerDidSelectNewOptions:self];
+        [self.delegate transitOptionsViewControllerDidSetNewOptions:self];
     }
     
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
@@ -214,14 +215,6 @@ typedef enum {
             title = @"Prefer";
             break;
         }
-        case TATransitOptionsSectionDate: {
-            title = @"Time";
-            break;
-        }
-        case TATransitOptionsSectionItineraries: {
-            title = @"Itineraries";
-            break;
-        }
     }
     return title;
 }
@@ -312,7 +305,7 @@ typedef enum {
                                        [self.dateFormatter stringFromDate:itinerary.endTime],
                                        durationInMinutes];
                 
-                if (itinerary == self.tripPlanNavigator.currentItinerary) {
+                if (indexPath.row == self.selectedItineraryIndex) {
                     [self selectCell:cell];
                 }
             }
