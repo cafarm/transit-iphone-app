@@ -22,19 +22,15 @@
 // - End of walking legs
 // - Interlined legs
 + (NSArray *)stepsWithItinerary:(OTPItinerary *)itinerary;
++ (NSDateFormatter *)sharedDateFormatter;
 
-- (id)initWithLegs:(NSArray *)legs isDestination:(BOOL)isDestination previousStep:(TAStep *)previousStep;
+- (id)initWithLegs:(NSArray *)legs previousStep:(TAStep *)previousStep;
 
 @property (readonly, strong, nonatomic) NSArray *legs;
 @property (readonly, nonatomic) OTPPlace *place;
-@property (readonly, nonatomic) OTPPlace *from;
-@property (readonly, nonatomic) OTPLeg *fromLeg;
-@property (readonly, nonatomic) OTPPlace *to;
-@property (readonly, nonatomic) OTPLeg *toLeg;
-@property (readonly, nonatomic) NSString *route;
-@property (readonly, nonatomic) NSNumber *distance;
-@property (readonly, nonatomic) NSNumber *duration;
-@property (readonly, nonatomic) BOOL isDestination;
+@property (readonly, nonatomic) NSString *mainDescription;
+@property (readonly, nonatomic) NSString *distanceDescription;
+@property (readonly, nonatomic) NSString *durationDescription;
 @property (readonly, nonatomic) MKMapRect boundingMapRect;
 
 @property (readonly, nonatomic) TAStep *previousStep;

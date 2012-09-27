@@ -8,7 +8,7 @@
 
 #import <CoreLocation/CoreLocation.h>
 
-extern CLLocationDistance TARadiusOfInterest;
+extern CLLocationDistance TALocationManagerRadiusOfInterest;
 
 @protocol TALocationManagerDelegate;
 

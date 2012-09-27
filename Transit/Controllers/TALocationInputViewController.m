@@ -23,7 +23,7 @@
 #import "CLGeocoder+Transit.h"
 #import "UIColor+Transit.h"
 
-static NSString *const kNavigationTitle = @"Transit";
+static NSString *const TANavigationTitle = @"Transit";
 
 @interface TALocationInputViewController ()
 
@@ -80,7 +80,7 @@ static NSString *const kNavigationTitle = @"Transit";
     // Hide nav bar shadow
     self.navigationController.navigationBar.clipsToBounds = YES;
     
-    self.navigationItem.title = kNavigationTitle;
+    self.navigationItem.title = TANavigationTitle;
     
     self.fieldContainerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"LocationInputBackground"]];
     
@@ -136,7 +136,7 @@ static NSString *const kNavigationTitle = @"Transit";
 {
     [super viewWillAppear:animated];
     
-    self.navigationItem.title = kNavigationTitle;
+    self.navigationItem.title = TANavigationTitle;
     [self enableAllViews];
 }
 
@@ -372,7 +372,7 @@ static NSString *const kNavigationTitle = @"Transit";
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     [self.completionsTable deselectRowAtIndexPath:[self.completionsTable indexPathForSelectedRow] animated:NO];
-    self.navigationItem.title = kNavigationTitle;
+    self.navigationItem.title = TANavigationTitle;
     [self enableAllViews];
 }
 

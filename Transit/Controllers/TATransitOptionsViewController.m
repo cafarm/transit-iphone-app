@@ -13,11 +13,11 @@
 #import "OTPClient.h"
 #import "UIColor+Transit.h"
 
-typedef enum {
-    TATransitOptionsSectionOptimize,
-    TATransitOptionsSectionDate,
-    TATransitOptionsSectionItineraries
-} TATransitOptionsSection;
+enum {
+    TASectionOptimize,
+    TASectionDate,
+    TASectionItineraries
+};
 
 @interface TATransitOptionsViewController ()
 
@@ -125,11 +125,11 @@ typedef enum {
     NSInteger numItineraries = [self.tripPlanNavigator.itineraries count];
     NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:numItineraries];
     for (int i = 0; i < [self.tripPlanNavigator.itineraries count]; i++) {
-        [indexPaths addObject:[NSIndexPath indexPathForItem:i inSection:TATransitOptionsSectionItineraries]];
+        [indexPaths addObject:[NSIndexPath indexPathForItem:i inSection:TASectionItineraries]];
     }
     [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
     
-    UITableViewCell *loadingCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:TATransitOptionsSectionItineraries]];
+    UITableViewCell *loadingCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:TASectionItineraries]];
     loadingCell.textLabel.text = @"Loading...";
     [self deselectCell:loadingCell];
     UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -156,7 +156,7 @@ typedef enum {
         NSInteger numItineraries = [self.tripPlanNavigator.itineraries count];
         NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:numItineraries];
         for (int i = 0; i < [self.tripPlanNavigator.itineraries count]; i++) {
-            [indexPaths addObject:[NSIndexPath indexPathForItem:i inSection:TATransitOptionsSectionItineraries]];
+            [indexPaths addObject:[NSIndexPath indexPathForItem:i inSection:TASectionItineraries]];
         }
         [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
         
@@ -211,7 +211,7 @@ typedef enum {
 {
     NSString *title = nil;
     switch (section) {
-        case TATransitOptionsSectionOptimize: {
+        case TASectionOptimize: {
             title = @"Prefer";
             break;
         }
@@ -223,15 +223,15 @@ typedef enum {
 {
     NSInteger numberOfRows;
     switch (section) {
-        case TATransitOptionsSectionOptimize: {
+        case TASectionOptimize: {
             numberOfRows = 3;
             break;
         }
-        case TATransitOptionsSectionDate: {
+        case TASectionDate: {
             numberOfRows = 1;
             break;
         }
-        case TATransitOptionsSectionItineraries: {
+        case TASectionItineraries: {
             if (self.isFetchingNewTripPlan) {
                 numberOfRows = 1;
             } else {
@@ -262,7 +262,7 @@ typedef enum {
     }
     
     switch (indexPath.section) {
-        case TATransitOptionsSectionOptimize: {
+        case TASectionOptimize: {
             switch (indexPath.row) {
                 case OTPObjectManagerOptimizeBestRoute: {
                     cell.textLabel.text = @"Best Route";
@@ -283,13 +283,13 @@ typedef enum {
             }
             break;
         }
-        case TATransitOptionsSectionDate: {
+        case TASectionDate: {
             cell.textLabel.text = self.otpObjectManager.shouldArriveBy ? @"Arrive" : @"Depart";
             cell.detailTextLabel.text = [self.dateFormatter stringFromTravelDate:self.otpObjectManager.date];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
         }
-        case TATransitOptionsSectionItineraries: {
+        case TASectionItineraries: {
             if (indexPath.row >= [self.tripPlanNavigator.itineraries count]) {
                 cell.textLabel.text = @"Load More Itineraries";
             } else {
@@ -321,12 +321,12 @@ typedef enum {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     switch (indexPath.section) {
-        case TATransitOptionsSectionOptimize: {
+        case TASectionOptimize: {
             if (indexPath.row == self.otpObjectManager.optimize) {
                 return;
             }
             
-            NSIndexPath *oldCellIndex = [NSIndexPath indexPathForItem:self.otpObjectManager.optimize inSection:TATransitOptionsSectionOptimize];
+            NSIndexPath *oldCellIndex = [NSIndexPath indexPathForItem:self.otpObjectManager.optimize inSection:TASectionOptimize];
             UITableViewCell *oldCell = [self.tableView cellForRowAtIndexPath:oldCellIndex];
             [self deselectCell:oldCell];
             
@@ -337,11 +337,11 @@ typedef enum {
             [self fetchNewTripPlan];
             break;
         }
-        case TATransitOptionsSectionDate: {
+        case TASectionDate: {
             [self pushDatePickerViewController];
             break;
         }
-        case TATransitOptionsSectionItineraries: {
+        case TASectionItineraries: {
             if (indexPath.row >= [self.tripPlanNavigator.itineraries count]) {
                 // TODO: Load more itineraries here
             } else {
@@ -349,7 +349,7 @@ typedef enum {
                     return;
                 }
                 
-                NSIndexPath *oldCellIndex = [NSIndexPath indexPathForItem:self.selectedItineraryIndex inSection:TATransitOptionsSectionItineraries];
+                NSIndexPath *oldCellIndex = [NSIndexPath indexPathForItem:self.selectedItineraryIndex inSection:TASectionItineraries];
                 UITableViewCell *oldCell = [self.tableView cellForRowAtIndexPath:oldCellIndex];
                 [self deselectCell:oldCell];
                 

@@ -18,7 +18,7 @@
 @class TATripPlanNavigator;
 @class OTPItinerary;
 
-@interface TADirectionsViewController : UIViewController <MKMapViewDelegate, TATransitOptionsViewControllerDelegate, TAStepScrollViewDelegate, TAStepScrollViewDataSource, UIGestureRecognizerDelegate>
+@interface TADirectionsViewController : UIViewController <MKMapViewDelegate, TATransitOptionsViewControllerDelegate, UITableViewDelegate, UITableViewDataSource, TAStepScrollViewDelegate, TAStepScrollViewDataSource, UIGestureRecognizerDelegate>
 
 - (id)initWithOTPObjectManager:(OTPObjectManager *)otpObjectManager
                locationManager:(TALocationManager *)locationManager

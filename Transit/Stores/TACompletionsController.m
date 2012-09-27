@@ -123,7 +123,7 @@
             
             [self.gpObjectManager fetchAutocompletePredictionsWithInput:self.input
                                                                location:location.coordinate
-                                                                 radius:TARadiusOfInterest
+                                                                 radius:TALocationManagerRadiusOfInterest
                                                       completionHandler:^(NSArray *predictions, NSError *error)
              {
                  self.fetchedPlaceCompletions = nil;

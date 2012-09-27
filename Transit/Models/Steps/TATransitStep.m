@@ -7,19 +7,19 @@
 //
 
 #import "TATransitStep.h"
+#import "OTPClient.h"
+#import "NSDateFormatter+Transit.h"
 
 @implementation TATransitStep
 
 @synthesize mode = _mode;
-@synthesize tripShortName = _tripShortName;
-@synthesize headSign = _headSign;
-@synthesize tripID = _tripID;
-@synthesize scheduledDate = _scheduledDate;
+@synthesize scheduledDateDescription = _scheduledDateDescription;
+@synthesize detailsDescription = _detailsDescription;
 @synthesize isArrival = _isArrival;
 
-- (id)initWithLegs:(NSArray *)legs isDestination:(BOOL)isDestination isArrival:(BOOL)isArrival previousStep:(TAStep *)previousStep
+- (id)initWithLegs:(NSArray *)legs previousStep:(TAStep *)previousStep isArrival:(BOOL)isArrival
 {
-    self = [super initWithLegs:legs isDestination:isDestination previousStep:previousStep];
+    self = [super initWithLegs:legs previousStep:previousStep];
     if (self) {
         _isArrival = isArrival;
     }
@@ -29,44 +29,77 @@
 - (OTPPlace *)place
 {
     if (self.isArrival) {
-        return self.to;
+        return ((OTPLeg *)[self.legs lastObject]).to;
     } else {
-        return self.from;
+        return ((OTPLeg *)[self.legs objectAtIndex:0]).from;
     }
-}
-
-- (OTPLeg *)placeLeg
-{
-    return self.place.leg;
 }
 
 - (OTPLegTraverseMode)mode
 {
-    return self.placeLeg.mode;
+    return self.place.leg.mode;
 }
 
-- (NSString *)tripShortName
+- (NSString *)route
 {
-    return self.placeLeg.tripShortName;
+    return ((OTPLeg *)[self.legs objectAtIndex:0]).route;
 }
 
 - (NSString *)headSign
 {
-    return self.placeLeg.headsign;
+    return self.place.leg.headsign;
 }
 
 - (NSString *)tripID
 {
-    return self.placeLeg.tripID;
+    return self.place.leg.tripID;
 }
 
 - (NSDate *)scheduledDate
 {
     if (self.isArrival) {
-        return self.toLeg.endTime;
+        return ((OTPLeg *)[self.legs lastObject]).endTime;
     } else {
-        return self.fromLeg.startTime;
+        return ((OTPLeg *)[self.legs objectAtIndex:0]).startTime;
     }
+}
+
+- (NSString *)scheduledDateDescription
+{
+    NSString *description;
+    if (self.isArrival) {
+        description = [NSString stringWithFormat:@"Arrives at %@", [[TAStep sharedDateFormatter] stringFromDate:self.scheduledDate]];
+    } else {
+        description = [NSString stringWithFormat:@"Departs at %@", [[TAStep sharedDateFormatter] stringFromDate:self.scheduledDate]];
+    }
+    return description;
+}
+
+- (NSString *)scheduledDateShortDescription
+{
+    return [[TAStep sharedDateFormatter] stringFromDate:self.scheduledDate];
+}
+
+- (NSString *)mainDescription
+{
+    NSString *description;
+    if (self.isArrival) {
+        description = [NSString stringWithFormat:@"Get off %@", self.route];
+    } else {
+        description = [NSString stringWithFormat:@"Take %@", self.route];
+    }
+    return description;
+}
+
+- (NSString *)detailsDescription
+{
+    NSString *description;
+    if (self.isArrival) {
+        description = [NSString stringWithFormat:@"At %@", self.place.name];
+    } else {
+        description = [NSString stringWithFormat:@"Towards %@", self.headSign];
+    }
+    return description;
 }
 
 @end

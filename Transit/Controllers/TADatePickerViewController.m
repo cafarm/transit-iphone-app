@@ -10,16 +10,16 @@
 #import "NSDateFormatter+Transit.h"
 #import "OTPClient.h"
 
-typedef enum {
-    TADatePickerSectionDepartAtOrArriveBy,
-    TADatePickerSectionDateDisplay,
-    TADatePickerSectionResetButton
-} TADatePickerSection;
+enum {
+    TASectionDepartAtOrArriveBy,
+    TASectionDateDisplay,
+    TASectionResetButton
+};
 
-typedef enum {
-    TADatePickerSegmentDepartAt,
-    TADatePickerSegmentArriveBy
-} TADatePickerSegment;
+enum {
+    TASegmentDepartAt,
+    TASegmentArriveBy
+};
 
 @interface TADatePickerViewController ()
 
@@ -97,7 +97,7 @@ typedef enum {
 
 - (void)resetDate
 {
-    if (self.departAtOrArriveByControl.selectedSegmentIndex == TADatePickerSegmentDepartAt) {
+    if (self.departAtOrArriveByControl.selectedSegmentIndex == TASegmentDepartAt) {
         self.datePicker.date = [NSDate date];
     } else {
         self.datePicker.date = [NSDate dateWithTimeIntervalSinceNow:45 * 60];
@@ -109,7 +109,7 @@ typedef enum {
 - (void)toggleResetDateButton
 {
     NSDate *date;
-    if (self.departAtOrArriveByControl.selectedSegmentIndex == TADatePickerSegmentDepartAt) {
+    if (self.departAtOrArriveByControl.selectedSegmentIndex == TASegmentDepartAt) {
         [self.resetDateButton setTitle:@"Now" forState:UIControlStateNormal];
         date = [NSDate date];
     } else {
@@ -126,7 +126,7 @@ typedef enum {
 
 - (void)changedDate
 {    
-    NSIndexPath *dateCellIndex = [NSIndexPath indexPathForItem:0 inSection:TADatePickerSectionDateDisplay];
+    NSIndexPath *dateCellIndex = [NSIndexPath indexPathForItem:0 inSection:TASectionDateDisplay];
     UITableViewCell *dateCell = [self.tableView cellForRowAtIndexPath:dateCellIndex];
     dateCell.textLabel.text = [self.dateFormatter stringFromTravelDate:self.datePicker.date];
     
@@ -141,7 +141,7 @@ typedef enum {
 
 - (void)toggleTitle
 {
-    if (self.departAtOrArriveByControl.selectedSegmentIndex == TADatePickerSegmentDepartAt) {
+    if (self.departAtOrArriveByControl.selectedSegmentIndex == TASegmentDepartAt) {
         self.navigationItem.title = @"Departure Time";
     } else {
         self.navigationItem.title = @"Arrival Time";
@@ -210,18 +210,18 @@ typedef enum {
     }
     
     switch (indexPath.section) {
-        case TADatePickerSectionDepartAtOrArriveBy: {
+        case TASectionDepartAtOrArriveBy: {
             self.departAtOrArriveByControl.frame = cell.bounds;
             [cell.contentView addSubview:self.departAtOrArriveByControl];
             cell.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
             break;
         }
-        case TADatePickerSectionDateDisplay: {
+        case TASectionDateDisplay: {
             cell.textLabel.text = [self.dateFormatter stringFromTravelDate:self.datePicker.date];
             cell.textLabel.textAlignment = UITextAlignmentCenter;
             break;
         }
-        case TADatePickerSectionResetButton: {
+        case TASectionResetButton: {
             self.resetDateButton.frame = cell.bounds;
             [cell.contentView addSubview:self.resetDateButton];
             cell.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -236,8 +236,8 @@ typedef enum {
 {
     CGFloat height;
     switch (indexPath.section) {
-        case TADatePickerSectionDepartAtOrArriveBy:
-        case TADatePickerSectionResetButton: {
+        case TASectionDepartAtOrArriveBy:
+        case TASectionResetButton: {
             height = 45;
             break;
         }

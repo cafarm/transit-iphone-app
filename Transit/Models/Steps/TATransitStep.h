@@ -10,13 +10,12 @@
 
 @interface TATransitStep : TAStep
 
-- (id)initWithLegs:(NSArray *)legs isDestination:(BOOL)isDestination isArrival:(BOOL)isArrival previousStep:(TAStep *)previousStep;
+- (id)initWithLegs:(NSArray *)legs previousStep:(TAStep *)previousStep isArrival:(BOOL)isArrival;
 
 @property (readonly, nonatomic) OTPLegTraverseMode mode;
-@property (readonly, nonatomic) NSString *tripShortName;
-@property (readonly, nonatomic) NSString *headSign;
-@property (readonly, nonatomic) NSString *tripID;
-@property (readonly, nonatomic) NSDate *scheduledDate;
+@property (readonly, nonatomic) NSString *scheduledDateDescription;
+@property (readonly, nonatomic) NSString *scheduledDateShortDescription;
+@property (readonly, nonatomic) NSString *detailsDescription;
 @property (readonly, nonatomic) BOOL isArrival;
 
 @end

@@ -50,13 +50,15 @@
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self) {        
+    if (self) {
+        self.clipsToBounds = NO;
+        
         // Init internal data structures
         _visibleSteps = [[NSMutableArray alloc] initWithCapacity:3];
         _reusableSteps = [[NSMutableDictionary alloc] initWithCapacity:3]; 
         
         // Setup scrollView
-        UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(21, 0, self.frame.size.width - 42, 100)];
+        UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
         scrollView.clipsToBounds = NO;
         scrollView.pagingEnabled = YES;
         scrollView.showsHorizontalScrollIndicator = NO;
@@ -184,21 +186,21 @@
 - (void)setLayerPropertiesForStep:(TAStepView *)step
 {
     // Add shadow (use shadowPath to improve rendering performance)
-    step.layer.shadowColor = [[UIColor blackColor] CGColor];
-    step.layer.shadowOffset = CGSizeMake(3.0f, 8.0f);
-    step.layer.shadowOpacity = 1.0f;
-    step.layer.shadowRadius = 7.0;
-    step.layer.masksToBounds = NO;
-    UIBezierPath *path = [UIBezierPath bezierPathWithRect:step.bounds];
-    step.layer.shadowPath = path.CGPath;
+//    step.layer.shadowColor = [[UIColor blackColor] CGColor];
+//    step.layer.shadowOffset = CGSizeMake(3.0f, 8.0f);
+//    step.layer.shadowOpacity = 1.0f;
+//    step.layer.shadowRadius = 7.0;
+//    step.layer.masksToBounds = NO;
+//    UIBezierPath *path = [UIBezierPath bezierPathWithRect:step.bounds];
+//    step.layer.shadowPath = path.CGPath;
     
-    step.maskLayer = [[CALayer alloc] init];
-    CGSize size = step.frame.size;
-    step.maskLayer.frame = CGRectMake(0, 0, size.width, size.height);
-    step.maskLayer.backgroundColor = [[UIColor blackColor] CGColor];
-    step.maskLayer.opaque = NO;
-    step.maskLayer.opacity = 0.0f;
-    [step.layer addSublayer:step.maskLayer];
+//    step.maskLayer = [[CALayer alloc] init];
+//    CGSize size = step.frame.size;
+//    step.maskLayer.frame = CGRectMake(0, 0, size.width, size.height);
+//    step.maskLayer.backgroundColor = [[UIColor blackColor] CGColor];
+//    step.maskLayer.opaque = NO;
+//    step.maskLayer.opacity = 0.0f;
+//    [step.layer addSublayer:step.maskLayer];
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView

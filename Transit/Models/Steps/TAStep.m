@@ -7,30 +7,39 @@
 //
 
 #import "TAStep.h"
+#import "TAPlaceStep.h"
 #import "TAWalkStep.h"
 #import "TATransitStep.h"
 #import "OTPClient.h"
+
+@interface TAStep ()
+    @property (readonly, nonatomic) NSNumber *distance;
+    @property (readonly, nonatomic) NSNumber *duration;
+@end
+
 
 @implementation TAStep
 
 @synthesize legs = _legs;
 @synthesize place = _place;
-@synthesize from = _from;
-@synthesize fromLeg = _fromLeg;
-@synthesize to = _to;
-@synthesize toLeg = _toLeg;
-@synthesize route = _route;
+@synthesize mainDescription = _mainDescription;
+@synthesize distanceDescription = _distanceDescription;
+@synthesize durationDescription = _durationDescription;
+@synthesize boundingMapRect = _boundingMapRect;
+
 @synthesize distance = _distance;
 @synthesize duration = _duration;
-@synthesize isDestination = _isDestination;
-@synthesize boundingMapRect = _boundingMapRect;
 
 @synthesize previousStep = _previousStep;
 
 + (NSArray *)stepsWithItinerary:(OTPItinerary *)itinerary
 {
     // Init for max capacity
-    NSMutableArray *steps = [NSMutableArray arrayWithCapacity:([itinerary.legs count] * 2)];
+    NSMutableArray *steps = [NSMutableArray arrayWithCapacity:([itinerary.legs count] * 2 + 2)];
+    
+    // Add a start place step
+    TAPlaceStep *startStep = [[TAPlaceStep alloc] initWithLegs:itinerary.legs previousStep:nil isDestination:NO];
+    [steps addObject:startStep];
         
     for (int legIndex = 0; legIndex < [itinerary.legs count]; legIndex++) {
         OTPLeg *currentLeg = [itinerary.legs objectAtIndex:legIndex];
@@ -40,13 +49,11 @@
             // We're on a new set of legs, we always need a "from" step in that case
             if (currentLeg.mode == OTPLegTraverseModeWalk) {
                 fromStep = [[TAWalkStep alloc] initWithLegs:[NSMutableArray arrayWithObject:currentLeg]
-                                              isDestination:NO
                                                previousStep:[steps lastObject]];
             } else {
                 fromStep = [[TATransitStep alloc] initWithLegs:[NSMutableArray arrayWithObject:currentLeg]
-                                                 isDestination:NO
-                                                     isArrival:NO
-                                                  previousStep:[steps lastObject]];
+                                                  previousStep:[steps lastObject]
+                                                     isArrival:NO];
             }
             
             [steps addObject:fromStep];
@@ -61,36 +68,40 @@
             nextLeg = [itinerary.legs objectAtIndex:legIndex + 1];
         }
         
-        // If we're on the last leg or we're ending a leg set and it wasn't a walking leg set, add a "to" step
-        if (nextLeg == nil || (!nextLeg.isInterlinedWithPreviousLeg && currentLeg.mode != OTPLegTraverseModeWalk)) {
+        // If we're on the last leg or we're ending a leg set and we're not on a walking leg, add a "to" step
+        if ((nextLeg == nil || !nextLeg.isInterlinedWithPreviousLeg) && currentLeg.mode != OTPLegTraverseModeWalk) {
             
-            TAStep *toStep = nil;
-            if (currentLeg.mode == OTPLegTraverseModeWalk) {
-                toStep = [[TAWalkStep alloc] initWithLegs:fromStep.legs
-                                            isDestination:(nextLeg == nil)
-                                             previousStep:[steps lastObject]];
-            } else {
-                toStep = [[TATransitStep alloc] initWithLegs:fromStep.legs
-                                               isDestination:(nextLeg == nil)
-                                                   isArrival:YES
-                                                previousStep:[steps lastObject]];
-            }
+            TAStep *toStep = [[TATransitStep alloc] initWithLegs:fromStep.legs
+                                                    previousStep:[steps lastObject]
+                                                       isArrival:YES];
             [steps addObject:toStep];
         }
     }
+    
+    // Add a end place step
+    TAPlaceStep *endStep = [[TAPlaceStep alloc] initWithLegs:itinerary.legs previousStep:[steps lastObject] isDestination:YES];
+    [steps addObject:endStep];
+    
     return steps;
 }
 
-- (id)initWithLegs:(NSMutableArray *)legs isDestination:(BOOL)isDestination previousStep:(TAStep *)previousStep
++ (NSDateFormatter *)sharedDateFormatter
+{
+    static NSDateFormatter *dateFormatter;
+    if (dateFormatter == nil) {
+        dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.dateStyle = NSDateFormatterNoStyle;
+        dateFormatter.timeStyle = NSDateFormatterShortStyle;
+    }
+    return dateFormatter;
+}
+
+- (id)initWithLegs:(NSMutableArray *)legs previousStep:(TAStep *)previousStep
 {
     self = [super init];
     if (self) {
         _legs = legs;
-        _isDestination = isDestination;
         _previousStep = previousStep;
-        
-        // We'll lazy load the bounding map rect
-        _boundingMapRect = MKMapRectNull;
     }
     return self;
 }
@@ -101,44 +112,10 @@
     return nil;
 }
 
-- (OTPPlace *)from
+- (NSString *)mainDescription
 {
-    return self.fromLeg.from;
-}
-
-- (OTPLeg *)fromLeg
-{
-    return (OTPLeg *)[self.legs objectAtIndex:0];
-}
-
-- (OTPPlace *)to
-{
-    return self.toLeg.to;
-}
-
-- (OTPLeg *)toLeg
-{
-    return (OTPLeg *)[self.legs lastObject];
-}
-
-- (NSString *)route
-{
-    return self.fromLeg.route;
-}
-
-- (NSString *)tripShortName
-{
-    return self.fromLeg.tripShortName;
-}
-
-- (NSString *)headSign
-{
-    return self.fromLeg.headsign;
-}
-
-- (NSString *)tripID
-{
-    return self.fromLeg.tripID;
+    // Override me!
+    return nil;
 }
 
 - (NSNumber *)distance
@@ -153,6 +130,11 @@
     return _distance;
 }
 
+- (NSString *)distanceDescription
+{
+    return [NSString stringWithFormat:@"%.01f miles", [self.distance floatValue] * 0.000621371f];
+}
+
 - (NSNumber *)duration
 {
     if (_duration == nil) {
@@ -165,11 +147,17 @@
     return _duration;
 }
 
+- (NSString *)durationDescription
+{
+    NSInteger duration = [self.duration unsignedIntValue] / 1000 / 60;
+    return [NSString stringWithFormat:@"%u mins", duration];
+}
+
 - (MKMapRect)boundingMapRect
 {
-    if (MKMapRectIsNull(_boundingMapRect)) {
+    if (MKMapRectIsEmpty(_boundingMapRect)) {
         for (OTPLeg *leg in self.legs) {
-            if (MKMapRectIsNull(_boundingMapRect)) {
+            if (MKMapRectIsEmpty(_boundingMapRect)) {
                 _boundingMapRect = [leg boundingMapRect];
             } else {
                 _boundingMapRect = MKMapRectUnion(_boundingMapRect, [leg boundingMapRect]);

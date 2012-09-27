@@ -21,7 +21,8 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
-    self.otpObjectManager = [[OTPObjectManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://localhost:4567"]];
+    //self.otpObjectManager = [[OTPObjectManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://localhost:4567"]];
+    self.otpObjectManager = [[OTPObjectManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://otp.hopto.org/opentripplanner-api-webapp"]];
     
     //self.gpObjectManager = [[GPObjectManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://localhost:4567"] apiKey:@"AIzaSyCXTU7jtaUbbQ4ZouFEKabc2VfJv260YhE"];
     self.gpObjectManager = [[GPObjectManager alloc] initWithBaseURL:[NSURL URLWithString:@"https://maps.googleapis.com/maps/api"] apiKey:@"AIzaSyCXTU7jtaUbbQ4ZouFEKabc2VfJv260YhE"];

@@ -10,19 +10,13 @@
 
 @interface TAStepView : UIView
 
-- (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier;
+- (id)initWithReuseIdentifier:(NSString *)reuseIdentifier;
 
 @property (readwrite, copy, nonatomic) NSString *reuseIdentifier;
 @property (strong, nonatomic) CALayer *maskLayer;
 @property (weak, nonatomic) UIView *view;
-@property (weak, nonatomic) UILabel *detailsLabel;
-@property (weak, nonatomic) UIImageView *imageView;
-
-@property (nonatomic) NSUInteger minNumberOfDetailLines;
-@property (nonatomic) NSUInteger maxNumberOfDetailLines;
 
 - (void)addLabelShadows;
 - (void)prepareForReuse;
-- (void)positionImageViewForNumberOfLines:(NSUInteger)numberOfLines;
 
 @end

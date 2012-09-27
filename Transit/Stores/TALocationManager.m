@@ -8,11 +8,11 @@
 
 #import "TALocationManager.h"
 
-CLLocationDistance TARadiusOfInterest = 25000;
+CLLocationDistance TALocationManagerRadiusOfInterest = 25000;
 
 // Seattle
-static CLLocationDegrees const kDefaultLatitude = 47.6097;
-static CLLocationDegrees const kDefaultLongitude = -122.3331;
+static CLLocationDegrees const TADefaultLatitude = 47.6097;
+static CLLocationDegrees const TADefaultLongitude = -122.3331;
 
 @interface TALocationManager ()
 
@@ -72,14 +72,14 @@ static CLLocationDegrees const kDefaultLongitude = -122.3331;
 - (CLRegion *)currentRegion
 {
     return [[CLRegion alloc] initCircularRegionWithCenter:self.currentLocation.coordinate
-                                                   radius:TARadiusOfInterest
+                                                   radius:TALocationManagerRadiusOfInterest
                                                identifier:@"currentRegion"];
 }
 
 - (CLLocation *)defaultLocation
 {
     if (_defaultLocation == nil) {
-        _defaultLocation = [[CLLocation alloc] initWithLatitude:kDefaultLatitude longitude:kDefaultLongitude];
+        _defaultLocation = [[CLLocation alloc] initWithLatitude:TADefaultLatitude longitude:TADefaultLongitude];
     }
     return _defaultLocation;
 }

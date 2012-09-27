@@ -76,6 +76,8 @@
 		1F62C90B16067B90007F5394 /* LargeBlueButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F62C90916067B90007F5394 /* LargeBlueButton@2x.png */; };
 		1F62C90E1606D99A007F5394 /* NSDateFormatter+Transit.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F62C90D1606D99A007F5394 /* NSDateFormatter+Transit.m */; };
 		1F634AA315C1F6C600192802 /* libOTPClient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F634A9E15C1F4CC00192802 /* libOTPClient.a */; };
+		1F67C756160D9E4800818DE3 /* Zoom.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F67C754160D9E4800818DE3 /* Zoom.png */; };
+		1F67C757160D9E4800818DE3 /* Zoom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F67C755160D9E4800818DE3 /* Zoom@2x.png */; };
 		1F77405715C6253100F3D527 /* MKMapView+Transit.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F77405615C6253100F3D527 /* MKMapView+Transit.m */; };
 		1F905EF015DDBCE60061BCE0 /* autocompleteResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 1F905EED15DDBCE60061BCE0 /* autocompleteResponse.json */; };
 		1F905EF115DDBCE60061BCE0 /* detailsResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 1F905EEE15DDBCE60061BCE0 /* detailsResponse.json */; };
@@ -118,6 +120,19 @@
 		1FD199CB15BBB14900BA8D48 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD199CA15BBB14900BA8D48 /* libxml2.2.dylib */; };
 		1FE873FB160C11C600D260E6 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE873F9160C11C600D260E6 /* Icon.png */; };
 		1FE873FC160C11C600D260E6 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE873FA160C11C600D260E6 /* Icon@2x.png */; };
+		1FEDB6451612CA8E006480D7 /* StepViewBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FEDB6431612CA8E006480D7 /* StepViewBackground.png */; };
+		1FEDB6461612CA8E006480D7 /* StepViewBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FEDB6441612CA8E006480D7 /* StepViewBackground@2x.png */; };
+		1FF6355516140025005B6236 /* TAPlaceStep.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF6355416140025005B6236 /* TAPlaceStep.m */; };
+		1FF6355716140923005B6236 /* TAPlaceStepView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FF6355616140923005B6236 /* TAPlaceStepView.xib */; };
+		1FF6355A161409C5005B6236 /* TAPlaceStepView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF63559161409C5005B6236 /* TAPlaceStepView.m */; };
+		1FF6356316147C74005B6236 /* BusCalloutLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF6355B16147C74005B6236 /* BusCalloutLeft.png */; };
+		1FF6356416147C74005B6236 /* BusCalloutLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF6355C16147C74005B6236 /* BusCalloutLeft@2x.png */; };
+		1FF6356516147C74005B6236 /* BusCalloutRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF6355D16147C74005B6236 /* BusCalloutRight.png */; };
+		1FF6356616147C74005B6236 /* BusCalloutRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF6355E16147C74005B6236 /* BusCalloutRight@2x.png */; };
+		1FF6356716147C74005B6236 /* WalkCalloutLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF6355F16147C74005B6236 /* WalkCalloutLeft.png */; };
+		1FF6356816147C74005B6236 /* WalkCalloutLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF6356016147C74005B6236 /* WalkCalloutLeft@2x.png */; };
+		1FF6356916147C74005B6236 /* WalkCalloutRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF6356116147C74005B6236 /* WalkCalloutRight.png */; };
+		1FF6356A16147C74005B6236 /* WalkCalloutRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF6356216147C74005B6236 /* WalkCalloutRight@2x.png */; };
 		1FF9F63015CCBA9C00AEBA28 /* TAStepScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9F62F15CCBA9C00AEBA28 /* TAStepScrollView.m */; };
 		1FF9F63315CCE0C500AEBA28 /* TAStepView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9F63215CCE0C500AEBA28 /* TAStepView.m */; };
 		1FFD6C0C15AD1D6200A4C388 /* TADirectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD6C0A15AD1D6200A4C388 /* TADirectionsViewController.m */; };
@@ -311,6 +326,8 @@
 		1F62C90C1606D99A007F5394 /* NSDateFormatter+Transit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDateFormatter+Transit.h"; path = "Models/NSDateFormatter+Transit.h"; sourceTree = "<group>"; };
 		1F62C90D1606D99A007F5394 /* NSDateFormatter+Transit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDateFormatter+Transit.m"; path = "Models/NSDateFormatter+Transit.m"; sourceTree = "<group>"; };
 		1F634A9415C1F4CC00192802 /* OTPClient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OTPClient.xcodeproj; path = "Libraries/opentripplanner-api-client/OTPClient.xcodeproj"; sourceTree = "<group>"; };
+		1F67C754160D9E4800818DE3 /* Zoom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Zoom.png; path = Transit/Resources/Images/Buttons/Zoom.png; sourceTree = "<group>"; };
+		1F67C755160D9E4800818DE3 /* Zoom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Zoom@2x.png"; path = "Transit/Resources/Images/Buttons/Zoom@2x.png"; sourceTree = "<group>"; };
 		1F77405515C6253100F3D527 /* MKMapView+Transit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MKMapView+Transit.h"; path = "Views/MKMapView+Transit.h"; sourceTree = "<group>"; };
 		1F77405615C6253100F3D527 /* MKMapView+Transit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MKMapView+Transit.m"; path = "Views/MKMapView+Transit.m"; sourceTree = "<group>"; };
 		1F905EED15DDBCE60061BCE0 /* autocompleteResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = autocompleteResponse.json; path = Fixtures/autocompleteResponse.json; sourceTree = "<group>"; };
@@ -349,6 +366,21 @@
 		1FD199CA15BBB14900BA8D48 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		1FE873F9160C11C600D260E6 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Transit/Resources/Images/Icon/Icon.png; sourceTree = "<group>"; };
 		1FE873FA160C11C600D260E6 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Transit/Resources/Images/Icon/Icon@2x.png"; sourceTree = "<group>"; };
+		1FEDB6431612CA8E006480D7 /* StepViewBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = StepViewBackground.png; path = Transit/Resources/Images/StepViewBackground.png; sourceTree = "<group>"; };
+		1FEDB6441612CA8E006480D7 /* StepViewBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "StepViewBackground@2x.png"; path = "Transit/Resources/Images/StepViewBackground@2x.png"; sourceTree = "<group>"; };
+		1FF6355316140025005B6236 /* TAPlaceStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TAPlaceStep.h; path = Models/Steps/TAPlaceStep.h; sourceTree = "<group>"; };
+		1FF6355416140025005B6236 /* TAPlaceStep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TAPlaceStep.m; path = Models/Steps/TAPlaceStep.m; sourceTree = "<group>"; };
+		1FF6355616140923005B6236 /* TAPlaceStepView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TAPlaceStepView.xib; path = Transit/Resources/Views/StepViews/TAPlaceStepView.xib; sourceTree = "<group>"; };
+		1FF63558161409C5005B6236 /* TAPlaceStepView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TAPlaceStepView.h; path = Views/StepViews/TAPlaceStepView.h; sourceTree = "<group>"; };
+		1FF63559161409C5005B6236 /* TAPlaceStepView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TAPlaceStepView.m; path = Views/StepViews/TAPlaceStepView.m; sourceTree = "<group>"; };
+		1FF6355B16147C74005B6236 /* BusCalloutLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BusCalloutLeft.png; path = Transit/Resources/Images/Callouts/BusCalloutLeft.png; sourceTree = "<group>"; };
+		1FF6355C16147C74005B6236 /* BusCalloutLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BusCalloutLeft@2x.png"; path = "Transit/Resources/Images/Callouts/BusCalloutLeft@2x.png"; sourceTree = "<group>"; };
+		1FF6355D16147C74005B6236 /* BusCalloutRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BusCalloutRight.png; path = Transit/Resources/Images/Callouts/BusCalloutRight.png; sourceTree = "<group>"; };
+		1FF6355E16147C74005B6236 /* BusCalloutRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BusCalloutRight@2x.png"; path = "Transit/Resources/Images/Callouts/BusCalloutRight@2x.png"; sourceTree = "<group>"; };
+		1FF6355F16147C74005B6236 /* WalkCalloutLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = WalkCalloutLeft.png; path = Transit/Resources/Images/Callouts/WalkCalloutLeft.png; sourceTree = "<group>"; };
+		1FF6356016147C74005B6236 /* WalkCalloutLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "WalkCalloutLeft@2x.png"; path = "Transit/Resources/Images/Callouts/WalkCalloutLeft@2x.png"; sourceTree = "<group>"; };
+		1FF6356116147C74005B6236 /* WalkCalloutRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = WalkCalloutRight.png; path = Transit/Resources/Images/Callouts/WalkCalloutRight.png; sourceTree = "<group>"; };
+		1FF6356216147C74005B6236 /* WalkCalloutRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "WalkCalloutRight@2x.png"; path = "Transit/Resources/Images/Callouts/WalkCalloutRight@2x.png"; sourceTree = "<group>"; };
 		1FF9F62E15CCBA9C00AEBA28 /* TAStepScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TAStepScrollView.h; path = Views/TAStepScrollView.h; sourceTree = "<group>"; };
 		1FF9F62F15CCBA9C00AEBA28 /* TAStepScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TAStepScrollView.m; path = Views/TAStepScrollView.m; sourceTree = "<group>"; };
 		1FF9F63115CCE0C500AEBA28 /* TAStepView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TAStepView.h; path = Views/StepViews/TAStepView.h; sourceTree = "<group>"; };
@@ -429,6 +461,8 @@
 			children = (
 				1FCCF79315D20CFA00AD2A4C /* TAStep.h */,
 				1FCCF79415D20CFA00AD2A4C /* TAStep.m */,
+				1FF6355316140025005B6236 /* TAPlaceStep.h */,
+				1FF6355416140025005B6236 /* TAPlaceStep.m */,
 				1F08CB0815E480D100E3063E /* TAWalkStep.h */,
 				1F08CB0915E480D100E3063E /* TAWalkStep.m */,
 				1F08CB0B15E480F100E3063E /* TATransitStep.h */,
@@ -440,6 +474,14 @@
 		1F20F30516044D3800DC00D7 /* Callouts */ = {
 			isa = PBXGroup;
 			children = (
+				1FF6355B16147C74005B6236 /* BusCalloutLeft.png */,
+				1FF6355C16147C74005B6236 /* BusCalloutLeft@2x.png */,
+				1FF6355D16147C74005B6236 /* BusCalloutRight.png */,
+				1FF6355E16147C74005B6236 /* BusCalloutRight@2x.png */,
+				1FF6355F16147C74005B6236 /* WalkCalloutLeft.png */,
+				1FF6356016147C74005B6236 /* WalkCalloutLeft@2x.png */,
+				1FF6356116147C74005B6236 /* WalkCalloutRight.png */,
+				1FF6356216147C74005B6236 /* WalkCalloutRight@2x.png */,
 				1F20F30616044D4A00DC00D7 /* CalloutLeft.png */,
 				1F20F30716044D4A00DC00D7 /* CalloutLeft@2x.png */,
 				1F20F30816044D4A00DC00D7 /* CalloutRight.png */,
@@ -451,6 +493,8 @@
 		1F313E3315E9A7F800EEF344 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				1F67C754160D9E4800818DE3 /* Zoom.png */,
+				1F67C755160D9E4800818DE3 /* Zoom@2x.png */,
 				1F62C90816067B90007F5394 /* LargeBlueButton.png */,
 				1F62C90916067B90007F5394 /* LargeBlueButton@2x.png */,
 				1F20F3261605279300DC00D7 /* TrackingHeading.png */,
@@ -647,6 +691,8 @@
 		1F90386D15D71F8A00B00877 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				1FEDB6431612CA8E006480D7 /* StepViewBackground.png */,
+				1FEDB6441612CA8E006480D7 /* StepViewBackground@2x.png */,
 				1FE873F8160C11AF00D260E6 /* Icon */,
 				1F20F30516044D3800DC00D7 /* Callouts */,
 				1F20F3011604462600DC00D7 /* CurrentStepAnnotation.png */,
@@ -697,6 +743,8 @@
 			children = (
 				1FF9F63115CCE0C500AEBA28 /* TAStepView.h */,
 				1FF9F63215CCE0C500AEBA28 /* TAStepView.m */,
+				1FF63558161409C5005B6236 /* TAPlaceStepView.h */,
+				1FF63559161409C5005B6236 /* TAPlaceStepView.m */,
 				1FA9E93415E37A83005E681E /* TAWalkStepView.h */,
 				1FA9E93515E37A83005E681E /* TAWalkStepView.m */,
 				1FA9E93715E37AA8005E681E /* TATransitStepView.h */,
@@ -708,6 +756,7 @@
 		1FA9E93315E37A19005E681E /* StepViews */ = {
 			isa = PBXGroup;
 			children = (
+				1FF6355616140923005B6236 /* TAPlaceStepView.xib */,
 				1FA9E93A15E37B0E005E681E /* TAWalkStepView.xib */,
 				1FA9E93C15E37B44005E681E /* TATransitStepView.xib */,
 			);
@@ -1036,6 +1085,19 @@
 				1F62C90B16067B90007F5394 /* LargeBlueButton@2x.png in Resources */,
 				1FE873FB160C11C600D260E6 /* Icon.png in Resources */,
 				1FE873FC160C11C600D260E6 /* Icon@2x.png in Resources */,
+				1F67C756160D9E4800818DE3 /* Zoom.png in Resources */,
+				1F67C757160D9E4800818DE3 /* Zoom@2x.png in Resources */,
+				1FEDB6451612CA8E006480D7 /* StepViewBackground.png in Resources */,
+				1FEDB6461612CA8E006480D7 /* StepViewBackground@2x.png in Resources */,
+				1FF6355716140923005B6236 /* TAPlaceStepView.xib in Resources */,
+				1FF6356316147C74005B6236 /* BusCalloutLeft.png in Resources */,
+				1FF6356416147C74005B6236 /* BusCalloutLeft@2x.png in Resources */,
+				1FF6356516147C74005B6236 /* BusCalloutRight.png in Resources */,
+				1FF6356616147C74005B6236 /* BusCalloutRight@2x.png in Resources */,
+				1FF6356716147C74005B6236 /* WalkCalloutLeft.png in Resources */,
+				1FF6356816147C74005B6236 /* WalkCalloutLeft@2x.png in Resources */,
+				1FF6356916147C74005B6236 /* WalkCalloutRight.png in Resources */,
+				1FF6356A16147C74005B6236 /* WalkCalloutRight@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1102,6 +1164,8 @@
 				1F08CB0D15E480F100E3063E /* TATransitStep.m in Sources */,
 				1F20F34916056B9800DC00D7 /* TADatePickerViewController.m in Sources */,
 				1F62C90E1606D99A007F5394 /* NSDateFormatter+Transit.m in Sources */,
+				1FF6355516140025005B6236 /* TAPlaceStep.m in Sources */,
+				1FF6355A161409C5005B6236 /* TAPlaceStepView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

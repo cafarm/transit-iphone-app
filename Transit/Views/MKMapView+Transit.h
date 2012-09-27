@@ -14,8 +14,8 @@
 
 @interface MKMapView (Transit)
 
-- (void)setVisibleMapRectToFitItinerary:(OTPItinerary *)itinerary animated:(BOOL)animated;
-- (void)setVisibleMapRectToFitStep:(TAStep *)step animated:(BOOL)animated;
+- (void)setVisibleMapRectToFitItinerary:(OTPItinerary *)itinerary edgePadding:(UIEdgeInsets)edgePadding animated:(BOOL)animated;
+- (void)setVisibleMapRectToFitStep:(TAStep *)step edgePadding:(UIEdgeInsets)edgePadding animated:(BOOL)animated;
 
 - (void)addOverlayForItinerary:(OTPItinerary *)itinerary;
 - (void)removeAllOverlays;
